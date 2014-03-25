@@ -2,10 +2,10 @@
 {
   "modid": "TiCTooltips",
   "name": "TiC Tooltips",
-  "description": "Adds useful information to TiC tool part item tooltips.",
+  "description": "A simple client-side add-on for Tinkers' Construct that adds relevant stats to all tool part tooltips.",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "",
+  "url": "http://www.minecraftforum.net/topic/2509840-164forge-tic-tooltips-v101-in-game-tinkers-construct-tool-part-stats/",
   "updateUrl": "",
   "authors": ["squeek"],
   "credits": "",
