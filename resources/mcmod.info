@@ -1,0 +1,16 @@
+[
+{
+  "modid": "TiCTooltips",
+  "name": "TiC Tooltips",
+  "description": "Adds useful information to TiC tool part item tooltips.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authors": ["squeek"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
