@@ -20,7 +20,10 @@ public class ModTiCTooltips {
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-    	MinecraftForge.EVENT_BUS.register(new TooltipHandler());
+    	if (!Loader.isModLoaded("IguanaTweaksTConstruct"))
+    	{
+    		MinecraftForge.EVENT_BUS.register(new TooltipHandler());
+    	}
     }
     
     @SideOnly(Side.CLIENT)

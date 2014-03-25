@@ -35,7 +35,7 @@ public class TooltipHandler {
 			int matID = ((IToolPart) item).getMaterialID(event.itemStack);
 			ToolMaterial mat = TConstructRegistry.getMaterial(matID);
 			
-			if (mat.ability() != "")
+			if (!mat.ability().equals(""))
 				event.toolTip.add(mat.style()+mat.ability());
 			
 			if (ToolPartHelper.isArrowHead(item))
