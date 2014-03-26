@@ -1,14 +1,16 @@
 package squeek.tictooltips;
 
-import java.text.DecimalFormat;
-
-import org.lwjgl.input.Keyboard;
+import java.util.List;
 
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+
+import org.lwjgl.input.Keyboard;
+
+import squeek.tictooltips.helpers.PatternHelper;
 import squeek.tictooltips.helpers.ToolPartHelper;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.tools.ArrowMaterial;
@@ -16,6 +18,7 @@ import tconstruct.library.tools.BowMaterial;
 import tconstruct.library.tools.BowstringMaterial;
 import tconstruct.library.tools.FletchingMaterial;
 import tconstruct.library.tools.ToolMaterial;
+import tconstruct.library.util.IPattern;
 import tconstruct.library.util.IToolPart;
 
 public class TooltipHandler {
@@ -69,7 +72,7 @@ public class TooltipHandler {
 				if (ToolPartHelper.isRod(item))
 				{
 					boolean isArrowMat = ToolPartHelper.isArrowRod(item);
-					if (isArrowMat && Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))
+					if (isArrowMat && (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)))
 					{
 						if (TConstructRegistry.validBowMaterial(matID))
 						{
@@ -89,7 +92,7 @@ public class TooltipHandler {
 					{
 						event.toolTip.add(StatCollector.translateToLocal("gui.partcrafter5")+ToolPartHelper.getHandleModifierString(mat.handleModifier));
 						if (isArrowMat)
-							event.toolTip.add("Hold "+EnumChatFormatting.ITALIC+EnumChatFormatting.YELLOW+"SHIFT"+EnumChatFormatting.RESET+EnumChatFormatting.GRAY+" to show bow/arrow stats");
+							event.toolTip.add("Hold "+EnumChatFormatting.YELLOW+EnumChatFormatting.ITALIC+"SHIFT"+EnumChatFormatting.RESET+EnumChatFormatting.GRAY+" to show bow/arrow stats");
 					}
 				}
 				else if (ToolPartHelper.isToolHead(item))
@@ -108,6 +111,34 @@ public class TooltipHandler {
 					event.toolTip.add(StatCollector.translateToLocal("gui.toolstation2")+ToolPartHelper.getDurabilityString(mat.durability()));
 					event.toolTip.add(StatCollector.translateToLocal("gui.toolstation14")+ToolPartHelper.getMiningSpeedString(mat.toolSpeed()));
 					event.toolTip.add(StatCollector.translateToLocal("gui.toolstation3")+ToolPartHelper.getAttackString(mat.attack()));
+				}
+			}
+		}
+		else if (item instanceof IPattern)
+		{
+			List<String> validMats = null;
+			
+			if (PatternHelper.isBowstringPattern(item, event.itemStack.getItemDamage()))
+			{
+				validMats = PatternHelper.getValidCustomMaterialsOfType(BowstringMaterial.class);
+			}
+			else if (PatternHelper.isFletchingPattern(item, event.itemStack.getItemDamage()))
+			{
+				validMats = PatternHelper.getValidCustomMaterialsOfType(FletchingMaterial.class);
+			}
+
+			if (validMats != null && !validMats.isEmpty())
+			{
+				event.toolTip.add("Valid Materials:");
+				for (String matName : validMats)
+				{
+					if (event.toolTip.size() < 7 || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
+						event.toolTip.add(" - "+matName);
+					else
+					{
+						event.toolTip.add("Hold "+EnumChatFormatting.YELLOW+EnumChatFormatting.ITALIC+"SHIFT"+EnumChatFormatting.RESET+EnumChatFormatting.GRAY+" for more");
+						break;
+					}
 				}
 			}
 		}
