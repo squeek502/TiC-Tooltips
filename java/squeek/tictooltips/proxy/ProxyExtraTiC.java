@@ -20,11 +20,12 @@ public class ProxyExtraTiC {
 			
 			ToolPartHelper.toolHeads.add( (Item) ExtraTiCPartsHandler.getDeclaredField("PICKAXE_HEAD").get(null) );
 			ToolPartHelper.toolHeads.add( (Item) ExtraTiCPartsHandler.getDeclaredField("SHOVEL_HEAD").get(null) );
-			ToolPartHelper.toolHeads.add( (Item) ExtraTiCPartsHandler.getDeclaredField("CHISEL_HEAD").get(null) );
-			ToolPartHelper.toolHeads.add( (Item) ExtraTiCPartsHandler.getDeclaredField("SCYTHE_HEAD").get(null) );
-			ToolPartHelper.toolHeads.add( (Item) ExtraTiCPartsHandler.getDeclaredField("LUMBERAXE_HEAD").get(null) );
 			ToolPartHelper.toolHeads.add( (Item) ExtraTiCPartsHandler.getDeclaredField("EXCAVATOR_HEAD").get(null) );
 			ToolPartHelper.toolHeads.add( (Item) ExtraTiCPartsHandler.getDeclaredField("HAMMER_HEAD").get(null) );
+
+			ToolPartHelper.weaponToolHeads.add( (Item) ExtraTiCPartsHandler.getDeclaredField("AXE_HEAD").get(null) );
+			ToolPartHelper.weaponToolHeads.add( (Item) ExtraTiCPartsHandler.getDeclaredField("SCYTHE_HEAD").get(null) );
+			ToolPartHelper.weaponToolHeads.add( (Item) ExtraTiCPartsHandler.getDeclaredField("LUMBERAXE_HEAD").get(null) );
 
 			ToolPartHelper.weaponHeads.add( (Item) ExtraTiCPartsHandler.getDeclaredField("SWORD_BLADE").get(null) );
 			ToolPartHelper.weaponHeads.add( (Item) ExtraTiCPartsHandler.getDeclaredField("LARGE_SWORD_BLADE").get(null) );
@@ -45,6 +46,8 @@ public class ProxyExtraTiC {
 			ToolPartHelper.arrowHeads.add( (Item) ExtraTiCPartsHandler.getDeclaredField("ARROWHEAD").get(null) );
 			
 			ToolPartHelper.arrowRods.add( (Item) ExtraTiCPartsHandler.getDeclaredField("TOOLROD").get(null) );
+
+			ToolPartHelper.chisels.add( (Item) ExtraTiCPartsHandler.getDeclaredField("CHISEL_HEAD").get(null) );
 		}
 		catch(Exception e) 
 		{

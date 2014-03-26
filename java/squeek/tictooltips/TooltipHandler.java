@@ -101,6 +101,17 @@ public class TooltipHandler {
 					event.toolTip.add(StatCollector.translateToLocal("gui.toolstation14")+ToolPartHelper.getMiningSpeedString(mat.toolSpeed()));
 					event.toolTip.add(StatCollector.translateToLocal("gui.toolstation15")+ToolPartHelper.getHarvestLevelString(mat.harvestLevel()));
 				}
+				else if (ToolPartHelper.isWeaponToolHead(item))
+				{
+					event.toolTip.add(StatCollector.translateToLocal("gui.toolstation2")+ToolPartHelper.getDurabilityString(mat.durability()));
+					event.toolTip.add(StatCollector.translateToLocal("gui.toolstation16")+ToolPartHelper.getMiningSpeedString(mat.toolSpeed()));
+					event.toolTip.add(StatCollector.translateToLocal("gui.toolstation3")+ToolPartHelper.getAttackString(mat.attack()));
+				}
+				else if (ToolPartHelper.isChiselHead(item))
+				{
+					event.toolTip.add(StatCollector.translateToLocal("gui.toolstation2")+ToolPartHelper.getDurabilityString(mat.durability()));
+					event.toolTip.add(StatCollector.translateToLocal("gui.toolstation16")+ToolPartHelper.getMiningSpeedString(mat.toolSpeed()));
+				}
 				else if (ToolPartHelper.isWeaponHead(item))
 				{
 					event.toolTip.add(StatCollector.translateToLocal("gui.toolstation3")+ToolPartHelper.getAttackString(mat.attack()));

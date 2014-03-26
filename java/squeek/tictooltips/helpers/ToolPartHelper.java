@@ -26,12 +26,16 @@ public class ToolPartHelper {
 		(
 			TContent.pickaxeHead, 
 			TContent.shovelHead,
-			TContent.hatchetHead,
-			TContent.chiselHead,
-			TContent.scytheBlade,
-			TContent.broadAxeHead,
 			TContent.excavatorHead,
 			TContent.hammerHead 
+		)
+	);
+	public static List<Item> weaponToolHeads = new ArrayList<Item>(
+		Arrays.asList
+		(
+			TContent.hatchetHead,
+			TContent.scytheBlade,
+			TContent.broadAxeHead
 		)
 	);
 	public static List<Item> weaponHeads = new ArrayList<Item>(
@@ -88,10 +92,20 @@ public class ToolPartHelper {
 			TContent.toolRod
 		)
 	);
+	public static List<Item> chisels = new ArrayList<Item>(
+		Arrays.asList(
+			TContent.chiselHead
+		)
+	);
 
 	public static boolean isToolHead(Item item)
 	{
 		return toolHeads.contains(item);
+	}
+	
+	public static boolean isWeaponToolHead(Item item)
+	{
+		return weaponToolHeads.contains(item);
 	}
 	
 	public static boolean isWeaponHead(Item item)
@@ -137,6 +151,11 @@ public class ToolPartHelper {
 	public static boolean isArrowRod(Item item)
 	{
 		return arrowRods.contains(item);
+	}
+	
+	public static boolean isChiselHead(Item item)
+	{
+		return chisels.contains(item);
 	}
 
 	// tools/weapons
