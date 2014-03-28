@@ -13,6 +13,7 @@ import org.lwjgl.input.Keyboard;
 
 import squeek.tictooltips.helpers.ColorHelper;
 import squeek.tictooltips.helpers.PatternHelper;
+import squeek.tictooltips.helpers.RomanNumeralHelper;
 import squeek.tictooltips.helpers.StringHelper;
 import squeek.tictooltips.helpers.ToolHelper;
 import squeek.tictooltips.helpers.ToolPartHelper;
@@ -46,6 +47,18 @@ public class TooltipHandler {
 			if (!mat.ability().equals(""))
 				event.toolTip.add(mat.style()+mat.ability());
 			
+			if (mat.shoddy() != 0)
+			{
+				for (int index=0; index<event.toolTip.size(); index++)
+				{
+					if (event.toolTip.get(index).contains(StringHelper.getShoddinessTypeString(mat.shoddy())))
+					{
+						event.toolTip.set(index, event.toolTip.get(index)+EnumChatFormatting.RESET+EnumChatFormatting.GRAY+" [Modifier: "+ToolPartHelper.getShoddinessString(mat.shoddy())+EnumChatFormatting.RESET+EnumChatFormatting.GRAY+"]");
+						break;
+					}
+				}
+			}
+				
 			if (ToolPartHelper.isArrowHead(item))
 			{
 				ArrowMaterial arrowMat = TConstructRegistry.getArrowMaterial(matID);
@@ -165,6 +178,10 @@ public class TooltipHandler {
 			{
 				ToolCore tool = (ToolCore) item;
 				NBTTagCompound toolTag = ToolHelper.getToolTag(event.itemStack);
+
+				float shoddiness = ToolHelper.getStonebound(toolTag);
+				boolean isShoddy = shoddiness != 0;
+				String shoddinessType = StringHelper.getShoddinessTypeString(shoddiness);
 				
 				ToolMaterial repairMat = ToolHelper.getHeadMaterial(toolTag);
 				event.toolTip.add(toolTipIndex++, "Repair Material: "+repairMat.style()+repairMat.displayName);
@@ -178,6 +195,11 @@ public class TooltipHandler {
 					event.toolTip.add(toolTipIndex++, StatCollector.translateToLocal("gui.toolstation2")+ColorHelper.getRelativeColor(curDurability, 0, maxDurability)+StringHelper.getDurabilityString(curDurability)+" / "+StringHelper.getDurabilityString(maxDurability));
 				}
 				
+				if (isShoddy)
+				{
+					event.toolTip.add(toolTipIndex++, shoddinessType+" Modifier: "+ToolPartHelper.getShoddinessString(shoddiness));
+				}
+				
 				if (ToolHelper.isWeaponTool(tool))
 				{
 					int damage = ToolHelper.getDamage(tool, toolTag);
@@ -187,7 +209,7 @@ public class TooltipHandler {
 					if (stoneboundDamage != 0)
 					{
 						String bonusOrLoss = stoneboundDamage > 0 ? StatCollector.translateToLocal("gui.toolstation4")+EnumChatFormatting.DARK_GREEN : StatCollector.translateToLocal("gui.toolstation5")+EnumChatFormatting.DARK_RED;
-						event.toolTip.add(toolTipIndex++, "- "+bonusOrLoss+StringHelper.getDamageString((int) stoneboundDamage));
+						event.toolTip.add(toolTipIndex++, "- "+shoddinessType+" "+bonusOrLoss+StringHelper.getDamageString((int) stoneboundDamage));
 					}
 				}
 
@@ -238,7 +260,7 @@ public class TooltipHandler {
 					if (stoneboundSpeed != 0)
 					{
 						String bonusOrLoss = stoneboundSpeed > 0 ? StatCollector.translateToLocal("gui.toolstation4")+EnumChatFormatting.DARK_GREEN : StatCollector.translateToLocal("gui.toolstation5")+EnumChatFormatting.DARK_RED;
-						event.toolTip.add(toolTipIndex++, "- "+bonusOrLoss+StringHelper.getSpeedString((int) (stoneboundSpeed*100f)));
+						event.toolTip.add(toolTipIndex++, "- "+shoddinessType+" "+bonusOrLoss+StringHelper.getSpeedString((int) (stoneboundSpeed*100f)));
 					}
 					
 					int harvestLevel = ToolHelper.getPrimaryHarvestLevel(toolTag);

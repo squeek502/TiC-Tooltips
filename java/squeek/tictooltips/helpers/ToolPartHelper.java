@@ -156,6 +156,11 @@ public class ToolPartHelper {
 		return chisels.contains(item);
 	}
 
+	// shoddiness
+	public static float minShoddiness=0f;
+	public static float maxPositiveShoddiness=minShoddiness;
+	public static float maxNegativeShoddiness=minShoddiness;
+	
 	// tools/weapons
 	public static int minAttack;
 	public static int maxAttack;
@@ -208,6 +213,13 @@ public class ToolPartHelper {
 			}
 			else
 			{
+				if (mat.shoddy() != 0f)
+				{
+					if (mat.shoddy() > 0f && mat.shoddy() > maxPositiveShoddiness)
+						maxPositiveShoddiness = mat.shoddy();
+					if (mat.shoddy() < 0f && mat.shoddy() < maxNegativeShoddiness)
+						maxNegativeShoddiness = mat.shoddy();
+				}
 				if (mat.attack() > maxAttack)
 					maxAttack = mat.attack();
 				else if (mat.attack() < minAttack)
@@ -327,6 +339,12 @@ public class ToolPartHelper {
 					minWeight = fletchingMat.mass;
 			}
 		}
+	}
+	
+	// shoddiness
+	public static String getShoddinessString(float val)
+	{
+		return ColorHelper.getRelativeColor(val, minShoddiness, val > 0 ? maxPositiveShoddiness : maxNegativeShoddiness)+StringHelper.getShoddinessString(val);
 	}
 	
 	// tools/weapons

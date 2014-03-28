@@ -35,41 +35,8 @@ public class StringHelper {
 	{
 		if (reinforced > 9)
 			return "Unbreakable";
-		String ret = "Reinforced ";
-		switch (reinforced)
-		{
-		case 1:
-			ret += "I";
-			break;
-		case 2:
-			ret += "II";
-			break;
-		case 3:
-			ret += "III";
-			break;
-		case 4:
-			ret += "IV";
-			break;
-		case 5:
-			ret += "V";
-			break;
-		case 6:
-			ret += "VI";
-			break;
-		case 7:
-			ret += "VII";
-			break;
-		case 8:
-			ret += "VIII";
-			break;
-		case 9:
-			ret += "IX";
-			break;
-		default:
-			ret += "X";
-			break;
-		}
-		return ret;
+		else
+			return "Reinforced "+RomanNumeralHelper.toRoman(reinforced);
 	}
 	
 	// Taken from tconstruct.library.tools.ToolCore
@@ -80,6 +47,16 @@ public class StringHelper {
 			return attack / 2 + heart;
 		else
 			return attack / 2f + heart;
+	}
+	
+	public static String getShoddinessTypeString(float shoddiness)
+	{
+		return shoddiness > 0 ? "Stonebound" : (shoddiness < 0 ? "Jagged" : "");
+	}
+	
+	public static String getShoddinessString(float shoddiness)
+	{
+		return Float.toString(Math.abs(shoddiness));
 	}
 	
 	public static String getModifierString(float modifier)
