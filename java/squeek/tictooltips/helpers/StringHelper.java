@@ -42,11 +42,14 @@ public class StringHelper {
 	// Taken from tconstruct.library.tools.ToolCore
 	public static String getDamageString(int attack)
 	{
-		String heart = attack == 2 ? StatCollector.translateToLocal("gui.partcrafter8") : StatCollector.translateToLocal("gui.partcrafter9");
-		if (attack % 2 == 0)
-			return attack / 2 + heart;
-		else
-			return attack / 2f + heart;
+		String damageNum = getDamageNumberString(attack);
+		String heart = Math.abs(attack) == 2 ? StatCollector.translateToLocal("gui.partcrafter8") : StatCollector.translateToLocal("gui.partcrafter9");
+		return damageNum+heart;
+	}
+
+	public static String getDamageNumberString(int attack)
+	{
+		return df.format(attack/2f);
 	}
 	
 	public static String getShoddinessTypeString(float shoddiness)
@@ -56,7 +59,10 @@ public class StringHelper {
 	
 	public static String getShoddinessString(float shoddiness)
 	{
-		return Float.toString(Math.abs(shoddiness));
+		if ((int) shoddiness == shoddiness)
+			return Float.toString(Math.abs(shoddiness));
+		else
+			return df.format(Math.abs(shoddiness));
 	}
 	
 	public static String getModifierString(float modifier)

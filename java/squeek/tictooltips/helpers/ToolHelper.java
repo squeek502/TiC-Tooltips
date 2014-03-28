@@ -73,7 +73,7 @@ public class ToolHelper {
 	public static int getDamage(ToolCore tool, NBTTagCompound toolTag)
 	{
 		int attack = toolTag.getInteger("Attack");
-		attack += getStoneboundDamage(toolTag);
+		attack += getShoddinessDamageBonus(toolTag);
 		attack *= tool.getDamageModifier();
 		if (attack < 1)
 			attack = 1;
@@ -81,14 +81,24 @@ public class ToolHelper {
 		return attack;
 	}
 	
-	public static float getStoneboundDamage(NBTTagCompound toolTag)
+	public static float getShoddinessDamageBonus(NBTTagCompound toolTag)
 	{
 		return (float) Math.log(getUsedDurability(toolTag) / 72f + 1) * -2 * getStonebound(toolTag);
 	}
+
+	public static float getMaxShoddinessDamageBonus(NBTTagCompound toolTag)
+	{
+		return (float) Math.log((getMaxDurability(toolTag)-1) / 72f + 1) * -2 * getStonebound(toolTag);
+	}
 	
-	public static float getStoneboundSpeed(NBTTagCompound toolTag)
+	public static float getShoddinessSpeedBonus(NBTTagCompound toolTag)
 	{
 		return (float) Math.log(getUsedDurability(toolTag) / 72f + 1) * 2 * getStonebound(toolTag);
+	}
+
+	public static float getMaxShoddinessSpeedBonus(NBTTagCompound toolTag)
+	{
+		return (float) Math.log((getMaxDurability(toolTag)-1) / 72f + 1) * 2 * getStonebound(toolTag);
 	}
 	
 	public static int getDrawSpeed(NBTTagCompound toolTag)

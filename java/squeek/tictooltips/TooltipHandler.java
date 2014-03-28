@@ -192,7 +192,8 @@ public class TooltipHandler {
 				{
 					int curDurability = maxDurability - ToolHelper.getUsedDurability(toolTag);
 					
-					event.toolTip.add(toolTipIndex++, StatCollector.translateToLocal("gui.toolstation2")+ColorHelper.getRelativeColor(curDurability, 0, maxDurability)+StringHelper.getDurabilityString(curDurability)+" / "+StringHelper.getDurabilityString(maxDurability));
+					String curOfMax = curDurability == maxDurability ? StringHelper.getDurabilityString(maxDurability) : StringHelper.getDurabilityString(curDurability)+" / "+StringHelper.getDurabilityString(maxDurability);
+					event.toolTip.add(toolTipIndex++, StatCollector.translateToLocal("gui.toolstation2")+ColorHelper.getRelativeColor(curDurability, 0, maxDurability)+curOfMax);
 				}
 				
 				if (isShoddy)
@@ -203,13 +204,19 @@ public class TooltipHandler {
 				if (ToolHelper.isWeaponTool(tool))
 				{
 					int damage = ToolHelper.getDamage(tool, toolTag);
-					float stoneboundDamage = ToolHelper.getStoneboundDamage(toolTag);
+					float stoneboundDamage = ToolHelper.getShoddinessDamageBonus(toolTag);
+					float maxStoneboundDamage = ToolHelper.getMaxShoddinessDamageBonus(toolTag);
 					
 					event.toolTip.add(toolTipIndex++, StatCollector.translateToLocal("gui.toolstation3")+ColorHelper.getRelativeColor(ToolHelper.getRawDamage(tool, toolTag)+stoneboundDamage, ToolPartHelper.minAttack, ToolPartHelper.maxAttack)+StringHelper.getDamageString(damage));
 					if (stoneboundDamage != 0)
 					{
 						String bonusOrLoss = stoneboundDamage > 0 ? StatCollector.translateToLocal("gui.toolstation4")+EnumChatFormatting.DARK_GREEN : StatCollector.translateToLocal("gui.toolstation5")+EnumChatFormatting.DARK_RED;
 						event.toolTip.add(toolTipIndex++, "- "+shoddinessType+" "+bonusOrLoss+StringHelper.getDamageString((int) stoneboundDamage));
+					}
+					if (maxStoneboundDamage != 0)
+					{
+						String bonusOrLoss = maxStoneboundDamage > 0 ? StatCollector.translateToLocal("gui.toolstation4")+EnumChatFormatting.DARK_GREEN : StatCollector.translateToLocal("gui.toolstation5")+EnumChatFormatting.DARK_RED;
+						event.toolTip.add(toolTipIndex++, "- Max "+shoddinessType+" "+bonusOrLoss+StringHelper.getDamageString((int) maxStoneboundDamage));
 					}
 				}
 
@@ -238,7 +245,8 @@ public class TooltipHandler {
 				{
 					int mineSpeed1 = ToolHelper.getPrimaryMiningSpeed(toolTag);
 					int mineSpeed2 = ToolHelper.getSecondaryMiningSpeed(toolTag);
-					float stoneboundSpeed = ToolHelper.getStoneboundSpeed(toolTag);
+					float stoneboundSpeed = ToolHelper.getShoddinessSpeedBonus(toolTag);
+					float maxStoneboundSpeed = ToolHelper.getMaxShoddinessSpeedBonus(toolTag);
 					
 					mineSpeed1 += stoneboundSpeed*100f;
 					mineSpeed2 += stoneboundSpeed*100f;
@@ -247,12 +255,24 @@ public class TooltipHandler {
 					int harvestLevel2 = ToolHelper.getSecondaryHarvestLevel(toolTag);
 					
 					event.toolTip.add(toolTipIndex++, StatCollector.translateToLocal("gui.toolstation12")+ToolPartHelper.getMiningSpeedString(mineSpeed1) + EnumChatFormatting.RESET+EnumChatFormatting.GRAY + ", " + ToolPartHelper.getMiningSpeedString(mineSpeed2));
+					if (stoneboundSpeed != 0)
+					{
+						String bonusOrLoss = stoneboundSpeed > 0 ? StatCollector.translateToLocal("gui.toolstation4")+EnumChatFormatting.DARK_GREEN : StatCollector.translateToLocal("gui.toolstation5")+EnumChatFormatting.DARK_RED;
+						event.toolTip.add(toolTipIndex++, "- "+shoddinessType+" "+bonusOrLoss+StringHelper.getSpeedString((int) (stoneboundSpeed*100f)));
+					}
+					if (maxStoneboundSpeed != 0)
+					{
+						String bonusOrLoss = maxStoneboundSpeed > 0 ? StatCollector.translateToLocal("gui.toolstation4")+EnumChatFormatting.DARK_GREEN : StatCollector.translateToLocal("gui.toolstation5")+EnumChatFormatting.DARK_RED;
+						event.toolTip.add(toolTipIndex++, "- Max "+shoddinessType+" "+bonusOrLoss+StringHelper.getSpeedString((int) (maxStoneboundSpeed*100f)));
+					}
+					
 					event.toolTip.add(toolTipIndex++, StatCollector.translateToLocal("gui.toolstation13")+" "+ToolPartHelper.getHarvestLevelString(harvestLevel1) + EnumChatFormatting.RESET+EnumChatFormatting.GRAY + ", " + ToolPartHelper.getHarvestLevelString(harvestLevel2));
 				}
 				else if (ToolHelper.isHarvestTool(tool))
 				{
 					int mineSpeed = ToolHelper.getTotalMiningSpeed(toolTag);
-					float stoneboundSpeed = ToolHelper.getStoneboundSpeed(toolTag);
+					float stoneboundSpeed = ToolHelper.getShoddinessSpeedBonus(toolTag);
+					float maxStoneboundSpeed = ToolHelper.getMaxShoddinessSpeedBonus(toolTag);
 					
 					mineSpeed += stoneboundSpeed*100f;
 					
@@ -261,6 +281,11 @@ public class TooltipHandler {
 					{
 						String bonusOrLoss = stoneboundSpeed > 0 ? StatCollector.translateToLocal("gui.toolstation4")+EnumChatFormatting.DARK_GREEN : StatCollector.translateToLocal("gui.toolstation5")+EnumChatFormatting.DARK_RED;
 						event.toolTip.add(toolTipIndex++, "- "+shoddinessType+" "+bonusOrLoss+StringHelper.getSpeedString((int) (stoneboundSpeed*100f)));
+					}
+					if (maxStoneboundSpeed != 0)
+					{
+						String bonusOrLoss = maxStoneboundSpeed > 0 ? StatCollector.translateToLocal("gui.toolstation4")+EnumChatFormatting.DARK_GREEN : StatCollector.translateToLocal("gui.toolstation5")+EnumChatFormatting.DARK_RED;
+						event.toolTip.add(toolTipIndex++, "- Max "+shoddinessType+" "+bonusOrLoss+StringHelper.getSpeedString((int) (maxStoneboundSpeed*100f)));
 					}
 					
 					int harvestLevel = ToolHelper.getPrimaryHarvestLevel(toolTag);
