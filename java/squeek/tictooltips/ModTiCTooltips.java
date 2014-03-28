@@ -13,28 +13,28 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 @Mod(modid = ModTiCTooltips.MODID, version = ModTiCTooltips.VERSION, dependencies = "required-after:TConstruct;after:ExtraTiC;after:TSteelworks")
 public class ModTiCTooltips {
-    public static final String MODID = "TiCTooltips";
-    public static final String VERSION = "1.0";
+	public static final String MODID = "TiCTooltips";
+	public static final String VERSION = "1.0";
 
-    @SideOnly(Side.CLIENT)
-    @EventHandler
-    public void init(FMLInitializationEvent event)
-    {
-    	if (!Loader.isModLoaded("IguanaTweaksTConstruct"))
-    	{
-    		MinecraftForge.EVENT_BUS.register(new TooltipHandler());
-    	}
-    }
-    
-    @SideOnly(Side.CLIENT)
-    @EventHandler
-    public void postInit(FMLPostInitializationEvent event)
-    {
-    	if (Loader.isModLoaded("ExtraTiC"))
-    	{
-    		ProxyExtraTiC.registerParts();
-    	}
-    	
-    	ToolPartHelper.determineMinAndMaxValues();
-    }
+	@SideOnly(Side.CLIENT)
+	@EventHandler
+	public void init(FMLInitializationEvent event)
+	{
+		if (!Loader.isModLoaded("IguanaTweaksTConstruct"))
+		{
+			MinecraftForge.EVENT_BUS.register(new TooltipHandler());
+		}
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@EventHandler
+	public void postInit(FMLPostInitializationEvent event)
+	{
+		if (Loader.isModLoaded("ExtraTiC"))
+		{
+			ProxyExtraTiC.registerParts();
+		}
+		
+		ToolPartHelper.determineMinAndMaxValues();
+	}
 }

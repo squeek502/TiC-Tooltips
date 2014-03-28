@@ -19,8 +19,6 @@ import tconstruct.library.tools.ToolMaterial;
 
 public class ToolPartHelper {
 	
-	private static DecimalFormat df = new DecimalFormat("##.##");
-	
 	public static List<Item> toolHeads = new ArrayList<Item>( 
 		Arrays.asList
 		(
@@ -159,38 +157,38 @@ public class ToolPartHelper {
 	}
 
 	// tools/weapons
-	private static int minAttack;
-	private static int maxAttack;
-	private static int minHarvestLevel;
-	private static int maxHarvestLevel;
-	private static int minDurability;
-	private static int maxDurability;
-	private static int minMiningSpeed;
-	private static int maxMiningSpeed;
-	private static float minHandleModifier;
-	private static float maxHandleModifier;
+	public static int minAttack;
+	public static int maxAttack;
+	public static int minHarvestLevel;
+	public static int maxHarvestLevel;
+	public static int minDurability;
+	public static int maxDurability;
+	public static int minMiningSpeed;
+	public static int maxMiningSpeed;
+	public static float minHandleModifier;
+	public static float maxHandleModifier;
 	
 	// arrows
-	private static float minAccuracy;
-	private static float maxAccuracy;
-	private static float minWeight;
-	private static float maxWeight;
+	public static float minAccuracy;
+	public static float maxAccuracy;
+	public static float minWeight;
+	public static float maxWeight;
 	
 	// bows
-	private static int minBowDrawSpeed;
-	private static int maxBowDrawSpeed;
-	private static int minBowDurability;
-	private static int maxBowDurability;
-	private static float minBowArrowSpeedModifier;
-	private static float maxBowArrowSpeedModifier;
+	public static int minBowDrawSpeed;
+	public static int maxBowDrawSpeed;
+	public static int minBowDurability;
+	public static int maxBowDurability;
+	public static float minBowArrowSpeedModifier;
+	public static float maxBowArrowSpeedModifier;
 	
 	// bowstrings
-	private static float minBowStringDrawspeedModifier;
-	private static float maxBowStringDrawspeedModifier;
-	private static float minBowStringDurabilityModifier;
-	private static float maxBowStringDurabilityModifier;
-	private static float minBowStringArrowSpeedModifier;
-	private static float maxBowStringArrowSpeedModifier;
+	public static float minBowStringDrawspeedModifier;
+	public static float maxBowStringDrawspeedModifier;
+	public static float minBowStringDurabilityModifier;
+	public static float maxBowStringDurabilityModifier;
+	public static float minBowStringArrowSpeedModifier;
+	public static float maxBowStringArrowSpeedModifier;
 	
 	public static void determineMinAndMaxValues()
 	{
@@ -334,134 +332,60 @@ public class ToolPartHelper {
 	// tools/weapons
 	public static String getAttackString(int val)
 	{
-		return ColorHelper.getRelativeColor(val, minAttack, maxAttack)+""+getDamageString(val);
+		return ColorHelper.getRelativeColor(val, minAttack, maxAttack)+StringHelper.getDamageString(val);
 	}
 	public static String getHarvestLevelString(int val)
 	{
-		return ColorHelper.getRelativeColor(val, minHarvestLevel, maxHarvestLevel)+""+getHarvestLevelName(val);
+		return ColorHelper.getRelativeColor(val, minHarvestLevel, maxHarvestLevel)+StringHelper.getHarvestLevelName(val);
 	}
 	public static String getDurabilityString(int val)
 	{
-		return ColorHelper.getRelativeColor(val, minDurability, maxDurability)+""+val;
+		return ColorHelper.getRelativeColor(val, minDurability, maxDurability)+StringHelper.getDurabilityString(val);
 	}
 	public static String getMiningSpeedString(int val)
 	{
-		return ColorHelper.getRelativeColor(val, minMiningSpeed, maxMiningSpeed)+""+df.format(val / 100f);
+		return ColorHelper.getRelativeColor(val, minMiningSpeed, maxMiningSpeed)+StringHelper.getSpeedString(val);
 	}
 	public static String getHandleModifierString(float val)
 	{
-		return ColorHelper.getRelativeColor(val, minHandleModifier, maxHandleModifier)+""+val+"x";
+		return ColorHelper.getRelativeColor(val, minHandleModifier, maxHandleModifier)+StringHelper.getModifierString(val);
 	}
 	
 	// arrows
 	public static String getAccuracyString(float val)
 	{
-		return ColorHelper.getRelativeColor(val, minAccuracy, maxAccuracy)+df.format(val - 4)+"%";
+		return ColorHelper.getRelativeColor(val, minAccuracy, maxAccuracy)+StringHelper.getAccuracyString(val);
 	}
 	public static String getWeightString(float val)
 	{
-		return ColorHelper.getRelativeColor(val, maxWeight, minWeight)+""+val;
+		return ColorHelper.getRelativeColor(val, maxWeight, minWeight)+StringHelper.getWeightString(val);
 	}
 
 	// bows
 	public static String getBowDrawSpeedString(int val)
 	{
-		return ColorHelper.getRelativeColor(val, maxBowDrawSpeed, minBowDrawSpeed)+df.format(val / 20f)+"s";
+		return ColorHelper.getRelativeColor(val, maxBowDrawSpeed, minBowDrawSpeed)+StringHelper.getDrawSpeedString(val);
 	}
 	public static String getBowDurabilityString(int val)
 	{
-		return ColorHelper.getRelativeColor(val, minBowDurability, maxBowDurability)+""+val;
+		return ColorHelper.getRelativeColor(val, minBowDurability, maxBowDurability)+StringHelper.getDurabilityString(val);
 	}
 	public static String getBowArrowSpeedModifierString(float val)
 	{
-		return ColorHelper.getRelativeColor(val, minBowArrowSpeedModifier, maxBowArrowSpeedModifier)+""+val+"x";
+		return ColorHelper.getRelativeColor(val, minBowArrowSpeedModifier, maxBowArrowSpeedModifier)+StringHelper.getModifierString(val);
 	}
 	
 	// bowstrings
 	public static String getBowStringDrawspeedModifierString(float val)
 	{
-		return ColorHelper.getRelativeColor(val, minBowStringDrawspeedModifier, maxBowStringDrawspeedModifier)+""+val+"x";
+		return ColorHelper.getRelativeColor(val, minBowStringDrawspeedModifier, maxBowStringDrawspeedModifier)+StringHelper.getModifierString(val);
 	}
 	public static String getBowStringDurabilityModifierString(float val)
 	{
-		return ColorHelper.getRelativeColor(val, minBowStringDrawspeedModifier, maxBowStringDrawspeedModifier)+""+val+"x";
+		return ColorHelper.getRelativeColor(val, minBowStringDrawspeedModifier, maxBowStringDrawspeedModifier)+StringHelper.getModifierString(val);
 	}
 	public static String getBowStringArrowSpeedModifierString(float val)
 	{
-		return ColorHelper.getRelativeColor(val, minBowStringArrowSpeedModifier, maxBowStringArrowSpeedModifier)+""+val+"x";
+		return ColorHelper.getRelativeColor(val, minBowStringArrowSpeedModifier, maxBowStringArrowSpeedModifier)+StringHelper.getModifierString(val);
 	}
-	
-	// Taken from tconstruct.client.gui.ToolStationGui
-    public static String getHarvestLevelName (int num)
-    {
-        switch (num)
-        {
-        case 0:
-            return (StatCollector.translateToLocal("gui.partcrafter.mining1"));
-        case 1:
-            return (StatCollector.translateToLocal("gui.partcrafter.mining2"));
-        case 2:
-            return (StatCollector.translateToLocal("gui.partcrafter.mining3"));
-        case 3:
-            return (StatCollector.translateToLocal("gui.partcrafter.mining4"));
-        case 4:
-            return (StatCollector.translateToLocal("gui.partcrafter.mining5"));
-        case 5:
-            return (StatCollector.translateToLocal("gui.partcrafter.mining6"));
-        default:
-            return String.valueOf(num);
-        }
-    }
-    
-    // Taken from tconstruct.library.tools.ToolCore
-    public static String getReinforcedString(int reinforced)
-    {
-        if (reinforced > 9)
-            return "Unbreakable";
-        String ret = "Reinforced ";
-        switch (reinforced)
-        {
-        case 1:
-            ret += "I";
-            break;
-        case 2:
-            ret += "II";
-            break;
-        case 3:
-            ret += "III";
-            break;
-        case 4:
-            ret += "IV";
-            break;
-        case 5:
-            ret += "V";
-            break;
-        case 6:
-            ret += "VI";
-            break;
-        case 7:
-            ret += "VII";
-            break;
-        case 8:
-            ret += "VIII";
-            break;
-        case 9:
-            ret += "IX";
-            break;
-        default:
-            ret += "X";
-            break;
-        }
-        return ret;
-    }
-    
-    // Taken from tconstruct.library.tools.ToolCore
-    public static String getDamageString(int attack)
-    {
-    	String heart = attack == 2 ? StatCollector.translateToLocal("gui.partcrafter8") : StatCollector.translateToLocal("gui.partcrafter9");
-    	if (attack % 2 == 0)
-    		return attack / 2 + heart;
-    	else
-    		return attack / 2f + heart;
-    }
 }
