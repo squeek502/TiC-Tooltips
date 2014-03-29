@@ -6,7 +6,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import org.lwjgl.input.Keyboard;
@@ -54,14 +53,20 @@ public class TooltipHandler
 		}
 		// Tools
 		else if (item instanceof ToolCore && ToolHelper.hasToolTag(event.itemStack))
-		{
-			int toolTipIndex = event.toolTip.size() > 0 ? Math.max(0, event.toolTip.size() - 2) : 0;
+		{	
+			int toolTipIndex = event.toolTip.size();
 
-			int i = toolTipIndex;
-			while (i < event.toolTip.size() && event.toolTip.get(i).equals(""))
+			// work backwards past any + attack strings
+			while (toolTipIndex > 1 && event.toolTip.get(toolTipIndex-1).startsWith("\u00A79+"))
 			{
-				event.toolTip.remove(i);
-				i++;
+				toolTipIndex--;
+			}
+			
+			// work backwards and remove any spacing
+			while (toolTipIndex > 1 && event.toolTip.get(toolTipIndex-1).equals(""))
+			{
+				event.toolTip.remove(toolTipIndex-1);
+				toolTipIndex--;
 			}
 
 			boolean ctrlDown = Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) || Keyboard.isKeyDown(Keyboard.KEY_RCONTROL);
@@ -85,7 +90,7 @@ public class TooltipHandler
 				while (event.toolTip.size() > 1)
 					event.toolTip.remove(1);
 
-				toolTipIndex = 1;
+				toolTipIndex = event.toolTip.size();
 
 				List<String> toolMaterials = getToolMaterialsTooltip(event.itemStack);
 				event.toolTip.addAll(toolTipIndex, toolMaterials);
@@ -140,24 +145,24 @@ public class TooltipHandler
 		{
 			ArrowMaterial arrowMat = TConstructRegistry.getArrowMaterial(matID);
 
-			toolTip.add(StatCollector.translateToLocal("gui.toolstation3") + ToolPartHelper.getAttackString(mat.attack()));
-			toolTip.add(StatCollector.translateToLocal("gui.toolstation9") + ToolPartHelper.getAccuracyString(arrowMat.accuracy));
-			toolTip.add(StatCollector.translateToLocal("gui.toolstation8") + ToolPartHelper.getWeightString(arrowMat.mass / 5f));
+			toolTip.add(StringHelper.getLocalizedString("gui.toolstation3") + ToolPartHelper.getAttackString(mat.attack()));
+			toolTip.add(StringHelper.getLocalizedString("gui.toolstation9") + ToolPartHelper.getAccuracyString(arrowMat.accuracy));
+			toolTip.add(StringHelper.getLocalizedString("gui.toolstation8") + ToolPartHelper.getWeightString(arrowMat.mass / 5f));
 		}
 		else if (ToolPartHelper.isArrowFletching(item))
 		{
 			FletchingMaterial fletchingMat = (FletchingMaterial) TConstructRegistry.getCustomMaterial(matID, FletchingMaterial.class);
 
-			toolTip.add(StatCollector.translateToLocal("gui.toolstation9") + ToolPartHelper.getAccuracyString(fletchingMat.accuracy));
-			toolTip.add(StatCollector.translateToLocal("gui.toolstation8") + ToolPartHelper.getWeightString(fletchingMat.mass));
+			toolTip.add(StringHelper.getLocalizedString("gui.toolstation9") + ToolPartHelper.getAccuracyString(fletchingMat.accuracy));
+			toolTip.add(StringHelper.getLocalizedString("gui.toolstation8") + ToolPartHelper.getWeightString(fletchingMat.mass));
 		}
 		else if (ToolPartHelper.isBowString(item))
 		{
 			BowstringMaterial bowstringMat = (BowstringMaterial) TConstructRegistry.getCustomMaterial(matID, BowstringMaterial.class);
 
-			toolTip.add(StatCollector.translateToLocal("gui.toolstation6") + ToolPartHelper.getBowStringDrawspeedModifierString(bowstringMat.drawspeedModifier));
-			toolTip.add(StatCollector.translateToLocal("gui.toolstation2") + ToolPartHelper.getBowStringDurabilityModifierString(bowstringMat.durabilityModifier));
-			toolTip.add(StatCollector.translateToLocal("gui.toolstation7") + ToolPartHelper.getBowStringArrowSpeedModifierString(bowstringMat.flightSpeedModifier));
+			toolTip.add(StringHelper.getLocalizedString("gui.toolstation6") + ToolPartHelper.getBowStringDrawspeedModifierString(bowstringMat.drawspeedModifier));
+			toolTip.add(StringHelper.getLocalizedString("gui.toolstation2") + ToolPartHelper.getBowStringDurabilityModifierString(bowstringMat.durabilityModifier));
+			toolTip.add(StringHelper.getLocalizedString("gui.toolstation7") + ToolPartHelper.getBowStringArrowSpeedModifierString(bowstringMat.flightSpeedModifier));
 		}
 		else
 		{
@@ -175,61 +180,61 @@ public class TooltipHandler
 					{
 						String prefix = hasTool ? "" : "Bow ";
 						BowMaterial bowMat = (BowMaterial) TConstructRegistry.getBowMaterial(matID);
-						toolTip.add(prefix + StatCollector.translateToLocal("gui.toolstation3") + ToolPartHelper.getAttackString(mat.attack()));
-						toolTip.add(prefix + StatCollector.translateToLocal("gui.toolstation6") + ToolPartHelper.getBowDrawSpeedString(bowMat.drawspeed));
-						toolTip.add(prefix + StatCollector.translateToLocal("gui.toolstation2") + ToolPartHelper.getBowDurabilityString(bowMat.durability));
-						toolTip.add(prefix + StatCollector.translateToLocal("gui.toolstation7") + ToolPartHelper.getBowArrowSpeedModifierString(bowMat.flightSpeedMax));
+						toolTip.add(prefix + StringHelper.getLocalizedString("gui.toolstation3") + ToolPartHelper.getAttackString(mat.attack()));
+						toolTip.add(prefix + StringHelper.getLocalizedString("gui.toolstation6") + ToolPartHelper.getBowDrawSpeedString(bowMat.drawspeed));
+						toolTip.add(prefix + StringHelper.getLocalizedString("gui.toolstation2") + ToolPartHelper.getBowDurabilityString(bowMat.durability));
+						toolTip.add(prefix + StringHelper.getLocalizedString("gui.toolstation7") + ToolPartHelper.getBowArrowSpeedModifierString(bowMat.flightSpeedMax));
 					}
 					if (TConstructRegistry.validArrowMaterial(matID) && (!hasTool || isToolAnArrow))
 					{
-						String prefix = hasTool ? "" : StatCollector.translateToLocal("item.InfiTool.Arrow.name") + " ";
+						String prefix = hasTool ? "" : StringHelper.getLocalizedString("item.InfiTool.Arrow.name") + " ";
 						ArrowMaterial arrowMat = TConstructRegistry.getArrowMaterial(matID);
-						toolTip.add(prefix + StatCollector.translateToLocal("gui.toolstation8") + ToolPartHelper.getWeightString(arrowMat.mass));
+						toolTip.add(prefix + StringHelper.getLocalizedString("gui.toolstation8") + ToolPartHelper.getWeightString(arrowMat.mass));
 					}
 				}
 				else
 				{
-					toolTip.add(StatCollector.translateToLocal("gui.partcrafter5") + ToolPartHelper.getHandleModifierString(mat.handleModifier));
+					toolTip.add(StringHelper.getLocalizedString("gui.partcrafter5") + ToolPartHelper.getHandleModifierString(mat.handleModifier));
 					if (!hasTool && isArrowMat)
 						toolTip.add("Hold " + EnumChatFormatting.YELLOW + EnumChatFormatting.ITALIC + "Shift" + EnumChatFormatting.RESET + EnumChatFormatting.GRAY + " for Bow/Arrow Stats");
 				}
 			}
 			else if (ToolPartHelper.isToolHead(item))
 			{
-				toolTip.add(StatCollector.translateToLocal("gui.toolstation2") + ToolPartHelper.getDurabilityString(mat.durability()));
-				toolTip.add(StatCollector.translateToLocal("gui.toolstation14") + ToolPartHelper.getMiningSpeedString(mat.toolSpeed()));
-				toolTip.add(StatCollector.translateToLocal("gui.toolstation15") + ToolPartHelper.getHarvestLevelString(mat.harvestLevel()));
+				toolTip.add(StringHelper.getLocalizedString("gui.toolstation2") + ToolPartHelper.getDurabilityString(mat.durability()));
+				toolTip.add(StringHelper.getLocalizedString("gui.toolstation14") + ToolPartHelper.getMiningSpeedString(mat.toolSpeed()));
+				toolTip.add(StringHelper.getLocalizedString("gui.toolstation15") + ToolPartHelper.getHarvestLevelString(mat.harvestLevel()));
 			}
 			else if (ToolPartHelper.isWeaponMiningHead(item))
 			{
-				toolTip.add(StatCollector.translateToLocal("gui.toolstation2") + ToolPartHelper.getDurabilityString(mat.durability()));
-				toolTip.add(StatCollector.translateToLocal("gui.toolstation14") + ToolPartHelper.getMiningSpeedString(mat.toolSpeed()));
-				toolTip.add(StatCollector.translateToLocal("gui.toolstation15") + ToolPartHelper.getHarvestLevelString(mat.harvestLevel()));
-				toolTip.add(StatCollector.translateToLocal("gui.toolstation3") + ToolPartHelper.getAttackString(mat.attack()));
+				toolTip.add(StringHelper.getLocalizedString("gui.toolstation2") + ToolPartHelper.getDurabilityString(mat.durability()));
+				toolTip.add(StringHelper.getLocalizedString("gui.toolstation14") + ToolPartHelper.getMiningSpeedString(mat.toolSpeed()));
+				toolTip.add(StringHelper.getLocalizedString("gui.toolstation15") + ToolPartHelper.getHarvestLevelString(mat.harvestLevel()));
+				toolTip.add(StringHelper.getLocalizedString("gui.toolstation3") + ToolPartHelper.getAttackString(mat.attack()));
 			}
 			else if (ToolPartHelper.isWeaponToolHead(item))
 			{
-				toolTip.add(StatCollector.translateToLocal("gui.toolstation2") + ToolPartHelper.getDurabilityString(mat.durability()));
-				toolTip.add(StatCollector.translateToLocal("gui.toolstation16") + ToolPartHelper.getMiningSpeedString(mat.toolSpeed()));
-				toolTip.add(StatCollector.translateToLocal("gui.toolstation3") + ToolPartHelper.getAttackString(mat.attack()));
+				toolTip.add(StringHelper.getLocalizedString("gui.toolstation2") + ToolPartHelper.getDurabilityString(mat.durability()));
+				toolTip.add(StringHelper.getLocalizedString("gui.toolstation16") + ToolPartHelper.getMiningSpeedString(mat.toolSpeed()));
+				toolTip.add(StringHelper.getLocalizedString("gui.toolstation3") + ToolPartHelper.getAttackString(mat.attack()));
 			}
 			else if (ToolPartHelper.isChiselHead(item))
 			{
-				toolTip.add(StatCollector.translateToLocal("gui.toolstation2") + ToolPartHelper.getDurabilityString(mat.durability()));
-				toolTip.add(StatCollector.translateToLocal("gui.toolstation16") + ToolPartHelper.getMiningSpeedString(mat.toolSpeed()));
+				toolTip.add(StringHelper.getLocalizedString("gui.toolstation2") + ToolPartHelper.getDurabilityString(mat.durability()));
+				toolTip.add(StringHelper.getLocalizedString("gui.toolstation16") + ToolPartHelper.getMiningSpeedString(mat.toolSpeed()));
 			}
 			else if (ToolPartHelper.isWeaponHead(item))
 			{
-				toolTip.add(StatCollector.translateToLocal("gui.toolstation3") + ToolPartHelper.getAttackString(mat.attack()));
-				toolTip.add(StatCollector.translateToLocal("gui.toolstation2") + ToolPartHelper.getDurabilityString(mat.durability()));
+				toolTip.add(StringHelper.getLocalizedString("gui.toolstation3") + ToolPartHelper.getAttackString(mat.attack()));
+				toolTip.add(StringHelper.getLocalizedString("gui.toolstation2") + ToolPartHelper.getDurabilityString(mat.durability()));
 			}
 			else if (ToolPartHelper.isPlate(item))
 			{
-				toolTip.add(StatCollector.translateToLocal("gui.toolstation2") + ToolPartHelper.getDurabilityString(mat.durability()));
+				toolTip.add(StringHelper.getLocalizedString("gui.toolstation2") + ToolPartHelper.getDurabilityString(mat.durability()));
 				if (!hasTool || ToolHelper.isHarvestTool(tool))
-					toolTip.add(StatCollector.translateToLocal("gui.toolstation14") + ToolPartHelper.getMiningSpeedString(mat.toolSpeed()));
+					toolTip.add(StringHelper.getLocalizedString("gui.toolstation14") + ToolPartHelper.getMiningSpeedString(mat.toolSpeed()));
 				if (!hasTool || ToolHelper.isWeaponTool(tool))
-					toolTip.add(StatCollector.translateToLocal("gui.toolstation3") + ToolPartHelper.getAttackString(mat.attack()));
+					toolTip.add(StringHelper.getLocalizedString("gui.toolstation3") + ToolPartHelper.getAttackString(mat.attack()));
 			}
 		}
 
@@ -295,7 +300,7 @@ public class TooltipHandler
 			int curDurability = maxDurability - ToolHelper.getUsedDurability(toolTag);
 
 			String curOfMax = curDurability == maxDurability ? StringHelper.getDurabilityString(maxDurability) : StringHelper.getDurabilityString(curDurability) + " / " + StringHelper.getDurabilityString(maxDurability);
-			toolTip.add(StatCollector.translateToLocal("gui.toolstation2") + ColorHelper.getRelativeColor(curDurability, 0, maxDurability) + curOfMax);
+			toolTip.add(StringHelper.getLocalizedString("gui.toolstation2") + ColorHelper.getRelativeColor(curDurability, 0, maxDurability) + curOfMax);
 		}
 
 		if (isShoddy)
@@ -309,11 +314,11 @@ public class TooltipHandler
 			float stoneboundDamage = ToolHelper.getShoddinessDamageBonus(toolTag);
 			float maxStoneboundDamage = ToolHelper.getMaxShoddinessDamageBonus(toolTag);
 
-			toolTip.add(StatCollector.translateToLocal("gui.toolstation3") + ColorHelper.getRelativeColor(ToolHelper.getRawDamage(tool, toolTag) + stoneboundDamage, ToolPartHelper.minAttack, ToolPartHelper.maxAttack) + StringHelper.getDamageString(damage));
+			toolTip.add(StringHelper.getLocalizedString("gui.toolstation3") + ColorHelper.getRelativeColor(ToolHelper.getRawDamage(tool, toolTag) + stoneboundDamage, ToolPartHelper.minAttack, ToolPartHelper.maxAttack) + StringHelper.getDamageString(damage));
 			if (stoneboundDamage != 0)
 			{
 				EnumChatFormatting textColor = stoneboundDamage > 0 ? EnumChatFormatting.DARK_GREEN : EnumChatFormatting.DARK_RED;
-				String bonusOrLoss = (stoneboundDamage > 0 ? StatCollector.translateToLocal("gui.toolstation4") : StatCollector.translateToLocal("gui.toolstation5")) + textColor;
+				String bonusOrLoss = (stoneboundDamage > 0 ? StringHelper.getLocalizedString("gui.toolstation4") : StringHelper.getLocalizedString("gui.toolstation5")) + textColor;
 				String maxString = "";
 				if (stoneboundDamage == maxStoneboundDamage)
 					bonusOrLoss += EnumChatFormatting.BOLD;
@@ -323,7 +328,7 @@ public class TooltipHandler
 			}
 			else if (maxStoneboundDamage != 0 && stoneboundDamage != maxStoneboundDamage)
 			{
-				String bonusOrLoss = maxStoneboundDamage > 0 ? StatCollector.translateToLocal("gui.toolstation4") + EnumChatFormatting.DARK_GREEN : StatCollector.translateToLocal("gui.toolstation5") + EnumChatFormatting.DARK_RED;
+				String bonusOrLoss = maxStoneboundDamage > 0 ? StringHelper.getLocalizedString("gui.toolstation4") + EnumChatFormatting.DARK_GREEN : StringHelper.getLocalizedString("gui.toolstation5") + EnumChatFormatting.DARK_RED;
 				toolTip.add(EnumChatFormatting.DARK_GRAY + "- Max " + shoddinessType + " " + bonusOrLoss + StringHelper.getDamageString((int) maxStoneboundDamage));
 			}
 		}
@@ -333,8 +338,8 @@ public class TooltipHandler
 			int drawSpeed = ToolHelper.getDrawSpeed(toolTag);
 			float arrowSpeedModifier = ToolHelper.getArrowSpeedModifier(toolTag);
 
-			toolTip.add(StatCollector.translateToLocal("gui.toolstation6") + ToolPartHelper.getBowDrawSpeedString(drawSpeed));
-			toolTip.add(StatCollector.translateToLocal("gui.toolstation7") + ToolPartHelper.getBowArrowSpeedModifierString(arrowSpeedModifier));
+			toolTip.add(StringHelper.getLocalizedString("gui.toolstation6") + ToolPartHelper.getBowDrawSpeedString(drawSpeed));
+			toolTip.add(StringHelper.getLocalizedString("gui.toolstation7") + ToolPartHelper.getBowArrowSpeedModifierString(arrowSpeedModifier));
 		}
 
 		if (ToolHelper.isAmmoTool(tool))
@@ -345,10 +350,10 @@ public class TooltipHandler
 			
 			String damageColor = ColorHelper.getRelativeColor(ToolHelper.getRawDamage(tool, toolTag), ToolPartHelper.minAttack, ToolPartHelper.maxAttack);
 
-			toolTip.add(StatCollector.translateToLocal("gui.toolstation10") + " " + damageColor + StringHelper.getDamageString(damage));
-			toolTip.add(StatCollector.translateToLocal("gui.toolstation11") + " " + damageColor + StringHelper.getAmmoDamageRangeString(damage));
-			toolTip.add(StatCollector.translateToLocal("gui.toolstation8") + ToolPartHelper.getWeightString(weight));
-			toolTip.add(StatCollector.translateToLocal("gui.toolstation9") + ToolPartHelper.getAccuracyString(accuracy));
+			toolTip.add(StringHelper.getLocalizedString("gui.toolstation10") + " " + damageColor + StringHelper.getDamageString(damage));
+			toolTip.add(StringHelper.getLocalizedString("gui.toolstation11") + " " + damageColor + StringHelper.getAmmoDamageRangeString(damage));
+			toolTip.add(StringHelper.getLocalizedString("gui.toolstation8") + ToolPartHelper.getWeightString(weight));
+			toolTip.add(StringHelper.getLocalizedString("gui.toolstation9") + ToolPartHelper.getAccuracyString(accuracy));
 		}
 
 		if (ToolHelper.isDualHarvestTool(tool))
@@ -364,11 +369,11 @@ public class TooltipHandler
 			int harvestLevel1 = ToolHelper.getPrimaryHarvestLevel(toolTag);
 			int harvestLevel2 = ToolHelper.getSecondaryHarvestLevel(toolTag);
 
-			toolTip.add(StatCollector.translateToLocal("gui.toolstation12") + ToolPartHelper.getMiningSpeedString(mineSpeed1) + EnumChatFormatting.RESET + EnumChatFormatting.GRAY + ", " + ToolPartHelper.getMiningSpeedString(mineSpeed2));
+			toolTip.add(StringHelper.getLocalizedString("gui.toolstation12") + ToolPartHelper.getMiningSpeedString(mineSpeed1) + EnumChatFormatting.RESET + EnumChatFormatting.GRAY + ", " + ToolPartHelper.getMiningSpeedString(mineSpeed2));
 			if (stoneboundSpeed != 0)
 			{
 				EnumChatFormatting textColor = stoneboundSpeed > 0 ? EnumChatFormatting.DARK_GREEN : EnumChatFormatting.DARK_RED;
-				String bonusOrLoss = (stoneboundSpeed > 0 ? StatCollector.translateToLocal("gui.toolstation4") : StatCollector.translateToLocal("gui.toolstation5")) + textColor;
+				String bonusOrLoss = (stoneboundSpeed > 0 ? StringHelper.getLocalizedString("gui.toolstation4") : StringHelper.getLocalizedString("gui.toolstation5")) + textColor;
 				String maxString = "";
 				if (stoneboundSpeed == maxStoneboundSpeed)
 					bonusOrLoss += EnumChatFormatting.BOLD;
@@ -378,11 +383,11 @@ public class TooltipHandler
 			}
 			else if (maxStoneboundSpeed != 0 && stoneboundSpeed != maxStoneboundSpeed)
 			{
-				String bonusOrLoss = maxStoneboundSpeed > 0 ? StatCollector.translateToLocal("gui.toolstation4") + EnumChatFormatting.DARK_GREEN : StatCollector.translateToLocal("gui.toolstation5") + EnumChatFormatting.DARK_RED;
+				String bonusOrLoss = maxStoneboundSpeed > 0 ? StringHelper.getLocalizedString("gui.toolstation4") + EnumChatFormatting.DARK_GREEN : StringHelper.getLocalizedString("gui.toolstation5") + EnumChatFormatting.DARK_RED;
 				toolTip.add(EnumChatFormatting.DARK_GRAY + "- Max " + shoddinessType + " " + bonusOrLoss + StringHelper.getSpeedString((int) (maxStoneboundSpeed * 100f)));
 			}
 
-			toolTip.add(StatCollector.translateToLocal("gui.toolstation13") + " " + ToolPartHelper.getHarvestLevelString(harvestLevel1) + EnumChatFormatting.RESET + EnumChatFormatting.GRAY + ", " + ToolPartHelper.getHarvestLevelString(harvestLevel2));
+			toolTip.add(StringHelper.getLocalizedString("gui.toolstation13") + " " + ToolPartHelper.getHarvestLevelString(harvestLevel1) + EnumChatFormatting.RESET + EnumChatFormatting.GRAY + ", " + ToolPartHelper.getHarvestLevelString(harvestLevel2));
 		}
 		else if (ToolHelper.isHarvestTool(tool))
 		{
@@ -392,11 +397,11 @@ public class TooltipHandler
 
 			mineSpeed += stoneboundSpeed * 100f;
 
-			toolTip.add(StatCollector.translateToLocal("gui.toolstation14") + ToolPartHelper.getMiningSpeedString(mineSpeed));
+			toolTip.add(StringHelper.getLocalizedString("gui.toolstation14") + ToolPartHelper.getMiningSpeedString(mineSpeed));
 			if (stoneboundSpeed != 0)
 			{
 				EnumChatFormatting textColor = stoneboundSpeed > 0 ? EnumChatFormatting.DARK_GREEN : EnumChatFormatting.DARK_RED;
-				String bonusOrLoss = (stoneboundSpeed > 0 ? StatCollector.translateToLocal("gui.toolstation4") : StatCollector.translateToLocal("gui.toolstation5")) + textColor;
+				String bonusOrLoss = (stoneboundSpeed > 0 ? StringHelper.getLocalizedString("gui.toolstation4") : StringHelper.getLocalizedString("gui.toolstation5")) + textColor;
 				String maxString = "";
 				if (stoneboundSpeed == maxStoneboundSpeed)
 					bonusOrLoss += EnumChatFormatting.BOLD;
@@ -406,25 +411,25 @@ public class TooltipHandler
 			}
 			else if (maxStoneboundSpeed != 0 && stoneboundSpeed != maxStoneboundSpeed)
 			{
-				String bonusOrLoss = maxStoneboundSpeed > 0 ? StatCollector.translateToLocal("gui.toolstation4") + EnumChatFormatting.DARK_GREEN : StatCollector.translateToLocal("gui.toolstation5") + EnumChatFormatting.DARK_RED;
+				String bonusOrLoss = maxStoneboundSpeed > 0 ? StringHelper.getLocalizedString("gui.toolstation4") + EnumChatFormatting.DARK_GREEN : StringHelper.getLocalizedString("gui.toolstation5") + EnumChatFormatting.DARK_RED;
 				toolTip.add(EnumChatFormatting.DARK_GRAY + "- Max " + shoddinessType + " " + bonusOrLoss + StringHelper.getSpeedString((int) (maxStoneboundSpeed * 100f)));
 			}
 
 			int harvestLevel = ToolHelper.getPrimaryHarvestLevel(toolTag);
 
-			toolTip.add(StatCollector.translateToLocal("gui.toolstation15") + ToolPartHelper.getHarvestLevelString(harvestLevel));
+			toolTip.add(StringHelper.getLocalizedString("gui.toolstation15") + ToolPartHelper.getHarvestLevelString(harvestLevel));
 		}
 		else if (ToolHelper.isUtilityTool(tool))
 		{
 			int mineSpeed = ToolHelper.getPrimaryMiningSpeed(toolTag);
 
-			toolTip.add(StatCollector.translateToLocal("gui.toolstation16") + ToolPartHelper.getMiningSpeedString(mineSpeed));
+			toolTip.add(StringHelper.getLocalizedString("gui.toolstation16") + ToolPartHelper.getMiningSpeedString(mineSpeed));
 		}
 
 		int modifiers = toolTag.getInteger("Modifiers");
 		if (modifiers > 0)
 		{
-			toolTip.add(StatCollector.translateToLocal("gui.toolstation18") + EnumChatFormatting.WHITE + modifiers);
+			toolTip.add(StringHelper.getLocalizedString("gui.toolstation18") + EnumChatFormatting.WHITE + modifiers);
 		}
 
 		if (toolTag.hasKey("Tooltip1"))
@@ -511,7 +516,7 @@ public class TooltipHandler
 		{
 			ToolPart part = (ToolPart) itemPart;
 			ToolMaterial mat = TConstructRegistry.getMaterial(matID);
-			toolTip.add(mat.style() + EnumChatFormatting.UNDERLINE + StatCollector.translateToLocal("toolpart." + part.partName).replaceAll("%%material ", mat.displayName));
+			toolTip.add(mat.style() + EnumChatFormatting.UNDERLINE + StringHelper.getLocalizedString("toolpart." + part.partName).replaceAll("%%material ", mat.displayName));
 		}
 		else if (itemPart instanceof Bowstring)
 		{
