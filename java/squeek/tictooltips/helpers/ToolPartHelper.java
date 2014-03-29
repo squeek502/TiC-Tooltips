@@ -21,8 +21,13 @@ public class ToolPartHelper
 		(
 			TContent.pickaxeHead, 
 			TContent.shovelHead,
-			TContent.excavatorHead,
-			TContent.hammerHead 
+			TContent.excavatorHead
+		)
+	);
+	public static List<Item> weaponMiningHeads = new ArrayList<Item>(
+		Arrays.asList
+		(
+			TContent.hammerHead
 		)
 	);
 	public static List<Item> weaponToolHeads = new ArrayList<Item>(
@@ -101,6 +106,11 @@ public class ToolPartHelper
 	public static boolean isWeaponToolHead(Item item)
 	{
 		return weaponToolHeads.contains(item);
+	}
+
+	public static boolean isWeaponMiningHead(Item item)
+	{
+		return weaponMiningHeads.contains(item);
 	}
 
 	public static boolean isWeaponHead(Item item)

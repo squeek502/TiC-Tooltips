@@ -17,7 +17,8 @@ public class ProxyExtraTiC
 			ToolPartHelper.toolHeads.add((Item) ExtraTiCPartsHandler.getDeclaredField("PICKAXE_HEAD").get(null));
 			ToolPartHelper.toolHeads.add((Item) ExtraTiCPartsHandler.getDeclaredField("SHOVEL_HEAD").get(null));
 			ToolPartHelper.toolHeads.add((Item) ExtraTiCPartsHandler.getDeclaredField("EXCAVATOR_HEAD").get(null));
-			ToolPartHelper.toolHeads.add((Item) ExtraTiCPartsHandler.getDeclaredField("HAMMER_HEAD").get(null));
+			
+			ToolPartHelper.weaponMiningHeads.add((Item) ExtraTiCPartsHandler.getDeclaredField("HAMMER_HEAD").get(null));
 
 			ToolPartHelper.weaponToolHeads.add((Item) ExtraTiCPartsHandler.getDeclaredField("AXE_HEAD").get(null));
 			ToolPartHelper.weaponToolHeads.add((Item) ExtraTiCPartsHandler.getDeclaredField("SCYTHE_HEAD").get(null));
