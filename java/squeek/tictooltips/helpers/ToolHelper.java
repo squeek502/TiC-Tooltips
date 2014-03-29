@@ -88,7 +88,7 @@ public class ToolHelper {
 
 	public static float getMaxShoddinessDamageBonus(NBTTagCompound toolTag)
 	{
-		return (float) Math.log((getMaxDurability(toolTag)-1) / 72f + 1) * -2 * getStonebound(toolTag);
+		return (float) Math.log(getMaxDurability(toolTag) / 72f + 1) * -2 * getStonebound(toolTag);
 	}
 	
 	public static float getShoddinessSpeedBonus(NBTTagCompound toolTag)
@@ -98,7 +98,7 @@ public class ToolHelper {
 
 	public static float getMaxShoddinessSpeedBonus(NBTTagCompound toolTag)
 	{
-		return (float) Math.log((getMaxDurability(toolTag)-1) / 72f + 1) * 2 * getStonebound(toolTag);
+		return (float) Math.log(getMaxDurability(toolTag) / 72f + 1) * 2 * getStonebound(toolTag);
 	}
 	
 	public static int getDrawSpeed(NBTTagCompound toolTag)
@@ -159,7 +159,7 @@ public class ToolHelper {
 			heads++;
 		}
 
-		return mineSpeed / heads;
+		return (int) ((float) mineSpeed / heads);
 	}
 	
 	public static int getPrimaryHarvestLevel(NBTTagCompound toolTag)

@@ -174,6 +174,9 @@ public class TooltipHandler {
 		else if (item instanceof ToolCore && ToolHelper.hasToolTag(event.itemStack))
 		{
 			int toolTipIndex = event.toolTip.size() > 0 ? Math.max(0, event.toolTip.size() - 2) : 0;
+			if (toolTipIndex > 1)
+				event.toolTip.add(toolTipIndex++, "");
+			
 			if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
 			{
 				ToolCore tool = (ToolCore) item;
@@ -210,13 +213,19 @@ public class TooltipHandler {
 					event.toolTip.add(toolTipIndex++, StatCollector.translateToLocal("gui.toolstation3")+ColorHelper.getRelativeColor(ToolHelper.getRawDamage(tool, toolTag)+stoneboundDamage, ToolPartHelper.minAttack, ToolPartHelper.maxAttack)+StringHelper.getDamageString(damage));
 					if (stoneboundDamage != 0)
 					{
-						String bonusOrLoss = stoneboundDamage > 0 ? StatCollector.translateToLocal("gui.toolstation4")+EnumChatFormatting.DARK_GREEN : StatCollector.translateToLocal("gui.toolstation5")+EnumChatFormatting.DARK_RED;
-						event.toolTip.add(toolTipIndex++, "- "+shoddinessType+" "+bonusOrLoss+StringHelper.getDamageString((int) stoneboundDamage));
+						EnumChatFormatting textColor = stoneboundDamage > 0 ? EnumChatFormatting.DARK_GREEN : EnumChatFormatting.DARK_RED;
+						String bonusOrLoss = (stoneboundDamage > 0 ? StatCollector.translateToLocal("gui.toolstation4") : StatCollector.translateToLocal("gui.toolstation5"))+textColor;
+						String maxString = "";
+						if (stoneboundDamage == maxStoneboundDamage)
+							bonusOrLoss += EnumChatFormatting.BOLD;
+						else
+							maxString = EnumChatFormatting.RESET+" "+EnumChatFormatting.DARK_GRAY+"[Max: "+StringHelper.getDamageNumberString((int) maxStoneboundDamage)+EnumChatFormatting.RESET+EnumChatFormatting.DARK_GRAY+"]";
+						event.toolTip.add(toolTipIndex++, EnumChatFormatting.DARK_GRAY+"- "+shoddinessType+" "+bonusOrLoss+StringHelper.getDamageString((int) stoneboundDamage)+maxString);
 					}
-					if (maxStoneboundDamage != 0)
+					else if (maxStoneboundDamage != 0 && stoneboundDamage != maxStoneboundDamage)
 					{
 						String bonusOrLoss = maxStoneboundDamage > 0 ? StatCollector.translateToLocal("gui.toolstation4")+EnumChatFormatting.DARK_GREEN : StatCollector.translateToLocal("gui.toolstation5")+EnumChatFormatting.DARK_RED;
-						event.toolTip.add(toolTipIndex++, "- Max "+shoddinessType+" "+bonusOrLoss+StringHelper.getDamageString((int) maxStoneboundDamage));
+						event.toolTip.add(toolTipIndex++, EnumChatFormatting.DARK_GRAY+"- Max "+shoddinessType+" "+bonusOrLoss+StringHelper.getDamageString((int) maxStoneboundDamage));
 					}
 				}
 
@@ -257,13 +266,19 @@ public class TooltipHandler {
 					event.toolTip.add(toolTipIndex++, StatCollector.translateToLocal("gui.toolstation12")+ToolPartHelper.getMiningSpeedString(mineSpeed1) + EnumChatFormatting.RESET+EnumChatFormatting.GRAY + ", " + ToolPartHelper.getMiningSpeedString(mineSpeed2));
 					if (stoneboundSpeed != 0)
 					{
-						String bonusOrLoss = stoneboundSpeed > 0 ? StatCollector.translateToLocal("gui.toolstation4")+EnumChatFormatting.DARK_GREEN : StatCollector.translateToLocal("gui.toolstation5")+EnumChatFormatting.DARK_RED;
-						event.toolTip.add(toolTipIndex++, "- "+shoddinessType+" "+bonusOrLoss+StringHelper.getSpeedString((int) (stoneboundSpeed*100f)));
+						EnumChatFormatting textColor = stoneboundSpeed > 0 ? EnumChatFormatting.DARK_GREEN : EnumChatFormatting.DARK_RED;
+						String bonusOrLoss = (stoneboundSpeed > 0 ? StatCollector.translateToLocal("gui.toolstation4") : StatCollector.translateToLocal("gui.toolstation5"))+textColor;
+						String maxString = "";
+						if (stoneboundSpeed == maxStoneboundSpeed)
+							bonusOrLoss += EnumChatFormatting.BOLD;
+						else
+							maxString = EnumChatFormatting.RESET+" "+EnumChatFormatting.DARK_GRAY+"[Max: "+StringHelper.getSpeedString((int) (maxStoneboundSpeed*100f))+EnumChatFormatting.RESET+EnumChatFormatting.DARK_GRAY+"]";
+						event.toolTip.add(toolTipIndex++, EnumChatFormatting.DARK_GRAY+"- "+shoddinessType+" "+bonusOrLoss+StringHelper.getSpeedString((int) (stoneboundSpeed*100f))+maxString);
 					}
-					if (maxStoneboundSpeed != 0)
+					else if (maxStoneboundSpeed != 0 && stoneboundSpeed != maxStoneboundSpeed)
 					{
 						String bonusOrLoss = maxStoneboundSpeed > 0 ? StatCollector.translateToLocal("gui.toolstation4")+EnumChatFormatting.DARK_GREEN : StatCollector.translateToLocal("gui.toolstation5")+EnumChatFormatting.DARK_RED;
-						event.toolTip.add(toolTipIndex++, "- Max "+shoddinessType+" "+bonusOrLoss+StringHelper.getSpeedString((int) (maxStoneboundSpeed*100f)));
+						event.toolTip.add(toolTipIndex++, EnumChatFormatting.DARK_GRAY+"- Max "+shoddinessType+" "+bonusOrLoss+StringHelper.getSpeedString((int) (maxStoneboundSpeed*100f)));
 					}
 					
 					event.toolTip.add(toolTipIndex++, StatCollector.translateToLocal("gui.toolstation13")+" "+ToolPartHelper.getHarvestLevelString(harvestLevel1) + EnumChatFormatting.RESET+EnumChatFormatting.GRAY + ", " + ToolPartHelper.getHarvestLevelString(harvestLevel2));
@@ -279,13 +294,19 @@ public class TooltipHandler {
 					event.toolTip.add(toolTipIndex++, StatCollector.translateToLocal("gui.toolstation14")+ToolPartHelper.getMiningSpeedString(mineSpeed));
 					if (stoneboundSpeed != 0)
 					{
-						String bonusOrLoss = stoneboundSpeed > 0 ? StatCollector.translateToLocal("gui.toolstation4")+EnumChatFormatting.DARK_GREEN : StatCollector.translateToLocal("gui.toolstation5")+EnumChatFormatting.DARK_RED;
-						event.toolTip.add(toolTipIndex++, "- "+shoddinessType+" "+bonusOrLoss+StringHelper.getSpeedString((int) (stoneboundSpeed*100f)));
+						EnumChatFormatting textColor = stoneboundSpeed > 0 ? EnumChatFormatting.DARK_GREEN : EnumChatFormatting.DARK_RED;
+						String bonusOrLoss = (stoneboundSpeed > 0 ? StatCollector.translateToLocal("gui.toolstation4") : StatCollector.translateToLocal("gui.toolstation5"))+textColor;
+						String maxString = "";
+						if (stoneboundSpeed == maxStoneboundSpeed)
+							bonusOrLoss += EnumChatFormatting.BOLD;
+						else
+							maxString = EnumChatFormatting.RESET+" "+EnumChatFormatting.DARK_GRAY+"[Max: "+StringHelper.getSpeedString((int) (maxStoneboundSpeed*100f))+EnumChatFormatting.RESET+EnumChatFormatting.DARK_GRAY+"]";
+						event.toolTip.add(toolTipIndex++, EnumChatFormatting.DARK_GRAY+"- "+shoddinessType+" "+bonusOrLoss+StringHelper.getSpeedString((int) (stoneboundSpeed*100f))+maxString);
 					}
-					if (maxStoneboundSpeed != 0)
+					else if (maxStoneboundSpeed != 0 && stoneboundSpeed != maxStoneboundSpeed)
 					{
 						String bonusOrLoss = maxStoneboundSpeed > 0 ? StatCollector.translateToLocal("gui.toolstation4")+EnumChatFormatting.DARK_GREEN : StatCollector.translateToLocal("gui.toolstation5")+EnumChatFormatting.DARK_RED;
-						event.toolTip.add(toolTipIndex++, "- Max "+shoddinessType+" "+bonusOrLoss+StringHelper.getSpeedString((int) (maxStoneboundSpeed*100f)));
+						event.toolTip.add(toolTipIndex++, EnumChatFormatting.DARK_GRAY+"- Max "+shoddinessType+" "+bonusOrLoss+StringHelper.getSpeedString((int) (maxStoneboundSpeed*100f)));
 					}
 					
 					int harvestLevel = ToolHelper.getPrimaryHarvestLevel(toolTag);
@@ -319,7 +340,7 @@ public class TooltipHandler {
 					{
 						String tipName = toolTag.getString(tooltip);
 						if (!tipName.trim().equals(""))
-							event.toolTip.add(toolTipIndex++, "- " + tipName);
+							event.toolTip.add(toolTipIndex++, EnumChatFormatting.DARK_GRAY+"- " + tipName);
 					}
 					else
 						displayToolTips = false;
