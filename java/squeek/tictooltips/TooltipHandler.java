@@ -226,8 +226,10 @@ public class TooltipHandler
 			else if (ToolPartHelper.isPlate(item))
 			{
 				toolTip.add(StatCollector.translateToLocal("gui.toolstation2") + ToolPartHelper.getDurabilityString(mat.durability()));
-				toolTip.add(StatCollector.translateToLocal("gui.toolstation14") + ToolPartHelper.getMiningSpeedString(mat.toolSpeed()));
-				toolTip.add(StatCollector.translateToLocal("gui.toolstation3") + ToolPartHelper.getAttackString(mat.attack()));
+				if (!hasTool || ToolHelper.isHarvestTool(tool))
+					toolTip.add(StatCollector.translateToLocal("gui.toolstation14") + ToolPartHelper.getMiningSpeedString(mat.toolSpeed()));
+				if (!hasTool || ToolHelper.isWeaponTool(tool))
+					toolTip.add(StatCollector.translateToLocal("gui.toolstation3") + ToolPartHelper.getAttackString(mat.attack()));
 			}
 		}
 
