@@ -121,8 +121,8 @@ public class StringHelper
 		localizationAlternatives.put("gui.partcrafter.mining4", "Obsidian");
 		localizationAlternatives.put("gui.partcrafter.mining5", "Cobalt");
 		localizationAlternatives.put("gui.partcrafter.mining6", "Manyullyn");
-		//localizationAlternatives.put("gui.partcrafter.mining7", "Atlarus");
-		//localizationAlternatives.put("gui.partcrafter.mining8", "Tartarite");
+		localizationAlternatives.put("gui.partcrafter.mining7", "Atlarus");
+		localizationAlternatives.put("gui.partcrafter.mining8", "Tartarite");
 		localizationAlternatives.put("gui.stenciltable1", "Next Pattern");
 		localizationAlternatives.put("gui.stenciltable2", "Previous Pattern");
 		localizationAlternatives.put("gui.toolforge1", "Repair and Modification");
