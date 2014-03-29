@@ -1,8 +1,8 @@
 package squeek.tictooltips;
 
+import net.minecraftforge.common.MinecraftForge;
 import squeek.tictooltips.helpers.ToolPartHelper;
 import squeek.tictooltips.proxy.ProxyExtraTiC;
-import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -12,7 +12,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @Mod(modid = ModTiCTooltips.MODID, version = ModTiCTooltips.VERSION, dependencies = "required-after:TConstruct;after:ExtraTiC;after:TSteelworks")
-public class ModTiCTooltips {
+public class ModTiCTooltips
+{
 	public static final String MODID = "TiCTooltips";
 	public static final String VERSION = "1.1";
 
@@ -25,7 +26,7 @@ public class ModTiCTooltips {
 			MinecraftForge.EVENT_BUS.register(new TooltipHandler());
 		}
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event)
@@ -34,7 +35,7 @@ public class ModTiCTooltips {
 		{
 			ProxyExtraTiC.registerParts();
 		}
-		
+
 		ToolPartHelper.determineMinAndMaxValues();
 	}
 }

@@ -1,13 +1,9 @@
 package squeek.tictooltips.helpers;
 
-import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.ArrayList;
-
 import net.minecraft.item.Item;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
 import tconstruct.common.TContent;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.tools.ArrowMaterial;
@@ -17,8 +13,9 @@ import tconstruct.library.tools.CustomMaterial;
 import tconstruct.library.tools.FletchingMaterial;
 import tconstruct.library.tools.ToolMaterial;
 
-public class ToolPartHelper {
-	
+public class ToolPartHelper
+{
+
 	public static List<Item> toolHeads = new ArrayList<Item>( 
 		Arrays.asList
 		(
@@ -100,12 +97,12 @@ public class ToolPartHelper {
 	{
 		return toolHeads.contains(item);
 	}
-	
+
 	public static boolean isWeaponToolHead(Item item)
 	{
 		return weaponToolHeads.contains(item);
 	}
-	
+
 	public static boolean isWeaponHead(Item item)
 	{
 		return weaponHeads.contains(item);
@@ -120,7 +117,7 @@ public class ToolPartHelper {
 	{
 		return bindings.contains(item);
 	}
-	
+
 	public static boolean isRod(Item item)
 	{
 		return rods.contains(item);
@@ -130,37 +127,37 @@ public class ToolPartHelper {
 	{
 		return shards.contains(item);
 	}
-	
+
 	public static boolean isArrowHead(Item item)
 	{
 		return arrowHeads.contains(item);
 	}
-	
+
 	public static boolean isArrowFletching(Item item)
 	{
 		return arrowFletchings.contains(item);
 	}
-	
+
 	public static boolean isBowString(Item item)
 	{
 		return bowStrings.contains(item);
 	}
-	
+
 	public static boolean isArrowRod(Item item)
 	{
 		return arrowRods.contains(item);
 	}
-	
+
 	public static boolean isChiselHead(Item item)
 	{
 		return chisels.contains(item);
 	}
 
 	// shoddiness
-	public static float minShoddiness=0f;
-	public static float maxPositiveShoddiness=minShoddiness;
-	public static float maxNegativeShoddiness=minShoddiness;
-	
+	public static float minShoddiness = 0f;
+	public static float maxPositiveShoddiness = minShoddiness;
+	public static float maxNegativeShoddiness = minShoddiness;
+
 	// tools/weapons
 	public static int minAttack;
 	public static int maxAttack;
@@ -172,13 +169,13 @@ public class ToolPartHelper {
 	public static int maxMiningSpeed;
 	public static float minHandleModifier;
 	public static float maxHandleModifier;
-	
+
 	// arrows
 	public static float minAccuracy;
 	public static float maxAccuracy;
 	public static float minWeight;
 	public static float maxWeight;
-	
+
 	// bows
 	public static int minBowDrawSpeed;
 	public static int maxBowDrawSpeed;
@@ -186,7 +183,7 @@ public class ToolPartHelper {
 	public static int maxBowDurability;
 	public static float minBowArrowSpeedModifier;
 	public static float maxBowArrowSpeedModifier;
-	
+
 	// bowstrings
 	public static float minBowStringDrawspeedModifier;
 	public static float maxBowStringDrawspeedModifier;
@@ -194,7 +191,7 @@ public class ToolPartHelper {
 	public static float maxBowStringDurabilityModifier;
 	public static float minBowStringArrowSpeedModifier;
 	public static float maxBowStringArrowSpeedModifier;
-	
+
 	public static void determineMinAndMaxValues()
 	{
 		boolean needsInit = true;
@@ -242,7 +239,7 @@ public class ToolPartHelper {
 					minHandleModifier = mat.handleDurability();
 			}
 		}
-		
+
 		needsInit = true;
 		for (int key : TConstructRegistry.arrowMaterials.keySet())
 		{
@@ -295,7 +292,7 @@ public class ToolPartHelper {
 					minBowArrowSpeedModifier = mat.flightSpeedMax;
 			}
 		}
-		
+
 		needsInit = true;
 		for (CustomMaterial customMat : TConstructRegistry.customMaterials)
 		{
@@ -325,7 +322,7 @@ public class ToolPartHelper {
 						minBowStringArrowSpeedModifier = mat.flightSpeedModifier;
 				}
 			}
-			
+
 			FletchingMaterial fletchingMat = (FletchingMaterial) TConstructRegistry.getCustomMaterial(customMat.materialID, FletchingMaterial.class);
 			if (fletchingMat != null)
 			{
@@ -340,70 +337,80 @@ public class ToolPartHelper {
 			}
 		}
 	}
-	
+
 	// shoddiness
 	public static String getShoddinessString(float val)
 	{
-		return ColorHelper.getRelativeColor(val, minShoddiness, val > 0 ? maxPositiveShoddiness : maxNegativeShoddiness)+StringHelper.getShoddinessString(val);
+		return ColorHelper.getRelativeColor(val, minShoddiness, val > 0 ? maxPositiveShoddiness : maxNegativeShoddiness) + StringHelper.getShoddinessString(val);
 	}
-	
+
 	// tools/weapons
 	public static String getAttackString(int val)
 	{
-		return ColorHelper.getRelativeColor(val, minAttack, maxAttack)+StringHelper.getDamageString(val);
+		return ColorHelper.getRelativeColor(val, minAttack, maxAttack) + StringHelper.getDamageString(val);
 	}
+
 	public static String getHarvestLevelString(int val)
 	{
-		return ColorHelper.getRelativeColor(val, minHarvestLevel, maxHarvestLevel)+StringHelper.getHarvestLevelName(val);
+		return ColorHelper.getRelativeColor(val, minHarvestLevel, maxHarvestLevel) + StringHelper.getHarvestLevelName(val);
 	}
+
 	public static String getDurabilityString(int val)
 	{
-		return ColorHelper.getRelativeColor(val, minDurability, maxDurability)+StringHelper.getDurabilityString(val);
+		return ColorHelper.getRelativeColor(val, minDurability, maxDurability) + StringHelper.getDurabilityString(val);
 	}
+
 	public static String getMiningSpeedString(int val)
 	{
-		return ColorHelper.getRelativeColor(val, minMiningSpeed, maxMiningSpeed)+StringHelper.getSpeedString(val);
+		return ColorHelper.getRelativeColor(val, minMiningSpeed, maxMiningSpeed) + StringHelper.getSpeedString(val);
 	}
+
 	public static String getHandleModifierString(float val)
 	{
-		return ColorHelper.getRelativeColor(val, minHandleModifier, maxHandleModifier)+StringHelper.getModifierString(val);
+		return ColorHelper.getRelativeColor(val, minHandleModifier, maxHandleModifier) + StringHelper.getModifierString(val);
 	}
-	
+
 	// arrows
 	public static String getAccuracyString(float val)
 	{
-		return ColorHelper.getRelativeColor(val, minAccuracy, maxAccuracy)+StringHelper.getAccuracyString(val);
+		return ColorHelper.getRelativeColor(val, minAccuracy, maxAccuracy) + StringHelper.getAccuracyString(val);
 	}
+
 	public static String getWeightString(float val)
 	{
-		return ColorHelper.getRelativeColor(val, maxWeight, minWeight)+StringHelper.getWeightString(val);
+		return ColorHelper.getRelativeColor(val, maxWeight, minWeight) + StringHelper.getWeightString(val);
 	}
 
 	// bows
 	public static String getBowDrawSpeedString(int val)
 	{
-		return ColorHelper.getRelativeColor(val, maxBowDrawSpeed, minBowDrawSpeed)+StringHelper.getDrawSpeedString(val);
+		return ColorHelper.getRelativeColor(val, maxBowDrawSpeed, minBowDrawSpeed) + StringHelper.getDrawSpeedString(val);
 	}
+
 	public static String getBowDurabilityString(int val)
 	{
-		return ColorHelper.getRelativeColor(val, minBowDurability, maxBowDurability)+StringHelper.getDurabilityString(val);
+		return ColorHelper.getRelativeColor(val, minBowDurability, maxBowDurability) + StringHelper.getDurabilityString(val);
 	}
+
 	public static String getBowArrowSpeedModifierString(float val)
 	{
-		return ColorHelper.getRelativeColor(val, minBowArrowSpeedModifier, maxBowArrowSpeedModifier)+StringHelper.getModifierString(val);
+		return ColorHelper.getRelativeColor(val, minBowArrowSpeedModifier, maxBowArrowSpeedModifier) + StringHelper.getModifierString(val);
 	}
-	
+
 	// bowstrings
 	public static String getBowStringDrawspeedModifierString(float val)
 	{
-		return ColorHelper.getRelativeColor(val, minBowStringDrawspeedModifier, maxBowStringDrawspeedModifier)+StringHelper.getModifierString(val);
+		return ColorHelper.getRelativeColor(val, minBowStringDrawspeedModifier, maxBowStringDrawspeedModifier) + StringHelper.getModifierString(val);
 	}
+
 	public static String getBowStringDurabilityModifierString(float val)
 	{
-		return ColorHelper.getRelativeColor(val, minBowStringDrawspeedModifier, maxBowStringDrawspeedModifier)+StringHelper.getModifierString(val);
+		return ColorHelper.getRelativeColor(val, minBowStringDrawspeedModifier, maxBowStringDrawspeedModifier) + StringHelper.getModifierString(val);
 	}
+
 	public static String getBowStringArrowSpeedModifierString(float val)
 	{
-		return ColorHelper.getRelativeColor(val, minBowStringArrowSpeedModifier, maxBowStringArrowSpeedModifier)+StringHelper.getModifierString(val);
+		return ColorHelper.getRelativeColor(val, minBowStringArrowSpeedModifier, maxBowStringArrowSpeedModifier) + StringHelper.getModifierString(val);
 	}
+
 }

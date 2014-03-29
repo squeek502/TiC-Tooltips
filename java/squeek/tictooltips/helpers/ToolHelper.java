@@ -1,26 +1,26 @@
 package squeek.tictooltips.helpers;
 
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.tools.ToolCore;
 import tconstruct.library.tools.ToolMaterial;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.StatCollector;
 
-public class ToolHelper {
+public class ToolHelper
+{
 
 	public static boolean hasToolTag(ItemStack itemStack)
 	{
 		return itemStack.hasTagCompound() && itemStack.getTagCompound().hasKey("InfiTool");
 	}
-	
+
 	public static NBTTagCompound getToolTag(ItemStack tool)
 	{
 		NBTTagCompound tag;
 		tag = tool.getTagCompound().getCompoundTag("InfiTool");
 		return tag;
 	}
-	
+
 	public static ToolMaterial getHeadMaterial(NBTTagCompound toolTag)
 	{
 		ToolMaterial mat = null;
@@ -41,14 +41,37 @@ public class ToolHelper {
 		}
 		return false;
 	}
-	
-	public static boolean isWeaponTool(ToolCore tool) { return hasToolCategory(tool, "weapon"); }
-	public static boolean isBowTool(ToolCore tool) { return hasToolCategory(tool, "bow"); }
-	public static boolean isAmmoTool(ToolCore tool) { return hasToolCategory(tool, "ammo"); }
-	public static boolean isDualHarvestTool(ToolCore tool) { return hasToolCategory(tool, "dualharvest"); }
-	public static boolean isHarvestTool(ToolCore tool) { return hasToolCategory(tool, "harvest"); }
-	public static boolean isUtilityTool(ToolCore tool) { return hasToolCategory(tool, "utility"); }
-	
+
+	public static boolean isWeaponTool(ToolCore tool)
+	{
+		return hasToolCategory(tool, "weapon");
+	}
+
+	public static boolean isBowTool(ToolCore tool)
+	{
+		return hasToolCategory(tool, "bow");
+	}
+
+	public static boolean isAmmoTool(ToolCore tool)
+	{
+		return hasToolCategory(tool, "ammo");
+	}
+
+	public static boolean isDualHarvestTool(ToolCore tool)
+	{
+		return hasToolCategory(tool, "dualharvest");
+	}
+
+	public static boolean isHarvestTool(ToolCore tool)
+	{
+		return hasToolCategory(tool, "harvest");
+	}
+
+	public static boolean isUtilityTool(ToolCore tool)
+	{
+		return hasToolCategory(tool, "utility");
+	}
+
 	public static int getUsedDurability(NBTTagCompound toolTag)
 	{
 		return toolTag.getInteger("Damage");
@@ -58,12 +81,12 @@ public class ToolHelper {
 	{
 		return toolTag.getInteger("TotalDurability");
 	}
-	
+
 	public static float getStonebound(NBTTagCompound toolTag)
 	{
 		return toolTag.getFloat("Shoddy");
 	}
-	
+
 	public static int getRawDamage(ToolCore tool, NBTTagCompound toolTag)
 	{
 		int rawDamage = toolTag.getInteger("Attack") - tool.getDamageVsEntity(null);
@@ -77,10 +100,10 @@ public class ToolHelper {
 		attack *= tool.getDamageModifier();
 		if (attack < 1)
 			attack = 1;
-		
+
 		return attack;
 	}
-	
+
 	public static float getShoddinessDamageBonus(NBTTagCompound toolTag)
 	{
 		return (float) Math.log(getUsedDurability(toolTag) / 72f + 1) * -2 * getStonebound(toolTag);
@@ -90,7 +113,7 @@ public class ToolHelper {
 	{
 		return (float) Math.log(getMaxDurability(toolTag) / 72f + 1) * -2 * getStonebound(toolTag);
 	}
-	
+
 	public static float getShoddinessSpeedBonus(NBTTagCompound toolTag)
 	{
 		return (float) Math.log(getUsedDurability(toolTag) / 72f + 1) * 2 * getStonebound(toolTag);
@@ -100,7 +123,7 @@ public class ToolHelper {
 	{
 		return (float) Math.log(getMaxDurability(toolTag) / 72f + 1) * 2 * getStonebound(toolTag);
 	}
-	
+
 	public static int getDrawSpeed(NBTTagCompound toolTag)
 	{
 		return toolTag.getInteger("DrawSpeed");
@@ -110,7 +133,7 @@ public class ToolHelper {
 	{
 		return toolTag.getFloat("FlightSpeed");
 	}
-	
+
 	public static int getAmmoDamage(NBTTagCompound toolTag)
 	{
 		return toolTag.getInteger("Attack");
@@ -125,17 +148,17 @@ public class ToolHelper {
 	{
 		return toolTag.getFloat("Accuracy");
 	}
-	
+
 	public static int getPrimaryMiningSpeed(NBTTagCompound toolTag)
 	{
 		return toolTag.getInteger("MiningSpeed");
 	}
-	
+
 	public static int getSecondaryMiningSpeed(NBTTagCompound toolTag)
 	{
 		return toolTag.getInteger("MiningSpeed2");
 	}
-	
+
 	public static int getTotalMiningSpeed(NBTTagCompound toolTag)
 	{
 		int mineSpeed = toolTag.getInteger("MiningSpeed");
@@ -161,7 +184,7 @@ public class ToolHelper {
 
 		return (int) ((float) mineSpeed / heads);
 	}
-	
+
 	public static int getPrimaryHarvestLevel(NBTTagCompound toolTag)
 	{
 		return toolTag.getInteger("HarvestLevel");
@@ -171,5 +194,5 @@ public class ToolHelper {
 	{
 		return toolTag.getInteger("HarvestLevel2");
 	}
-	
+
 }
