@@ -110,7 +110,7 @@ public class TooltipHandler {
 					{
 						event.toolTip.add(StatCollector.translateToLocal("gui.partcrafter5")+ToolPartHelper.getHandleModifierString(mat.handleModifier));
 						if (isArrowMat)
-							event.toolTip.add("Hold "+EnumChatFormatting.YELLOW+EnumChatFormatting.ITALIC+"SHIFT"+EnumChatFormatting.RESET+EnumChatFormatting.GRAY+" to show bow/arrow stats");
+							event.toolTip.add("Hold "+EnumChatFormatting.YELLOW+EnumChatFormatting.ITALIC+"Shift"+EnumChatFormatting.RESET+EnumChatFormatting.GRAY+" for Bow/Arrow Stats");
 					}
 				}
 				else if (ToolPartHelper.isToolHead(item))
@@ -165,7 +165,7 @@ public class TooltipHandler {
 						event.toolTip.add(" - "+matName);
 					else
 					{
-						event.toolTip.add("Hold "+EnumChatFormatting.YELLOW+EnumChatFormatting.ITALIC+"SHIFT"+EnumChatFormatting.RESET+EnumChatFormatting.GRAY+" for more");
+						event.toolTip.add("Hold "+EnumChatFormatting.YELLOW+EnumChatFormatting.ITALIC+"Shift"+EnumChatFormatting.RESET+EnumChatFormatting.GRAY+" for More");
 						break;
 					}
 				}
@@ -174,11 +174,19 @@ public class TooltipHandler {
 		else if (item instanceof ToolCore && ToolHelper.hasToolTag(event.itemStack))
 		{
 			int toolTipIndex = event.toolTip.size() > 0 ? Math.max(0, event.toolTip.size() - 2) : 0;
-			if (toolTipIndex > 1)
-				event.toolTip.add(toolTipIndex++, "");
+
+			int i = toolTipIndex;
+			while (i < event.toolTip.size() && event.toolTip.get(i).equals(""))
+			{
+				event.toolTip.remove(i);
+				i++;
+			}
 			
 			if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
 			{
+				if (toolTipIndex > 1)
+					event.toolTip.add(toolTipIndex++, "");
+				
 				ToolCore tool = (ToolCore) item;
 				NBTTagCompound toolTag = ToolHelper.getToolTag(event.itemStack);
 
@@ -345,10 +353,12 @@ public class TooltipHandler {
 					else
 						displayToolTips = false;
 				}
+				if (toolTipIndex < event.toolTip.size() && !event.toolTip.get(toolTipIndex).equals(""))
+					event.toolTip.add(toolTipIndex++, "");
 			}
 			else
 			{
-				event.toolTip.add(toolTipIndex, "Hold "+EnumChatFormatting.YELLOW+EnumChatFormatting.ITALIC+"SHIFT"+EnumChatFormatting.RESET+EnumChatFormatting.GRAY+" for stats");
+				event.toolTip.add(toolTipIndex++, EnumChatFormatting.GRAY+"Hold "+EnumChatFormatting.YELLOW+EnumChatFormatting.ITALIC+"Shift"+EnumChatFormatting.RESET+EnumChatFormatting.GRAY+" for Stats");
 			}
 		}
 	}
