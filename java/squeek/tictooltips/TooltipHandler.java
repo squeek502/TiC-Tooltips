@@ -171,17 +171,14 @@ public class TooltipHandler
 				boolean isToolABow = hasTool && ToolHelper.isBowTool(tool);
 				if ((hasTool && (isToolAnArrow || isToolABow)) || (isArrowMat && (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))))
 				{
-					if (TConstructRegistry.validBowMaterial(matID))
+					if (TConstructRegistry.validBowMaterial(matID) && (!hasTool || isToolABow))
 					{
+						String prefix = hasTool ? "" : "Bow ";
 						BowMaterial bowMat = (BowMaterial) TConstructRegistry.getBowMaterial(matID);
-						toolTip.add(StatCollector.translateToLocal("gui.toolstation3") + ToolPartHelper.getAttackString(mat.attack()));
-						if (!hasTool || isToolABow)
-						{
-							String prefix = hasTool ? "" : "Bow ";
-							toolTip.add(prefix + StatCollector.translateToLocal("gui.toolstation6") + ToolPartHelper.getBowDrawSpeedString(bowMat.drawspeed));
-							toolTip.add(prefix + StatCollector.translateToLocal("gui.toolstation2") + ToolPartHelper.getBowDurabilityString(bowMat.durability));
-							toolTip.add(prefix + StatCollector.translateToLocal("gui.toolstation7") + ToolPartHelper.getBowArrowSpeedModifierString(bowMat.flightSpeedMax));
-						}
+						toolTip.add(prefix + StatCollector.translateToLocal("gui.toolstation3") + ToolPartHelper.getAttackString(mat.attack()));
+						toolTip.add(prefix + StatCollector.translateToLocal("gui.toolstation6") + ToolPartHelper.getBowDrawSpeedString(bowMat.drawspeed));
+						toolTip.add(prefix + StatCollector.translateToLocal("gui.toolstation2") + ToolPartHelper.getBowDurabilityString(bowMat.durability));
+						toolTip.add(prefix + StatCollector.translateToLocal("gui.toolstation7") + ToolPartHelper.getBowArrowSpeedModifierString(bowMat.flightSpeedMax));
 					}
 					if (TConstructRegistry.validArrowMaterial(matID) && (!hasTool || isToolAnArrow))
 					{
@@ -343,9 +340,11 @@ public class TooltipHandler
 			int damage = ToolHelper.getAmmoDamage(toolTag);
 			float weight = ToolHelper.getWeight(toolTag);
 			float accuracy = ToolHelper.getAccuracy(toolTag);
+			
+			String damageColor = ColorHelper.getRelativeColor(ToolHelper.getRawDamage(tool, toolTag), ToolPartHelper.minAttack, ToolPartHelper.maxAttack);
 
-			toolTip.add(StatCollector.translateToLocal("gui.toolstation10") + " " + StringHelper.getDamageString(damage));
-			toolTip.add(StatCollector.translateToLocal("gui.toolstation11") + " " + StringHelper.getAmmoDamageRangeString(damage));
+			toolTip.add(StatCollector.translateToLocal("gui.toolstation10") + " " + damageColor + StringHelper.getDamageString(damage));
+			toolTip.add(StatCollector.translateToLocal("gui.toolstation11") + " " + damageColor + StringHelper.getAmmoDamageRangeString(damage));
 			toolTip.add(StatCollector.translateToLocal("gui.toolstation8") + ToolPartHelper.getWeightString(weight));
 			toolTip.add(StatCollector.translateToLocal("gui.toolstation9") + ToolPartHelper.getAccuracyString(accuracy));
 		}
