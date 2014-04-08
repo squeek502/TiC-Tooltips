@@ -8,12 +8,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import org.lwjgl.input.Keyboard;
-import squeek.tictooltips.helpers.ColorHelper;
-import squeek.tictooltips.helpers.PatternHelper;
-import squeek.tictooltips.helpers.StringHelper;
-import squeek.tictooltips.helpers.ToolHelper;
-import squeek.tictooltips.helpers.ToolPartHelper;
+import squeek.tictooltips.helpers.*;
 import tconstruct.items.Bowstring;
 import tconstruct.items.Fletching;
 import tconstruct.items.ToolPart;
@@ -69,8 +64,8 @@ public class TooltipHandler
 				toolTipIndex--;
 			}
 
-			boolean ctrlDown = Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) || Keyboard.isKeyDown(Keyboard.KEY_RCONTROL);
-			boolean shiftDown = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
+			boolean ctrlDown = KeyHelper.isCtrlKeyDown();
+			boolean shiftDown = KeyHelper.isShiftKeyDown();
 			// Shift held
 			if (shiftDown && !ctrlDown)
 			{
@@ -174,7 +169,7 @@ public class TooltipHandler
 				boolean isArrowMat = ToolPartHelper.isArrowRod(item);
 				boolean isToolAnArrow = hasTool && ToolHelper.isAmmoTool(tool);
 				boolean isToolABow = hasTool && ToolHelper.isBowTool(tool);
-				if ((hasTool && (isToolAnArrow || isToolABow)) || (isArrowMat && (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))))
+				if ((hasTool && (isToolAnArrow || isToolABow)) || (isArrowMat && KeyHelper.isShiftKeyDown()))
 				{
 					if (TConstructRegistry.validBowMaterial(matID) && (!hasTool || isToolABow))
 					{
@@ -263,7 +258,7 @@ public class TooltipHandler
 			toolTip.add("Valid Materials:");
 			for (String matName : validMats)
 			{
-				if (toolTip.size() < 7 || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
+				if (toolTip.size() < 7 || KeyHelper.isShiftKeyDown())
 					toolTip.add(" - " + matName);
 				else
 				{
@@ -437,7 +432,6 @@ public class TooltipHandler
 
 		boolean displayToolTips = true;
 		int tipNum = 0;
-		int written = 0;
 		while (displayToolTips)
 		{
 			tipNum++;
