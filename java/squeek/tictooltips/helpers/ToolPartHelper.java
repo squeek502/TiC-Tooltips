@@ -48,6 +48,15 @@ public class ToolPartHelper
 			TContent.signHead
 		)
 	);
+	public static List<Item> weaponGuards = new ArrayList<Item>(
+		Arrays.asList
+		(
+		 	TContent.crossbar,
+		 	TContent.handGuard,
+		 	TContent.wideGuard,
+		 	TContent.fullGuard
+		)
+	);
 	public static List<Item> bindings = new ArrayList<Item>(
 		Arrays.asList
 		(
@@ -116,6 +125,11 @@ public class ToolPartHelper
 	public static boolean isWeaponHead(Item item)
 	{
 		return weaponHeads.contains(item);
+	}
+	
+	public static boolean isWeaponGuard(Item item)
+	{
+		return weaponGuards.contains(item);
 	}
 
 	public static boolean isPlate(Item item)

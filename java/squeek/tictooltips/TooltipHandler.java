@@ -9,6 +9,8 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import squeek.tictooltips.helpers.*;
+import squeek.tictooltips.proxy.ProxyExtraTiC;
+import squeek.tictooltips.proxy.ProxyIguanaTweaks;
 import tconstruct.items.Bowstring;
 import tconstruct.items.Fletching;
 import tconstruct.items.ToolPart;
@@ -33,16 +35,30 @@ public class TooltipHandler
 
 		Item item = event.itemStack.getItem();
 
-		// Tools
+		// Tool Parts
 		if (item instanceof IToolPart)
 		{
 			if (ToolPartHelper.isShard(item))
 				return;
-
-			event.toolTip.addAll(getMaterialTooltip(event.itemStack));
+			
+			if (ModTiCTooltips.hasIguanaTweaks)
+			{
+				if (ToolPartHelper.isArrowFletching(item) || ToolPartHelper.isBowString(item))
+				{
+					event.toolTip.addAll(getMaterialTooltip(event.itemStack));
+				}
+				else if (ProxyExtraTiC.isExtraTiCPart(item))
+				{
+					event.toolTip.addAll(ProxyIguanaTweaks.getPartTooltip(event.itemStack, event.entityPlayer, event.showAdvancedItemTooltips));
+				}
+			}
+			else
+			{
+				event.toolTip.addAll(getMaterialTooltip(event.itemStack));
+			}
 		}
 		// Patterns
-		else if (item instanceof IPattern)
+		else if (item instanceof IPattern && !ModTiCTooltips.hasIguanaTweaks)
 		{
 			event.toolTip.addAll(getPatternTooltip(event.itemStack));
 		}
@@ -231,6 +247,11 @@ public class TooltipHandler
 				if (!hasTool || ToolHelper.isWeaponTool(tool))
 					toolTip.add(StringHelper.getLocalizedString("gui.toolstation3") + ToolPartHelper.getAttackString(mat.attack()));
 			}
+			/* weapon guards don't affect anything except abilities
+			else if (ToolPartHelper.isWeaponGuard(item))
+			{
+			}
+			*/
 		}
 
 		return toolTip;
@@ -410,9 +431,12 @@ public class TooltipHandler
 				toolTip.add(EnumChatFormatting.DARK_GRAY + "- Max " + shoddinessType + " " + bonusOrLoss + StringHelper.getSpeedString((int) (maxStoneboundSpeed * 100f)));
 			}
 
-			int harvestLevel = ToolHelper.getPrimaryHarvestLevel(toolTag);
-
-			toolTip.add(StringHelper.getLocalizedString("gui.toolstation15") + ToolPartHelper.getHarvestLevelString(harvestLevel));
+			if (!ModTiCTooltips.hasIguanaTweaks)
+			{
+				int harvestLevel = ToolHelper.getPrimaryHarvestLevel(toolTag);
+	
+				toolTip.add(StringHelper.getLocalizedString("gui.toolstation15") + ToolPartHelper.getHarvestLevelString(harvestLevel));
+			}
 		}
 		else if (ToolHelper.isUtilityTool(tool))
 		{
@@ -421,13 +445,14 @@ public class TooltipHandler
 			toolTip.add(StringHelper.getLocalizedString("gui.toolstation16") + ToolPartHelper.getMiningSpeedString(mineSpeed));
 		}
 
-		int modifiers = toolTag.getInteger("Modifiers");
-		if (modifiers > 0)
+		int modifiersAvailable = toolTag.getInteger("Modifiers");
+		if (modifiersAvailable > 0)
 		{
-			toolTip.add(StringHelper.getLocalizedString("gui.toolstation18") + EnumChatFormatting.WHITE + modifiers);
+			toolTip.add(StringHelper.getLocalizedString("gui.toolstation18") + EnumChatFormatting.WHITE + modifiersAvailable);
 		}
 
-		if (toolTag.hasKey("Tooltip1"))
+		boolean hasModifiers = toolTag.hasKey("ModifierTip1") && !toolTag.getString("ModifierTip1").trim().equals("");
+		if (hasModifiers)
 			toolTip.add("Modifiers:");
 
 		boolean displayToolTips = true;

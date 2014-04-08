@@ -3,6 +3,7 @@ package squeek.tictooltips;
 import net.minecraftforge.common.MinecraftForge;
 import squeek.tictooltips.helpers.ToolPartHelper;
 import squeek.tictooltips.proxy.ProxyExtraTiC;
+import squeek.tictooltips.proxy.ProxyIguanaTweaks;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -16,15 +17,14 @@ public class ModTiCTooltips
 {
 	public static final String MODID = "TiCTooltips";
 	public static final String VERSION = "${version}";
+	
+	public static boolean hasIguanaTweaks;
 
 	@SideOnly(Side.CLIENT)
 	@EventHandler
 	public void init(FMLInitializationEvent event)
 	{
-		if (!Loader.isModLoaded("IguanaTweaksTConstruct"))
-		{
-			MinecraftForge.EVENT_BUS.register(new TooltipHandler());
-		}
+		MinecraftForge.EVENT_BUS.register(new TooltipHandler());
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -33,7 +33,14 @@ public class ModTiCTooltips
 	{
 		if (Loader.isModLoaded("ExtraTiC"))
 		{
+			ProxyExtraTiC.init();
 			ProxyExtraTiC.registerParts();
+		}
+		if (Loader.isModLoaded("IguanaTweaksTConstruct"))
+		{
+			hasIguanaTweaks = true;
+			ProxyIguanaTweaks.init();
+			ProxyIguanaTweaks.registerParts();
 		}
 
 		ToolPartHelper.determineMinAndMaxValues();

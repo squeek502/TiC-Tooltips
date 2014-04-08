@@ -2,6 +2,8 @@ package squeek.tictooltips.helpers;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
+import squeek.tictooltips.ModTiCTooltips;
+import squeek.tictooltips.proxy.ProxyIguanaTweaks;
 import net.minecraft.util.StatCollector;
 
 public class StringHelper
@@ -12,6 +14,9 @@ public class StringHelper
 	// Taken from tconstruct.client.gui.ToolStationGui
 	public static String getHarvestLevelName(int num)
 	{
+		if (ModTiCTooltips.hasIguanaTweaks)
+			return ProxyIguanaTweaks.getHarvestLevelName(num);
+		
 		String unlocalized = "gui.partcrafter.mining" + (num + 1);
 		String localized = StringHelper.getLocalizedString(unlocalized);
 		if (!unlocalized.equals(localized))
