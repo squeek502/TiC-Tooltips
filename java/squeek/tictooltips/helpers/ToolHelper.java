@@ -95,7 +95,7 @@ public class ToolHelper
 
 	public static int getDamage(ToolCore tool, NBTTagCompound toolTag)
 	{
-		int attack = toolTag.getInteger("Attack");
+		int attack = toolTag.getInteger("Attack")+1;
 		attack += getShoddinessDamageBonus(toolTag);
 		attack *= tool.getDamageModifier();
 		if (attack < 1)
