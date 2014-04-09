@@ -457,7 +457,7 @@ public class TooltipHandler
 
 		boolean displayToolTips = true;
 		int tipNum = 0;
-		while (displayToolTips)
+		while (hasModifiers && displayToolTips)
 		{
 			tipNum++;
 			String tooltip = "ModifierTip" + tipNum;
