@@ -4,6 +4,7 @@ import net.minecraftforge.common.MinecraftForge;
 import squeek.tictooltips.helpers.ToolPartHelper;
 import squeek.tictooltips.proxy.ProxyExtraTiC;
 import squeek.tictooltips.proxy.ProxyIguanaTweaks;
+import squeek.tictooltips.proxy.ProxyMariculture;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -12,7 +13,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@Mod(modid = ModTiCTooltips.MODID, version = ModTiCTooltips.VERSION, dependencies = "required-after:TConstruct;after:ExtraTiC;after:TSteelworks")
+@Mod(modid = ModTiCTooltips.MODID, version = ModTiCTooltips.VERSION, dependencies = "required-after:TConstruct;after:ExtraTiC;after:TSteelworks;after:Mariculture")
 public class ModTiCTooltips
 {
 	public static final String MODID = "TiCTooltips";
@@ -35,6 +36,11 @@ public class ModTiCTooltips
 		{
 			ProxyExtraTiC.init();
 			ProxyExtraTiC.registerParts();
+		}
+		if (Loader.isModLoaded("Mariculture"))
+		{
+			ProxyMariculture.init();
+			ProxyMariculture.registerParts();
 		}
 		if (Loader.isModLoaded("IguanaTweaksTConstruct"))
 		{
