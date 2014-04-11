@@ -2,6 +2,7 @@ package squeek.tictooltips.helpers;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import tconstruct.common.TContent;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.tools.ToolCore;
 import tconstruct.library.tools.ToolMaterial;
@@ -112,6 +113,64 @@ public class ToolHelper
 			attack = 1;
 
 		return attack;
+	}
+	
+	public static int[] getSmiteDamageRange(ToolCore tool, NBTTagCompound toolTag)
+	{
+		int staticBonus = 0;
+		int variableBonus = 0;
+		// TODO: Better way to determine if the tool is of a certain type
+		if (tool == TContent.hammer)
+        {
+            int level = 2;
+            staticBonus += level * 2;
+            variableBonus += level * 2 + 1;
+        }
+		if (toolTag.hasKey("ModSmite"))
+        {
+            int[] array = toolTag.getIntArray("ModSmite");
+            int base = array[0] / 18;
+            staticBonus += 1 + base;
+            variableBonus += base + 1;
+        }
+		return new int[] {staticBonus, staticBonus+variableBonus};
+	}
+	
+	public static int[] getAntiSpiderDamageRange(ToolCore tool, NBTTagCompound toolTag)
+	{
+		int staticBonus = 0;
+		int variableBonus = 0;
+		if (toolTag.hasKey("ModAntiSpider"))
+        {
+            int[] array = toolTag.getIntArray("ModAntiSpider");
+            int base = array[0] / 2;
+            staticBonus += 1 + base;
+            variableBonus += base + 1;
+        }
+		return new int[] {staticBonus, staticBonus+variableBonus};
+	}
+	
+	public static int getBurnDuration(ToolCore tool, NBTTagCompound toolTag)
+	{
+		int burnDuration = 0;
+		if (toolTag.hasKey("Fiery"))
+        {
+			burnDuration += toolTag.getInteger("Fiery") / 5 + 1;
+        }
+        if (toolTag.getBoolean("Lava"))
+        {
+        	burnDuration += 3;
+        }
+		return burnDuration;
+	}
+	
+	public static float getChanceToBehead(ToolCore tool, NBTTagCompound toolTag)
+	{
+		float chanceToBehead = toolTag.getInteger("Beheading");
+		if (tool == TContent.cleaver)
+			chanceToBehead += 2;
+		chanceToBehead = chanceToBehead / 10;
+        return Math.min(1, chanceToBehead);
 	}
 
 	public static float getShoddinessDamageBonus(NBTTagCompound toolTag)

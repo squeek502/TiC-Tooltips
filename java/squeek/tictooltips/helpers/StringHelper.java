@@ -103,6 +103,16 @@ public class StringHelper
 		String heart = StringHelper.getLocalizedString("gui.partcrafter9");
 		return df.format(minAttack / 2f) + "-" + df.format(maxAttack / 2f) + heart;
 	}
+	
+	public static String getDurationString(double duration)
+	{
+		return df.format(duration) + "s";
+	}
+	
+	public static String getPercentageString(double percent)
+	{
+		return df.format(percent * 100f) + "%";
+	}
 
 	// for TCon version < 1.5.3
 	public static HashMap<String, String> localizationAlternatives = new HashMap<String, String>();

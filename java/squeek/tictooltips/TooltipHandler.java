@@ -333,6 +333,10 @@ public class TooltipHandler
 			int damage = ToolHelper.getDamage(tool, toolTag);
 			float stoneboundDamage = ToolHelper.getShoddinessDamageBonus(toolTag);
 			float maxStoneboundDamage = ToolHelper.getMaxShoddinessDamageBonus(toolTag);
+			int smiteDamageRange[] = ToolHelper.getSmiteDamageRange(tool, toolTag);
+			int antiSpiderDamageRange[] = ToolHelper.getAntiSpiderDamageRange(tool, toolTag);
+			int burnDuration = ToolHelper.getBurnDuration(tool, toolTag);
+			float chanceToBehead = ToolHelper.getChanceToBehead(tool, toolTag);
 
 			toolTip.add(StringHelper.getLocalizedString("gui.toolstation3") + ColorHelper.getRelativeColor(ToolHelper.getRawDamage(tool, toolTag) + stoneboundDamage, ToolPartHelper.minAttack, ToolPartHelper.maxAttack) + StringHelper.getDamageString(damage));
 			if (stoneboundDamage != 0)
@@ -350,6 +354,29 @@ public class TooltipHandler
 			{
 				String bonusOrLoss = maxStoneboundDamage > 0 ? StringHelper.getLocalizedString("gui.toolstation4") + EnumChatFormatting.DARK_GREEN : StringHelper.getLocalizedString("gui.toolstation5") + EnumChatFormatting.DARK_RED;
 				toolTip.add(EnumChatFormatting.DARK_GRAY + "- Max " + shoddinessType + " " + bonusOrLoss + StringHelper.getDamageString((int) maxStoneboundDamage));
+			}
+			if (smiteDamageRange[1] != 0 && smiteDamageRange[0] != 0)
+			{
+				EnumChatFormatting textColor = smiteDamageRange[0] >= 0 ? EnumChatFormatting.DARK_GREEN : EnumChatFormatting.DARK_RED;
+				String bonusOrLoss = (smiteDamageRange[0] >= 0 ? StringHelper.getLocalizedString("gui.toolstation4") : StringHelper.getLocalizedString("gui.toolstation5"));
+				bonusOrLoss = bonusOrLoss.substring(0, bonusOrLoss.length()-2);
+				toolTip.add(EnumChatFormatting.DARK_GRAY + "- " + bonusOrLoss + " vs Undead: " + textColor + StringHelper.getDamageNumberString(smiteDamageRange[0]) + "-" + StringHelper.getDamageString(smiteDamageRange[1]));
+			}
+			if (antiSpiderDamageRange[1] != 0 && antiSpiderDamageRange[0] != 0)
+			{
+				EnumChatFormatting textColor = antiSpiderDamageRange[0] >= 0 ? EnumChatFormatting.DARK_GREEN : EnumChatFormatting.DARK_RED;
+				String bonusOrLoss = (antiSpiderDamageRange[0] >= 0 ? StringHelper.getLocalizedString("gui.toolstation4") : StringHelper.getLocalizedString("gui.toolstation5"));
+				bonusOrLoss = bonusOrLoss.substring(0, bonusOrLoss.length()-2);
+				toolTip.add(EnumChatFormatting.DARK_GRAY + "- " + bonusOrLoss + " vs Spiders: " + textColor + StringHelper.getDamageNumberString(antiSpiderDamageRange[0]) + "-" + StringHelper.getDamageString(antiSpiderDamageRange[1]));
+			}
+			if (burnDuration != 0)
+			{
+				EnumChatFormatting textColor = EnumChatFormatting.DARK_RED;
+				toolTip.add(EnumChatFormatting.DARK_GRAY + "- Burn Duration: " + textColor + StringHelper.getDurationString(burnDuration));
+			}
+			if (chanceToBehead != 0)
+			{
+				toolTip.add(EnumChatFormatting.DARK_GRAY + "- Chance to Behead: " + ColorHelper.getRelativeColor(chanceToBehead, 0, 1) + StringHelper.getPercentageString(chanceToBehead));
 			}
 		}
 
