@@ -92,6 +92,11 @@ public class ToolHelper
 	{
 		return toolTag.getInteger("Unbreaking");
 	}
+	
+	public static boolean isUnbreakable(NBTTagCompound toolTag)
+	{
+		return getReinforcedLevel(toolTag) >= 10;
+	}
 
 	public static float getStonebound(NBTTagCompound toolTag)
 	{

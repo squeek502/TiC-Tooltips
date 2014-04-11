@@ -314,7 +314,8 @@ public class TooltipHandler
 		if (maxDurability > 0)
 		{
 			int curDurability = maxDurability - ToolHelper.getUsedDurability(toolTag);
-			int effectiveDurability = ToolHelper.getEffectiveDurability(toolTag);
+			boolean isUnbreakable = ToolHelper.isUnbreakable(toolTag);
+			int effectiveDurability = isUnbreakable ? -1 : ToolHelper.getEffectiveDurability(toolTag);
 
 			String curOfMax = curDurability == maxDurability ? StringHelper.getDurabilityString(maxDurability) : StringHelper.getDurabilityString(curDurability) + " / " + StringHelper.getDurabilityString(maxDurability);
 			toolTip.add(StringHelper.getLocalizedString("gui.toolstation2") + ColorHelper.getRelativeColor(curDurability, 0, maxDurability) + curOfMax);

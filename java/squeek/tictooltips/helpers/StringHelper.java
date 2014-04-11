@@ -82,7 +82,7 @@ public class StringHelper
 
 	public static String getDurabilityString(int durability)
 	{
-		return Integer.toString(durability);
+		return durability >= 0 ? Integer.toString(durability) : "Infinite";
 	}
 
 	public static String getWeightString(float weight)
