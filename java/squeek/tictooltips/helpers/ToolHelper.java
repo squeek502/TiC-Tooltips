@@ -82,6 +82,16 @@ public class ToolHelper
 		return toolTag.getInteger("TotalDurability");
 	}
 
+	public static int getEffectiveDurability(NBTTagCompound toolTag)
+	{
+		return (int) (toolTag.getInteger("TotalDurability") * (1f + getReinforcedLevel(toolTag) * .1f));
+	}
+
+	public static int getReinforcedLevel(NBTTagCompound toolTag)
+	{
+		return toolTag.getInteger("Unbreaking");
+	}
+
 	public static float getStonebound(NBTTagCompound toolTag)
 	{
 		return toolTag.getFloat("Shoddy");
