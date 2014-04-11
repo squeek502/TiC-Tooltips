@@ -193,6 +193,8 @@ public class ToolPartHelper
 	public static int maxMiningSpeed;
 	public static float minHandleModifier;
 	public static float maxHandleModifier;
+	public static int minReinforcedLevel;
+	public static int maxReinforcedLevel;
 
 	// arrows
 	public static float minAccuracy;
@@ -230,6 +232,7 @@ public class ToolPartHelper
 				minDurability = maxDurability = mat.durability();
 				minMiningSpeed = maxMiningSpeed = mat.toolSpeed();
 				minHandleModifier = maxHandleModifier = mat.handleDurability();
+				minReinforcedLevel = maxReinforcedLevel = mat.reinforced();
 				needsInit = false;
 			}
 			else
@@ -261,6 +264,10 @@ public class ToolPartHelper
 					maxHandleModifier = mat.handleDurability();
 				else if (mat.handleDurability() < minHandleModifier)
 					minHandleModifier = mat.handleDurability();
+				if (mat.reinforced() > maxReinforcedLevel)
+					maxReinforcedLevel = mat.reinforced();
+				else if (mat.reinforced() < minReinforcedLevel)
+					minReinforcedLevel = mat.reinforced();
 			}
 		}
 
@@ -392,6 +399,11 @@ public class ToolPartHelper
 	public static String getHandleModifierString(float val)
 	{
 		return ColorHelper.getRelativeColor(val, minHandleModifier, maxHandleModifier) + StringHelper.getModifierString(val);
+	}
+
+	public static String getReinforcedString(int val)
+	{
+		return ColorHelper.getRelativeColor(val, minReinforcedLevel, maxReinforcedLevel) + StringHelper.getReinforcedString(val);
 	}
 
 	// arrows

@@ -320,7 +320,7 @@ public class TooltipHandler
 			toolTip.add(StringHelper.getLocalizedString("gui.toolstation2") + ColorHelper.getRelativeColor(curDurability, 0, maxDurability) + curOfMax);
 			
 			if (maxDurability != effectiveDurability)
-				toolTip.add("Effective " + StringHelper.getLocalizedString("gui.toolstation2") + StringHelper.getDurabilityString(effectiveDurability));
+				toolTip.add("Effective " + StringHelper.getLocalizedString("gui.toolstation2") + ColorHelper.getRelativeColor(ToolHelper.getReinforcedLevel(toolTag), ToolPartHelper.minReinforcedLevel-3, ToolPartHelper.maxReinforcedLevel) + StringHelper.getDurabilityString(effectiveDurability));
 		}
 
 		if (isShoddy)
