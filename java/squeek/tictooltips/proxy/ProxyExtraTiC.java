@@ -7,7 +7,7 @@ import java.util.List;
 import net.minecraft.item.Item;
 import squeek.tictooltips.helpers.ToolPartHelper;
 
-public class ProxyExtraTiC
+public class ProxyExtraTiC implements IModPartHandler
 {
 
 	private static Class<?> ExtraTiCPartsHandler;
@@ -22,6 +22,8 @@ public class ProxyExtraTiC
 			ExtraTiCPart = Class.forName("glassmaker.extratic.parts.Part");
 			unlocalizedPartName = ExtraTiCPart.getDeclaredField("unlocalizedPartName");
 			unlocalizedPartName.setAccessible(true);
+			registerParts();
+			ProxyIguanaTweaks.registerModPartHandler(new ProxyExtraTiC());
 		}
 		catch (Exception e)
 		{
@@ -142,11 +144,6 @@ public class ProxyExtraTiC
 			return;
 		}
 	}
-	
-	public static boolean isExtraTiCPart(Item part)
-	{
-		return extraTiCParts.contains(part);
-	}
 
 	// ExtraTiC unlocalizedName -> TiC partName
 	public static HashMap<String, String> partNameDictionary = new HashMap<String, String>();
@@ -176,8 +173,9 @@ public class ProxyExtraTiC
 		partNameDictionary.put("hammer.head", "HammerHead");
 		partNameDictionary.put("arrowhead", "ArrowHead");
 	}
-	
-	public static String getPartName(Item part)
+
+	@Override
+	public String getPartName(Item part)
 	{
 		String partName = "";
 		
@@ -193,6 +191,12 @@ public class ProxyExtraTiC
 		partName = partNameDictionary.get(partName);
 		
 		return partName;
+	}
+
+	@Override
+	public boolean isModdedPart(Item part)
+	{
+		return extraTiCParts.contains(part);
 	}
 
 }

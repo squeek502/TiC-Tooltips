@@ -1,13 +1,12 @@
 package squeek.tictooltips.proxy;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import net.minecraft.item.Item;
 import squeek.tictooltips.helpers.ToolPartHelper;
 
-public class ProxyMariculture
+public class ProxyMariculture implements IModPartHandler
 {
 
 	private static Class<?> MariculturePartsHandler;
@@ -15,6 +14,8 @@ public class ProxyMariculture
 
 	public static void init()
 	{
+		registerParts();
+		ProxyIguanaTweaks.registerModPartHandler(new ProxyMariculture());
 	}
 
 	public static void registerParts()
@@ -131,11 +132,6 @@ public class ProxyMariculture
 		}
 	}
 
-	public static boolean isMariculturePart(Item part)
-	{
-		return MaricultureParts.contains(part);
-	}
-
 	// Mariculture unlocalizedName -> TiC partName
 	public static HashMap<String, String> partNameDictionary = new HashMap<String, String>();
 	static
@@ -166,7 +162,8 @@ public class ProxyMariculture
 		partNameDictionary.put("titanium.tough.rod", "ToughRod");
 	}
 
-	public static String getPartName(Item part)
+	@Override
+	public String getPartName(Item part)
 	{
 		String partName = "";
 
@@ -182,6 +179,12 @@ public class ProxyMariculture
 		partName = partNameDictionary.get(partName);
 
 		return partName;
+	}
+
+	@Override
+	public boolean isModdedPart(Item part)
+	{
+		return MaricultureParts.contains(part);
 	}
 
 }

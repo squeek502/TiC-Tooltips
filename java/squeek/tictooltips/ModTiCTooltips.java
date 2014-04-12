@@ -35,18 +35,15 @@ public class ModTiCTooltips
 		if (Loader.isModLoaded("ExtraTiC"))
 		{
 			ProxyExtraTiC.init();
-			ProxyExtraTiC.registerParts();
 		}
 		if (Loader.isModLoaded("Mariculture"))
 		{
 			ProxyMariculture.init();
-			ProxyMariculture.registerParts();
 		}
 		if (Loader.isModLoaded("IguanaTweaksTConstruct"))
 		{
 			hasIguanaTweaks = true;
 			ProxyIguanaTweaks.init();
-			ProxyIguanaTweaks.registerParts();
 		}
 
 		ToolPartHelper.determineMinAndMaxValues();

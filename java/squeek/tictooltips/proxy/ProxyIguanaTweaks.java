@@ -14,8 +14,13 @@ import tconstruct.items.ToolPart;
 public class ProxyIguanaTweaks
 {
 	private static Class<?> IguanaTweaksTConstruct = null;
-	public static List<Item> defaultToolParts = null;
 	private static Method proxyGetHarvestLevelName;
+	private static List<IModPartHandler> modPartHandlers = new ArrayList<IModPartHandler>();
+	
+	public static void registerModPartHandler(IModPartHandler modPartHandler)
+	{
+		modPartHandlers.add(modPartHandler);
+	}
 	
 	private static enum toolPartIndexes { 
 		toolRod, pickaxeHead, shovelHead, hatchetHead,
@@ -37,12 +42,32 @@ public class ProxyIguanaTweaks
      	TContent.arrowhead
 	);
 	
+	public static class ProxyDefaultToolHandler implements IModPartHandler
+	{
+		public static List<Item> defaultToolParts = null;
+
+		@Override
+		public String getPartName(Item part)
+		{
+			return ((ToolPart) part).partName;
+		}
+
+		@Override
+		public boolean isModdedPart(Item part)
+		{
+			return defaultToolParts.contains(part);
+		}
+		
+	}
+	
 	public static void init()
 	{
 		try
 		{
 			IguanaTweaksTConstruct = Class.forName("iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct");
 			proxyGetHarvestLevelName = IguanaTweaksTConstruct.getDeclaredMethod("getHarvestLevelName", int.class);
+			registerParts();
+			ProxyIguanaTweaks.registerModPartHandler(new ProxyDefaultToolHandler());
 		}
 		catch (Exception e)
 		{
@@ -55,44 +80,44 @@ public class ProxyIguanaTweaks
 	{
 		try
 		{
-			defaultToolParts = (List<Item>) IguanaTweaksTConstruct.getDeclaredField("toolParts").get(null);
+			ProxyDefaultToolHandler.defaultToolParts = (List<Item>) IguanaTweaksTConstruct.getDeclaredField("toolParts").get(null);
 
-			ToolPartHelper.toolHeads.add(defaultToolParts.get(toolPartIndexes.pickaxeHead.ordinal()));
-			ToolPartHelper.toolHeads.add(defaultToolParts.get(toolPartIndexes.shovelHead.ordinal()));
-			ToolPartHelper.toolHeads.add(defaultToolParts.get(toolPartIndexes.excavatorHead.ordinal()));
+			ToolPartHelper.toolHeads.add(ProxyDefaultToolHandler.defaultToolParts.get(toolPartIndexes.pickaxeHead.ordinal()));
+			ToolPartHelper.toolHeads.add(ProxyDefaultToolHandler.defaultToolParts.get(toolPartIndexes.shovelHead.ordinal()));
+			ToolPartHelper.toolHeads.add(ProxyDefaultToolHandler.defaultToolParts.get(toolPartIndexes.excavatorHead.ordinal()));
 			
-			ToolPartHelper.weaponMiningHeads.add(TContent.hammerHead);
+			ToolPartHelper.weaponMiningHeads.add(ProxyDefaultToolHandler.defaultToolParts.get(toolPartIndexes.hammerHead.ordinal()));
 
-			ToolPartHelper.weaponToolHeads.add(defaultToolParts.get(toolPartIndexes.hatchetHead.ordinal()));
-			ToolPartHelper.weaponToolHeads.add(defaultToolParts.get(toolPartIndexes.scytheBlade.ordinal()));
-			ToolPartHelper.weaponToolHeads.add(defaultToolParts.get(toolPartIndexes.broadAxeHead.ordinal()));
+			ToolPartHelper.weaponToolHeads.add(ProxyDefaultToolHandler.defaultToolParts.get(toolPartIndexes.hatchetHead.ordinal()));
+			ToolPartHelper.weaponToolHeads.add(ProxyDefaultToolHandler.defaultToolParts.get(toolPartIndexes.scytheBlade.ordinal()));
+			ToolPartHelper.weaponToolHeads.add(ProxyDefaultToolHandler.defaultToolParts.get(toolPartIndexes.broadAxeHead.ordinal()));
 
-			ToolPartHelper.weaponHeads.add(defaultToolParts.get(toolPartIndexes.swordBlade.ordinal()));
-			ToolPartHelper.weaponHeads.add(defaultToolParts.get(toolPartIndexes.largeSwordBlade.ordinal()));
-			ToolPartHelper.weaponHeads.add(defaultToolParts.get(toolPartIndexes.knifeBlade.ordinal()));
-			ToolPartHelper.weaponHeads.add(defaultToolParts.get(toolPartIndexes.frypanHead.ordinal()));
-			ToolPartHelper.weaponHeads.add(defaultToolParts.get(toolPartIndexes.signHead.ordinal()));
+			ToolPartHelper.weaponHeads.add(ProxyDefaultToolHandler.defaultToolParts.get(toolPartIndexes.swordBlade.ordinal()));
+			ToolPartHelper.weaponHeads.add(ProxyDefaultToolHandler.defaultToolParts.get(toolPartIndexes.largeSwordBlade.ordinal()));
+			ToolPartHelper.weaponHeads.add(ProxyDefaultToolHandler.defaultToolParts.get(toolPartIndexes.knifeBlade.ordinal()));
+			ToolPartHelper.weaponHeads.add(ProxyDefaultToolHandler.defaultToolParts.get(toolPartIndexes.frypanHead.ordinal()));
+			ToolPartHelper.weaponHeads.add(ProxyDefaultToolHandler.defaultToolParts.get(toolPartIndexes.signHead.ordinal()));
 
-			ToolPartHelper.weaponGuards.add(defaultToolParts.get(toolPartIndexes.crossbar.ordinal()));
-			ToolPartHelper.weaponGuards.add(defaultToolParts.get(toolPartIndexes.handGuard.ordinal()));
-			ToolPartHelper.weaponGuards.add(defaultToolParts.get(toolPartIndexes.wideGuard.ordinal()));
-			ToolPartHelper.weaponGuards.add(defaultToolParts.get(toolPartIndexes.fullGuard.ordinal()));
+			ToolPartHelper.weaponGuards.add(ProxyDefaultToolHandler.defaultToolParts.get(toolPartIndexes.crossbar.ordinal()));
+			ToolPartHelper.weaponGuards.add(ProxyDefaultToolHandler.defaultToolParts.get(toolPartIndexes.handGuard.ordinal()));
+			ToolPartHelper.weaponGuards.add(ProxyDefaultToolHandler.defaultToolParts.get(toolPartIndexes.wideGuard.ordinal()));
+			ToolPartHelper.weaponGuards.add(ProxyDefaultToolHandler.defaultToolParts.get(toolPartIndexes.fullGuard.ordinal()));
 
-			ToolPartHelper.bindings.add(defaultToolParts.get(toolPartIndexes.binding.ordinal()));
-			ToolPartHelper.bindings.add(defaultToolParts.get(toolPartIndexes.toughBinding.ordinal()));
+			ToolPartHelper.bindings.add(ProxyDefaultToolHandler.defaultToolParts.get(toolPartIndexes.binding.ordinal()));
+			ToolPartHelper.bindings.add(ProxyDefaultToolHandler.defaultToolParts.get(toolPartIndexes.toughBinding.ordinal()));
 
-			ToolPartHelper.rods.add(defaultToolParts.get(toolPartIndexes.toolRod.ordinal()));
-			ToolPartHelper.rods.add(defaultToolParts.get(toolPartIndexes.toughRod.ordinal()));
+			ToolPartHelper.rods.add(ProxyDefaultToolHandler.defaultToolParts.get(toolPartIndexes.toolRod.ordinal()));
+			ToolPartHelper.rods.add(ProxyDefaultToolHandler.defaultToolParts.get(toolPartIndexes.toughRod.ordinal()));
 
-			ToolPartHelper.plates.add(defaultToolParts.get(toolPartIndexes.largePlate.ordinal()));
+			ToolPartHelper.plates.add(ProxyDefaultToolHandler.defaultToolParts.get(toolPartIndexes.largePlate.ordinal()));
 
 			//ToolPartHelper.shards.add(defaultToolParts.get(toolPartIndexes.toolShard.ordinal()));
 
-			ToolPartHelper.arrowHeads.add(defaultToolParts.get(toolPartIndexes.arrowhead.ordinal()));
+			ToolPartHelper.arrowHeads.add(ProxyDefaultToolHandler.defaultToolParts.get(toolPartIndexes.arrowhead.ordinal()));
 
-			ToolPartHelper.arrowRods.add(defaultToolParts.get(toolPartIndexes.toolRod.ordinal()));
+			ToolPartHelper.arrowRods.add(ProxyDefaultToolHandler.defaultToolParts.get(toolPartIndexes.toolRod.ordinal()));
 
-			ToolPartHelper.chisels.add(defaultToolParts.get(toolPartIndexes.chiselHead.ordinal()));
+			ToolPartHelper.chisels.add(ProxyDefaultToolHandler.defaultToolParts.get(toolPartIndexes.chiselHead.ordinal()));
 		}
 		catch (Exception e)
 		{
@@ -124,22 +149,20 @@ public class ProxyIguanaTweaks
 		Item item = itemStack.getItem();
 		Item iguanaPart = null;
 		
-		if (item instanceof ToolPart)
-			iguanaPart = findCorrespondingIguanaToolPart((ToolPart) item);
-		else if (ProxyExtraTiC.isExtraTiCPart(item))
-			iguanaPart = findCorrespondingIguanaToolPart(ProxyExtraTiC.getPartName(item));
-		else if (ProxyMariculture.isMariculturePart(item))
-			iguanaPart = findCorrespondingIguanaToolPart(ProxyMariculture.getPartName(item));
+		for (IModPartHandler modPartHandler : modPartHandlers)
+		{
+			if (modPartHandler.isModdedPart(item))
+			{
+				iguanaPart = findCorrespondingIguanaToolPart(modPartHandler.getPartName(item));
+				if (iguanaPart != null)
+					break;
+			}
+		}
 		
 		if (iguanaPart != null)
 			iguanaPart.addInformation(itemStack, player, toolTip, par4);
 		
 		return toolTip;
-	}
-	
-	public static Item findCorrespondingIguanaToolPart(ToolPart part)
-	{
-		return findCorrespondingIguanaToolPart(part.partName);
 	}
 
 	public static Item findCorrespondingIguanaToolPart(String partName)
@@ -151,5 +174,25 @@ public class ProxyIguanaTweaks
 		}
 		
 		return null;
+	}
+
+	public static String getPartName(Item part)
+	{
+		for (IModPartHandler modPartHandler : modPartHandlers)
+		{
+			if (modPartHandler.isModdedPart(part))
+				return modPartHandler.getPartName(part);
+		}
+		return "";
+	}
+
+	public static boolean isModdedPart(Item part)
+	{
+		for (IModPartHandler modPartHandler : modPartHandlers)
+		{
+			if (modPartHandler.isModdedPart(part))
+				return true;
+		}
+		return false;
 	}
 }
