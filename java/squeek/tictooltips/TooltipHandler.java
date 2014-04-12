@@ -65,7 +65,10 @@ public class TooltipHandler
 		// Tools
 		else if (item instanceof ToolCore && ToolHelper.hasToolTag(event.itemStack))
 		{	
-			int toolTipIndex = event.toolTip.size();
+			// start at the last line of the tooltip that was added by Tinkers
+			List<String> tinkersTooltip = new ArrayList<String>();
+			((ToolCore) item).addInformation(event.itemStack, event.entityPlayer, tinkersTooltip, event.showAdvancedItemTooltips);
+			int toolTipIndex = tinkersTooltip.size() > 0 ? event.toolTip.indexOf(tinkersTooltip.get(0)) + tinkersTooltip.size() : event.toolTip.size();
 
 			// work backwards past any + attack strings
 			while (toolTipIndex > 1 && event.toolTip.get(toolTipIndex-1).startsWith("\u00A79+"))
