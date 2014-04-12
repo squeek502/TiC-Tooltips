@@ -172,7 +172,7 @@ public class ProxyMariculture
 
 		try
 		{
-			partName = part.getUnlocalizedName();
+			partName = part.getUnlocalizedName().substring(5);
 		}
 		catch (Exception e)
 		{

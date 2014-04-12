@@ -11,6 +11,7 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import squeek.tictooltips.helpers.*;
 import squeek.tictooltips.proxy.ProxyExtraTiC;
 import squeek.tictooltips.proxy.ProxyIguanaTweaks;
+import squeek.tictooltips.proxy.ProxyMariculture;
 import tconstruct.items.Bowstring;
 import tconstruct.items.Fletching;
 import tconstruct.items.ToolPart;
@@ -47,7 +48,7 @@ public class TooltipHandler
 				{
 					event.toolTip.addAll(getMaterialTooltip(event.itemStack));
 				}
-				else if (ProxyExtraTiC.isExtraTiCPart(item))
+				else if (ProxyExtraTiC.isExtraTiCPart(item) || ProxyMariculture.isMariculturePart(item))
 				{
 					event.toolTip.addAll(ProxyIguanaTweaks.getPartTooltip(event.itemStack, event.entityPlayer, event.showAdvancedItemTooltips));
 				}

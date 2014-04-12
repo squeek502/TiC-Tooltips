@@ -126,8 +126,10 @@ public class ProxyIguanaTweaks
 		
 		if (item instanceof ToolPart)
 			iguanaPart = findCorrespondingIguanaToolPart((ToolPart) item);
-		else
+		else if (ProxyExtraTiC.isExtraTiCPart(item))
 			iguanaPart = findCorrespondingIguanaToolPart(ProxyExtraTiC.getPartName(item));
+		else if (ProxyMariculture.isMariculturePart(item))
+			iguanaPart = findCorrespondingIguanaToolPart(ProxyMariculture.getPartName(item));
 		
 		if (iguanaPart != null)
 			iguanaPart.addInformation(itemStack, player, toolTip, par4);
