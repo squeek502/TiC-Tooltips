@@ -14,6 +14,7 @@ import tconstruct.items.Bowstring;
 import tconstruct.items.Fletching;
 import tconstruct.items.ToolPart;
 import tconstruct.library.TConstructRegistry;
+import tconstruct.library.armor.ArmorCore;
 import tconstruct.library.tools.ArrowMaterial;
 import tconstruct.library.tools.BowMaterial;
 import tconstruct.library.tools.BowstringMaterial;
@@ -115,6 +116,19 @@ public class TooltipHandler
 				event.toolTip.add(toolTipIndex++, "Hold " + EnumChatFormatting.YELLOW + EnumChatFormatting.ITALIC + "Shift" + EnumChatFormatting.RESET + EnumChatFormatting.GRAY + " for Stats");
 				event.toolTip.add(toolTipIndex++, "Hold " + EnumChatFormatting.DARK_AQUA + EnumChatFormatting.ITALIC + "Ctrl" + EnumChatFormatting.RESET + EnumChatFormatting.GRAY + " for Materials");
 			}
+		}
+		// Armor
+		else if (item instanceof ArmorCore && ArmorHelper.hasArmorTag(event.itemStack))
+		{
+			int toolTipIndex = Math.min(1, event.toolTip.size());
+			
+			// find first empty line
+			while (toolTipIndex < event.toolTip.size() && !event.toolTip.get(toolTipIndex).equals(""))
+			{
+				toolTipIndex++;
+			}
+			
+			event.toolTip.addAll(toolTipIndex, getArmorStatsTooltip(event.itemStack));
 		}
 	}
 
@@ -591,6 +605,22 @@ public class TooltipHandler
 		List<String> partStats = getMaterialTooltip(matID, itemPart, tool);
 		toolTip.addAll(partStats);
 
+		return toolTip;
+	}
+
+	/*
+	 * 	Armor Tool Tip
+	 */
+	private List<String> getArmorStatsTooltip(ItemStack itemStack)
+	{
+		List<String> toolTip = new ArrayList<String>();
+
+		//ArmorCore armor = (ArmorCore) itemStack.getItem();
+		NBTTagCompound armorTag = ArmorHelper.getArmorTag(itemStack);
+
+		int modifiersAvailable = armorTag.getInteger("Modifiers");
+		toolTip.add(StringHelper.getLocalizedString("gui.toolstation18") + EnumChatFormatting.WHITE + modifiersAvailable);
+		
 		return toolTip;
 	}
 
