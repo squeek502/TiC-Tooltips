@@ -422,10 +422,10 @@ public class TooltipHandler
 
 		if (ToolHelper.isDualHarvestTool(tool))
 		{
-			int mineSpeed1 = ToolHelper.getPrimaryMiningSpeed(toolTag);
-			int mineSpeed2 = ToolHelper.getSecondaryMiningSpeed(toolTag);
-			float stoneboundSpeed = ToolHelper.getShoddinessSpeedBonus(toolTag);
-			float maxStoneboundSpeed = ToolHelper.getMaxShoddinessSpeedBonus(toolTag);
+			int mineSpeed1 = ToolHelper.getPrimaryMiningSpeed(tool, toolTag);
+			int mineSpeed2 = ToolHelper.getSecondaryMiningSpeed(tool, toolTag);
+			float stoneboundSpeed = ToolHelper.getShoddinessSpeedBonus(tool, toolTag);
+			float maxStoneboundSpeed = ToolHelper.getMaxShoddinessSpeedBonus(tool, toolTag);
 
 			mineSpeed1 += stoneboundSpeed * 100f;
 			mineSpeed2 += stoneboundSpeed * 100f;
@@ -455,9 +455,9 @@ public class TooltipHandler
 		}
 		else if (ToolHelper.isHarvestTool(tool))
 		{
-			int mineSpeed = ToolHelper.getTotalMiningSpeed(toolTag);
-			float stoneboundSpeed = ToolHelper.getShoddinessSpeedBonus(toolTag);
-			float maxStoneboundSpeed = ToolHelper.getMaxShoddinessSpeedBonus(toolTag);
+			int mineSpeed = ToolHelper.getTotalMiningSpeed(tool, toolTag);
+			float stoneboundSpeed = ToolHelper.getShoddinessSpeedBonus(tool, toolTag);
+			float maxStoneboundSpeed = ToolHelper.getMaxShoddinessSpeedBonus(tool, toolTag);
 
 			mineSpeed += stoneboundSpeed * 100f;
 
@@ -488,7 +488,7 @@ public class TooltipHandler
 		}
 		else if (ToolHelper.isUtilityTool(tool))
 		{
-			int mineSpeed = ToolHelper.getPrimaryMiningSpeed(toolTag);
+			int mineSpeed = ToolHelper.getPrimaryMiningSpeed(tool, toolTag);
 
 			toolTip.add(StringHelper.getLocalizedString("gui.toolstation16") + ToolPartHelper.getMiningSpeedString(mineSpeed));
 		}

@@ -1,6 +1,7 @@
 package squeek.tictooltips;
 
 import net.minecraftforge.common.MinecraftForge;
+import squeek.tictooltips.helpers.ToolHelper;
 import squeek.tictooltips.helpers.ToolPartHelper;
 import squeek.tictooltips.proxy.ProxyExtraTiC;
 import squeek.tictooltips.proxy.ProxyIguanaTweaks;
@@ -46,6 +47,7 @@ public class ModTiCTooltips
 			ProxyIguanaTweaks.init();
 		}
 
+		ToolHelper.init();
 		ToolPartHelper.determineMinAndMaxValues();
 	}
 }

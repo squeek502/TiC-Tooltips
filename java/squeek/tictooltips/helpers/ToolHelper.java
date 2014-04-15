@@ -1,14 +1,33 @@
 package squeek.tictooltips.helpers;
 
+import java.lang.reflect.Method;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import tconstruct.common.TContent;
 import tconstruct.library.TConstructRegistry;
+import tconstruct.library.tools.HarvestTool;
 import tconstruct.library.tools.ToolCore;
 import tconstruct.library.tools.ToolMaterial;
 
 public class ToolHelper
 {
+	public static boolean harvestToolsHaveVariableSpeedCalculations = false;
+	private static Method harvestToolStoneboundModifier = null;
+	private static Method harvestToolBreakSpeedModifier = null;
+	
+	public static void init()
+	{
+		try
+		{
+			harvestToolStoneboundModifier = HarvestTool.class.getDeclaredMethod("stoneboundModifier");
+			harvestToolBreakSpeedModifier = HarvestTool.class.getDeclaredMethod("breakSpeedModifier");
+			harvestToolsHaveVariableSpeedCalculations = true;
+		}
+		catch (Exception e)
+		{
+			harvestToolsHaveVariableSpeedCalculations = false;
+		}
+	}
 
 	public static boolean hasToolTag(ItemStack itemStack)
 	{
@@ -187,15 +206,37 @@ public class ToolHelper
 	{
 		return (float) Math.log(getMaxDurability(toolTag) / 72f + 1) * -2 * getStonebound(toolTag);
 	}
-
-	public static float getShoddinessSpeedBonus(NBTTagCompound toolTag)
+	
+	public static float getShoddinessModifierConstant(ToolCore tool)
 	{
-		return (float) Math.log(getUsedDurability(toolTag) / 72f + 1) * 2 * getStonebound(toolTag);
+		float modifierConstant = 72f;
+		if (harvestToolsHaveVariableSpeedCalculations && tool != null && tool instanceof HarvestTool)
+		{
+			try
+			{
+				modifierConstant = (Float) harvestToolStoneboundModifier.invoke((HarvestTool) tool);
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+		return modifierConstant;
+	}
+	
+	public static float getShoddinessSpeedBonus(int usedDurability, float shoddiness, float modifierConstant)
+	{
+		return (float) Math.log(usedDurability / modifierConstant + 1) * 2 * shoddiness;
 	}
 
-	public static float getMaxShoddinessSpeedBonus(NBTTagCompound toolTag)
+	public static float getShoddinessSpeedBonus(ToolCore tool, NBTTagCompound toolTag)
 	{
-		return (float) Math.log(getMaxDurability(toolTag) / 72f + 1) * 2 * getStonebound(toolTag);
+		return getShoddinessSpeedBonus(getUsedDurability(toolTag), getStonebound(toolTag), getShoddinessModifierConstant(tool));
+	}
+
+	public static float getMaxShoddinessSpeedBonus(ToolCore tool, NBTTagCompound toolTag)
+	{
+		return getShoddinessSpeedBonus(getMaxDurability(toolTag), getStonebound(toolTag), getShoddinessModifierConstant(tool));
 	}
 
 	public static int getDrawSpeed(NBTTagCompound toolTag)
@@ -222,18 +263,35 @@ public class ToolHelper
 	{
 		return toolTag.getFloat("Accuracy");
 	}
-
-	public static int getPrimaryMiningSpeed(NBTTagCompound toolTag)
+	
+	public static float getMiningSpeedModifier(ToolCore tool)
 	{
-		return toolTag.getInteger("MiningSpeed");
+		float speedModifier = 1f;
+		if (harvestToolsHaveVariableSpeedCalculations && tool != null && tool instanceof HarvestTool)
+		{
+			try
+			{
+				speedModifier = (Float) harvestToolBreakSpeedModifier.invoke((HarvestTool) tool);
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+		return speedModifier;
 	}
 
-	public static int getSecondaryMiningSpeed(NBTTagCompound toolTag)
+	public static int getPrimaryMiningSpeed(ToolCore tool, NBTTagCompound toolTag)
 	{
-		return toolTag.getInteger("MiningSpeed2");
+		return (int) (toolTag.getInteger("MiningSpeed") * getMiningSpeedModifier(tool));
 	}
 
-	public static int getTotalMiningSpeed(NBTTagCompound toolTag)
+	public static int getSecondaryMiningSpeed(ToolCore tool, NBTTagCompound toolTag)
+	{
+		return (int) (toolTag.getInteger("MiningSpeed2") * getMiningSpeedModifier(tool));
+	}
+
+	public static int getTotalMiningSpeed(ToolCore tool, NBTTagCompound toolTag)
 	{
 		int mineSpeed = toolTag.getInteger("MiningSpeed");
 		int heads = 1;
@@ -256,7 +314,7 @@ public class ToolHelper
 			heads++;
 		}
 
-		return (int) ((float) mineSpeed / heads);
+		return (int) ((float) mineSpeed * getMiningSpeedModifier(tool) / heads);
 	}
 
 	public static int getPrimaryHarvestLevel(NBTTagCompound toolTag)
