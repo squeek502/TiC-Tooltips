@@ -67,11 +67,18 @@ public class TooltipHandler
 		{	
 			// start at the last line of the tooltip that was added by Tinkers
 			List<String> tinkersTooltip = new ArrayList<String>();
-			((ToolCore) item).addInformation(event.itemStack, event.entityPlayer, tinkersTooltip, event.showAdvancedItemTooltips);
-			int toolTipIndex = tinkersTooltip.size() > 0 ? event.toolTip.indexOf(tinkersTooltip.get(0)) + tinkersTooltip.size() : event.toolTip.size();
+			String plusPrefix = "\u00A79+";
+			int toolTipIndex = 0;
+			if (event.toolTip.get(event.toolTip.size()-1).equals(plusPrefix))
+				toolTipIndex = event.toolTip.size()-1;
+			else
+			{
+				((ToolCore) item).addInformation(event.itemStack, event.entityPlayer, tinkersTooltip, event.showAdvancedItemTooltips);
+				toolTipIndex = tinkersTooltip.size() > 0 ? event.toolTip.indexOf(tinkersTooltip.get(0)) + tinkersTooltip.size() : event.toolTip.size();
+			}
 
 			// work backwards past any + attack strings
-			while (toolTipIndex > 1 && event.toolTip.get(toolTipIndex-1).startsWith("\u00A79+"))
+			while (toolTipIndex > 1 && event.toolTip.get(toolTipIndex-1).startsWith(plusPrefix))
 			{
 				toolTipIndex--;
 			}
