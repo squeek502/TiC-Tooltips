@@ -135,9 +135,9 @@ public class StringHelper
 		localizationAlternatives.put("gui.partcrafter.mining3", "Redstone");
 		localizationAlternatives.put("gui.partcrafter.mining4", "Obsidian");
 		localizationAlternatives.put("gui.partcrafter.mining5", "Cobalt");
-		localizationAlternatives.put("gui.partcrafter.mining6", "Manyullyn");
-		localizationAlternatives.put("gui.partcrafter.mining7", "Atlarus");
-		localizationAlternatives.put("gui.partcrafter.mining8", "Tartarite");
+		localizationAlternatives.put("gui.partcrafter.mining6", "Atlarus");
+		localizationAlternatives.put("gui.partcrafter.mining7", "7");
+		localizationAlternatives.put("gui.partcrafter.mining8", "8");
 		localizationAlternatives.put("gui.stenciltable1", "Next Pattern");
 		localizationAlternatives.put("gui.stenciltable2", "Previous Pattern");
 		localizationAlternatives.put("gui.toolforge1", "Repair and Modification");
@@ -164,6 +164,9 @@ public class StringHelper
 
 	public static String getLocalizedString(String unlocalized)
 	{
+		if (unlocalized.equals("gui.partcrafter.mining6"))
+			return localizationAlternatives.get(unlocalized);
+			
 		String localized = StatCollector.translateToLocal(unlocalized);
 		if (localized.equals(unlocalized))
 		{

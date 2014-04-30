@@ -2,9 +2,11 @@ package squeek.tictooltips;
 
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -69,12 +71,30 @@ public class TooltipHandler
 			List<String> tinkersTooltip = new ArrayList<String>();
 			String plusPrefix = "\u00A79+";
 			int toolTipIndex = 0;
-			if (event.toolTip.get(event.toolTip.size()-1).equals(plusPrefix))
-				toolTipIndex = event.toolTip.size()-1;
-			else
+			if (event.toolTip.size() > 1)
 			{
-				((ToolCore) item).addInformation(event.itemStack, event.entityPlayer, tinkersTooltip, event.showAdvancedItemTooltips);
-				toolTipIndex = tinkersTooltip.size() > 0 ? event.toolTip.indexOf(tinkersTooltip.get(0)) + tinkersTooltip.size() : event.toolTip.size();
+				toolTipIndex = -1;
+				
+				// skip to the index of last + modifier
+				// TODO: skip to the first + modifier
+				if (event.toolTip.get(event.toolTip.size()-1).startsWith(plusPrefix))
+					toolTipIndex = event.toolTip.size()-1;
+				// otherwise skip to the first enchant string
+				else if (event.itemStack.isItemEnchanted())
+				{
+					NBTTagList enchantTagList = event.itemStack.getEnchantmentTagList();
+					short enchantID = ((NBTTagCompound)enchantTagList.tagAt(0)).getShort("id");
+					short enchantLevel = ((NBTTagCompound)enchantTagList.tagAt(0)).getShort("lvl");
+					String enchantName = Enchantment.enchantmentsList[enchantID].getTranslatedName(enchantLevel);
+					toolTipIndex = event.toolTip.indexOf(enchantName);
+				}
+
+				// as a last resort, skip to the end of the TiC additions (potentially expensive)
+				if (toolTipIndex == -1)
+				{
+					((ToolCore) item).addInformation(event.itemStack, event.entityPlayer, tinkersTooltip, event.showAdvancedItemTooltips);
+					toolTipIndex = tinkersTooltip.size() > 0 ? event.toolTip.indexOf(tinkersTooltip.get(0)) + tinkersTooltip.size() : event.toolTip.size();
+				}
 			}
 
 			// work backwards past any + attack strings
