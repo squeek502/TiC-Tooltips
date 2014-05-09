@@ -3,11 +3,11 @@ package squeek.tictooltips.helpers;
 import java.lang.reflect.Method;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import tconstruct.common.TContent;
+import tconstruct.common.TRepo;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.tools.HarvestTool;
 import tconstruct.library.tools.ToolCore;
-import tconstruct.library.tools.ToolMaterial;
+import tconstruct.library.tools.TToolMaterial;
 
 public class ToolHelper
 {
@@ -41,9 +41,9 @@ public class ToolHelper
 		return tag;
 	}
 
-	public static ToolMaterial getHeadMaterial(NBTTagCompound toolTag)
+	public static TToolMaterial getHeadMaterial(NBTTagCompound toolTag)
 	{
-		ToolMaterial mat = null;
+		TToolMaterial mat = null;
 		int matID = toolTag.getInteger("Head");
 		if (matID >= 0)
 		{
@@ -144,7 +144,7 @@ public class ToolHelper
 		int staticBonus = 0;
 		int variableBonus = 0;
 		// TODO: Better way to determine if the tool is of a certain type
-		if (tool == TContent.hammer)
+		if (tool == TRepo.hammer)
         {
             int level = 2;
             staticBonus += level * 2;
@@ -191,7 +191,7 @@ public class ToolHelper
 	public static float getChanceToBehead(ToolCore tool, NBTTagCompound toolTag)
 	{
 		float chanceToBehead = toolTag.getInteger("Beheading");
-		if (tool == TContent.cleaver)
+		if (tool == TRepo.cleaver)
 			chanceToBehead += 2;
 		chanceToBehead = chanceToBehead / 10;
         return Math.min(1, chanceToBehead);

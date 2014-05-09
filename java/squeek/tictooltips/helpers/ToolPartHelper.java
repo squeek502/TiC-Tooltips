@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import net.minecraft.item.Item;
-import tconstruct.common.TContent;
+import tconstruct.common.TRepo;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.tools.ArrowMaterial;
 import tconstruct.library.tools.BowMaterial;
 import tconstruct.library.tools.BowstringMaterial;
 import tconstruct.library.tools.CustomMaterial;
 import tconstruct.library.tools.FletchingMaterial;
-import tconstruct.library.tools.ToolMaterial;
+import tconstruct.library.tools.TToolMaterial;
 
 public class ToolPartHelper
 {
@@ -19,91 +19,91 @@ public class ToolPartHelper
 	public static List<Item> toolHeads = new ArrayList<Item>( 
 		Arrays.asList
 		(
-			TContent.pickaxeHead, 
-			TContent.shovelHead,
-			TContent.excavatorHead
+			TRepo.pickaxeHead, 
+			TRepo.shovelHead,
+			TRepo.excavatorHead
 		)
 	);
 	public static List<Item> weaponMiningHeads = new ArrayList<Item>(
 		Arrays.asList
 		(
-			TContent.hammerHead
+			TRepo.hammerHead
 		)
 	);
 	public static List<Item> weaponToolHeads = new ArrayList<Item>(
 		Arrays.asList
 		(
-			TContent.hatchetHead,
-			TContent.scytheBlade,
-			TContent.broadAxeHead
+			TRepo.hatchetHead,
+			TRepo.scytheBlade,
+			TRepo.broadAxeHead
 		)
 	);
 	public static List<Item> weaponHeads = new ArrayList<Item>(
 		Arrays.asList
 		(
-			TContent.swordBlade,
-			TContent.largeSwordBlade,
-			TContent.knifeBlade,
-			TContent.frypanHead,
-			TContent.signHead
+			TRepo.swordBlade,
+			TRepo.largeSwordBlade,
+			TRepo.knifeBlade,
+			TRepo.frypanHead,
+			TRepo.signHead
 		)
 	);
 	public static List<Item> weaponGuards = new ArrayList<Item>(
 		Arrays.asList
 		(
-		 	TContent.crossbar,
-		 	TContent.handGuard,
-		 	TContent.wideGuard,
-		 	TContent.fullGuard
+		 	TRepo.crossbar,
+		 	TRepo.handGuard,
+		 	TRepo.wideGuard,
+		 	TRepo.fullGuard
 		)
 	);
 	public static List<Item> bindings = new ArrayList<Item>(
 		Arrays.asList
 		(
-			TContent.binding,
-			TContent.toughBinding
+			TRepo.binding,
+			TRepo.toughBinding
 		)
 	);
 	public static List<Item> rods = new ArrayList<Item>(
 		Arrays.asList
 		(
-			TContent.toolRod,
-			TContent.toughRod
+			TRepo.toolRod,
+			TRepo.toughRod
 		)
 	);
 	public static List<Item> plates = new ArrayList<Item>(
 		Arrays.asList(
-			TContent.largePlate
+			TRepo.largePlate
 		)
 	);
 	public static List<Item> shards = new ArrayList<Item>(
 		Arrays.asList(
-			TContent.toolShard
+			TRepo.toolShard
 		)
 	);
 	public static List<Item> arrowHeads = new ArrayList<Item>(
 		Arrays.asList(
-			TContent.arrowhead
+			TRepo.arrowhead
 		)
 	);
 	public static List<Item> arrowFletchings = new ArrayList<Item>(
 		Arrays.asList(
-			TContent.fletching
+			TRepo.fletching
 		)
 	);
 	public static List<Item> bowStrings = new ArrayList<Item>(
 		Arrays.asList(
-			TContent.bowstring
+			TRepo.bowstring
 		)
 	);
 	public static List<Item> arrowRods = new ArrayList<Item>(
 		Arrays.asList(
-			TContent.toolRod
+			TRepo.toolRod
 		)
 	);
 	public static List<Item> chisels = new ArrayList<Item>(
 		Arrays.asList(
-			TContent.chiselHead
+			TRepo.chiselHead
 		)
 	);
 
@@ -223,7 +223,7 @@ public class ToolPartHelper
 		boolean needsInit = true;
 		for (int key : TConstructRegistry.toolMaterials.keySet())
 		{
-			ToolMaterial mat = TConstructRegistry.toolMaterials.get(key);
+			TToolMaterial mat = TConstructRegistry.toolMaterials.get(key);
 
 			if (needsInit)
 			{

@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraftforge.event.ForgeSubscribe;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import squeek.tictooltips.helpers.*;
 import squeek.tictooltips.proxy.ProxyIguanaTweaks;
@@ -22,14 +22,14 @@ import tconstruct.library.tools.BowMaterial;
 import tconstruct.library.tools.BowstringMaterial;
 import tconstruct.library.tools.FletchingMaterial;
 import tconstruct.library.tools.ToolCore;
-import tconstruct.library.tools.ToolMaterial;
+import tconstruct.library.tools.TToolMaterial;
 import tconstruct.library.util.IPattern;
 import tconstruct.library.util.IToolPart;
 
 public class TooltipHandler
 {
 
-	@ForgeSubscribe
+	@SubscribeEvent
 	public void onItemTooltip(ItemTooltipEvent event)
 	{
 		if (event.entityPlayer == null)
@@ -83,8 +83,8 @@ public class TooltipHandler
 				else if (event.itemStack.isItemEnchanted())
 				{
 					NBTTagList enchantTagList = event.itemStack.getEnchantmentTagList();
-					short enchantID = ((NBTTagCompound)enchantTagList.tagAt(0)).getShort("id");
-					short enchantLevel = ((NBTTagCompound)enchantTagList.tagAt(0)).getShort("lvl");
+					short enchantID = ((NBTTagCompound)enchantTagList.getCompoundTagAt(0)).getShort("id");
+					short enchantLevel = ((NBTTagCompound)enchantTagList.getCompoundTagAt(0)).getShort("lvl");
 					String enchantName = Enchantment.enchantmentsList[enchantID].getTranslatedName(enchantLevel);
 					toolTipIndex = event.toolTip.indexOf(enchantName);
 				}
@@ -177,7 +177,7 @@ public class TooltipHandler
 	private List<String> getMaterialTooltip(int matID, Item item, ToolCore tool)
 	{
 		List<String> toolTip = new ArrayList<String>();
-		ToolMaterial mat = TConstructRegistry.getMaterial(matID);
+		TToolMaterial mat = TConstructRegistry.getMaterial(matID);
 		boolean hasTool = tool != null;
 
 		if (!mat.ability().equals(""))
@@ -349,7 +349,7 @@ public class TooltipHandler
 		boolean isShoddy = shoddiness != 0;
 		String shoddinessType = StringHelper.getShoddinessTypeString(shoddiness);
 
-		ToolMaterial repairMat = ToolHelper.getHeadMaterial(toolTag);
+		TToolMaterial repairMat = ToolHelper.getHeadMaterial(toolTag);
 		toolTip.add("Repair Material: " + repairMat.style() + repairMat.displayName);
 
 		int maxDurability = ToolHelper.getMaxDurability(toolTag);
@@ -609,7 +609,7 @@ public class TooltipHandler
 		if (itemPart instanceof ToolPart)
 		{
 			ToolPart part = (ToolPart) itemPart;
-			ToolMaterial mat = TConstructRegistry.getMaterial(matID);
+			TToolMaterial mat = TConstructRegistry.getMaterial(matID);
 			toolTip.add(mat.style() + EnumChatFormatting.UNDERLINE + StringHelper.getLocalizedString("toolpart." + part.partName).replaceAll("%%material ", mat.displayName));
 		}
 		else if (itemPart instanceof Bowstring)
