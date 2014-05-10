@@ -4,6 +4,9 @@ import java.lang.reflect.Method;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import tconstruct.common.TRepo;
+import tconstruct.items.tools.Excavator;
+import tconstruct.items.tools.Hammer;
+import tconstruct.items.tools.LumberAxe;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.tools.HarvestTool;
 import tconstruct.library.tools.ToolCore;
@@ -14,7 +17,7 @@ public class ToolHelper
 	public static boolean harvestToolsHaveVariableSpeedCalculations = false;
 	private static Method harvestToolStoneboundModifier = null;
 	private static Method harvestToolBreakSpeedModifier = null;
-	
+
 	public static void init()
 	{
 		try
@@ -111,7 +114,7 @@ public class ToolHelper
 	{
 		return toolTag.getInteger("Unbreaking");
 	}
-	
+
 	public static boolean isUnbreakable(NBTTagCompound toolTag)
 	{
 		return getReinforcedLevel(toolTag) >= 10;
@@ -130,7 +133,7 @@ public class ToolHelper
 
 	public static int getDamage(ToolCore tool, NBTTagCompound toolTag)
 	{
-		int attack = toolTag.getInteger("Attack")+1;
+		int attack = toolTag.getInteger("Attack") + 1;
 		attack += getShoddinessDamageBonus(toolTag);
 		attack *= tool.getDamageModifier();
 		if (attack < 1)
@@ -138,63 +141,63 @@ public class ToolHelper
 
 		return attack;
 	}
-	
+
 	public static int[] getSmiteDamageRange(ToolCore tool, NBTTagCompound toolTag)
 	{
 		int staticBonus = 0;
 		int variableBonus = 0;
 		// TODO: Better way to determine if the tool is of a certain type
 		if (tool == TRepo.hammer)
-        {
-            int level = 2;
-            staticBonus += level * 2;
-            variableBonus += level * 2 + 1;
-        }
+		{
+			int level = 2;
+			staticBonus += level * 2;
+			variableBonus += level * 2 + 1;
+		}
 		if (toolTag.hasKey("ModSmite"))
-        {
-            int[] array = toolTag.getIntArray("ModSmite");
-            int base = array[0] / 18;
-            staticBonus += 1 + base;
-            variableBonus += base + 1;
-        }
-		return new int[] {staticBonus, staticBonus+variableBonus};
+		{
+			int[] array = toolTag.getIntArray("ModSmite");
+			int base = array[0] / 18;
+			staticBonus += 1 + base;
+			variableBonus += base + 1;
+		}
+		return new int[]{staticBonus, staticBonus + variableBonus};
 	}
-	
+
 	public static int[] getAntiSpiderDamageRange(ToolCore tool, NBTTagCompound toolTag)
 	{
 		int staticBonus = 0;
 		int variableBonus = 0;
 		if (toolTag.hasKey("ModAntiSpider"))
-        {
-            int[] array = toolTag.getIntArray("ModAntiSpider");
-            int base = array[0] / 2;
-            staticBonus += 1 + base;
-            variableBonus += base + 1;
-        }
-		return new int[] {staticBonus, staticBonus+variableBonus};
+		{
+			int[] array = toolTag.getIntArray("ModAntiSpider");
+			int base = array[0] / 2;
+			staticBonus += 1 + base;
+			variableBonus += base + 1;
+		}
+		return new int[]{staticBonus, staticBonus + variableBonus};
 	}
-	
+
 	public static int getBurnDuration(ToolCore tool, NBTTagCompound toolTag)
 	{
 		int burnDuration = 0;
 		if (toolTag.hasKey("Fiery"))
-        {
+		{
 			burnDuration += toolTag.getInteger("Fiery") / 5 + 1;
-        }
-        if (toolTag.getBoolean("Lava"))
-        {
-        	burnDuration += 3;
-        }
+		}
+		if (toolTag.getBoolean("Lava"))
+		{
+			burnDuration += 3;
+		}
 		return burnDuration;
 	}
-	
+
 	public static float getChanceToBehead(ToolCore tool, NBTTagCompound toolTag)
 	{
 		float chanceToBehead = toolTag.getInteger("Beheading");
 		if (tool == TRepo.cleaver)
 			chanceToBehead += 2;
 		chanceToBehead = chanceToBehead / 10;
-        return Math.min(1, chanceToBehead);
+		return Math.min(1, chanceToBehead);
 	}
 
 	public static float getShoddinessDamageBonus(NBTTagCompound toolTag)
@@ -206,11 +209,16 @@ public class ToolHelper
 	{
 		return (float) Math.log(getMaxDurability(toolTag) / 72f + 1) * -2 * getStonebound(toolTag);
 	}
-	
+
 	public static float getShoddinessModifierConstant(ToolCore tool)
 	{
 		float modifierConstant = 72f;
-		if (harvestToolsHaveVariableSpeedCalculations && tool != null && tool instanceof HarvestTool)
+
+		if (tool == null || !(tool instanceof HarvestTool))
+			return modifierConstant;
+
+		// version >= 1.5.5
+		if (harvestToolsHaveVariableSpeedCalculations)
 		{
 			try
 			{
@@ -221,9 +229,15 @@ public class ToolHelper
 				e.printStackTrace();
 			}
 		}
+		// version < 1.5.5
+		else if (tool instanceof Excavator || tool instanceof Hammer) // not LumberAxe due to a TiC bug
+		{
+			modifierConstant = 216f;
+		}
+
 		return modifierConstant;
 	}
-	
+
 	public static float getShoddinessSpeedBonus(int usedDurability, float shoddiness, float modifierConstant)
 	{
 		return (float) Math.log(usedDurability / modifierConstant + 1) * 2 * shoddiness;
@@ -263,11 +277,16 @@ public class ToolHelper
 	{
 		return toolTag.getFloat("Accuracy");
 	}
-	
+
 	public static float getMiningSpeedModifier(ToolCore tool)
 	{
 		float speedModifier = 1f;
-		if (harvestToolsHaveVariableSpeedCalculations && tool != null && tool instanceof HarvestTool)
+
+		if (tool == null || !(tool instanceof HarvestTool))
+			return speedModifier;
+
+		// version >= 1.5.5
+		if (harvestToolsHaveVariableSpeedCalculations)
 		{
 			try
 			{
@@ -278,6 +297,12 @@ public class ToolHelper
 				e.printStackTrace();
 			}
 		}
+		// version < 1.5.5
+		else if (tool instanceof Excavator || tool instanceof Hammer || tool instanceof LumberAxe)
+		{
+			speedModifier = 1f / 3f;
+		}
+
 		return speedModifier;
 	}
 
@@ -314,7 +339,7 @@ public class ToolHelper
 			heads++;
 		}
 
-		return (int) ((float) mineSpeed * getMiningSpeedModifier(tool) / heads);
+		return (int) ((float) mineSpeed / heads * getMiningSpeedModifier(tool));
 	}
 
 	public static int getPrimaryHarvestLevel(NBTTagCompound toolTag)
