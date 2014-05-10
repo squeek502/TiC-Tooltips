@@ -128,7 +128,7 @@ public class ProxyMariculture implements IModPartHandler
 		}
 		catch (Exception e)
 		{
-			ModTiCTooltips.Log.warning("Failed to register Mariculture tool parts: " + e.toString());
+			ModTiCTooltips.Log.error("Failed to register Mariculture tool parts: " + e.toString());
 			return false;
 		}
 		

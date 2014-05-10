@@ -72,7 +72,7 @@ public class ProxyIguanaTweaks
 		}
 		catch (Exception e)
 		{
-			ModTiCTooltips.Log.warning("Failed to load Iguana Tweaks integration: " + e.toString());
+			ModTiCTooltips.Log.error("Failed to load Iguana Tweaks integration: " + e.toString());
 		}
 	}
 	
@@ -122,7 +122,7 @@ public class ProxyIguanaTweaks
 		}
 		catch (Exception e)
 		{
-			ModTiCTooltips.Log.warning("Failed to register Iguana Tweaks tool parts: " + e.toString());
+			ModTiCTooltips.Log.error("Failed to register Iguana Tweaks tool parts: " + e.toString());
 			return false;
 		}
 		

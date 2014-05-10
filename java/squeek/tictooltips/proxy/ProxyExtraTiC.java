@@ -28,7 +28,7 @@ public class ProxyExtraTiC implements IModPartHandler
 		}
 		catch (Exception e)
 		{
-			ModTiCTooltips.Log.warning("Failed to load Extra TiC integration: " + e.toString());
+			ModTiCTooltips.Log.error("Failed to load Extra TiC integration: " + e.toString());
 		}
 	}
 
@@ -141,7 +141,7 @@ public class ProxyExtraTiC implements IModPartHandler
 		}
 		catch (Exception e)
 		{
-			ModTiCTooltips.Log.warning("Failed to register Extra TiC tool parts: " + e.toString());
+			ModTiCTooltips.Log.error("Failed to register Extra TiC tool parts: " + e.toString());
 			return false;
 		}
 		
