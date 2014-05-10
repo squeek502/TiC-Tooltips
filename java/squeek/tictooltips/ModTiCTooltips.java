@@ -1,5 +1,6 @@
 package squeek.tictooltips;
 
+import java.util.logging.Logger;
 import net.minecraftforge.common.MinecraftForge;
 import squeek.tictooltips.ModInfo;
 import squeek.tictooltips.helpers.ToolHelper;
@@ -7,6 +8,7 @@ import squeek.tictooltips.helpers.ToolPartHelper;
 import squeek.tictooltips.proxy.ProxyExtraTiC;
 import squeek.tictooltips.proxy.ProxyIguanaTweaks;
 import squeek.tictooltips.proxy.ProxyMariculture;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -19,6 +21,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ModTiCTooltips
 {
 	public static boolean hasIguanaTweaks;
+	public static final Logger Log = Logger.getLogger(ModInfo.MODID);
+	static
+	{
+		Log.setParent(FMLLog.getLogger());
+	}
 
 	@SideOnly(Side.CLIENT)
 	@EventHandler

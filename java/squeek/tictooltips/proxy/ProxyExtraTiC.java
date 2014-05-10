@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import net.minecraft.item.Item;
+import squeek.tictooltips.ModTiCTooltips;
 import squeek.tictooltips.helpers.ToolPartHelper;
 
 public class ProxyExtraTiC implements IModPartHandler
@@ -22,16 +23,16 @@ public class ProxyExtraTiC implements IModPartHandler
 			ExtraTiCPart = Class.forName("glassmaker.extratic.parts.Part");
 			unlocalizedPartName = ExtraTiCPart.getDeclaredField("unlocalizedPartName");
 			unlocalizedPartName.setAccessible(true);
-			registerParts();
-			ProxyIguanaTweaks.registerModPartHandler(new ProxyExtraTiC());
+			if (registerParts())
+				ProxyIguanaTweaks.registerModPartHandler(new ProxyExtraTiC());
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			ModTiCTooltips.Log.warning("Failed to load Extra TiC integration: " + e.toString());
 		}
 	}
 
-	public static void registerParts()
+	public static boolean registerParts()
 	{
 		try
 		{
@@ -140,9 +141,11 @@ public class ProxyExtraTiC implements IModPartHandler
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
-			return;
+			ModTiCTooltips.Log.warning("Failed to register Extra TiC tool parts: " + e.toString());
+			return false;
 		}
+		
+		return true;
 	}
 
 	// ExtraTiC unlocalizedName -> TiC partName
@@ -185,7 +188,6 @@ public class ProxyExtraTiC implements IModPartHandler
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
 		}
 
 		partName = partNameDictionary.get(partName);

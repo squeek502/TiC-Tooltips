@@ -7,6 +7,7 @@ import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import squeek.tictooltips.ModTiCTooltips;
 import squeek.tictooltips.helpers.ToolPartHelper;
 import tconstruct.common.TContent;
 import tconstruct.items.ToolPart;
@@ -66,17 +67,17 @@ public class ProxyIguanaTweaks
 		{
 			IguanaTweaksTConstruct = Class.forName("iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct");
 			proxyGetHarvestLevelName = IguanaTweaksTConstruct.getDeclaredMethod("getHarvestLevelName", int.class);
-			registerParts();
-			ProxyIguanaTweaks.registerModPartHandler(new ProxyDefaultToolHandler());
+			if (registerParts())
+				ProxyIguanaTweaks.registerModPartHandler(new ProxyDefaultToolHandler());
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			ModTiCTooltips.Log.warning("Failed to load Iguana Tweaks integration: " + e.toString());
 		}
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static void registerParts()
+	public static boolean registerParts()
 	{
 		try
 		{
@@ -121,9 +122,11 @@ public class ProxyIguanaTweaks
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
-			return;
+			ModTiCTooltips.Log.warning("Failed to register Iguana Tweaks tool parts: " + e.toString());
+			return false;
 		}
+		
+		return true;
 	}
 	
 	public static String getHarvestLevelName(int num)
@@ -136,7 +139,6 @@ public class ProxyIguanaTweaks
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
 		}
 		
 		return harvestLevelName;
