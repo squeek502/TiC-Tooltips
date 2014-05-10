@@ -226,7 +226,7 @@ public class ToolHelper
 			}
 			catch (Exception e)
 			{
-				e.printStackTrace();
+				harvestToolsHaveVariableSpeedCalculations = false;
 			}
 		}
 		// version < 1.5.5
@@ -294,7 +294,7 @@ public class ToolHelper
 			}
 			catch (Exception e)
 			{
-				e.printStackTrace();
+				harvestToolsHaveVariableSpeedCalculations = false;
 			}
 		}
 		// version < 1.5.5

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import net.minecraft.item.Item;
+import squeek.tictooltips.ModTiCTooltips;
 import squeek.tictooltips.helpers.ToolPartHelper;
 
 public class ProxyMariculture implements IModPartHandler
@@ -14,11 +15,11 @@ public class ProxyMariculture implements IModPartHandler
 
 	public static void init()
 	{
-		registerParts();
-		ProxyIguanaTweaks.registerModPartHandler(new ProxyMariculture());
+		if (registerParts())
+			ProxyIguanaTweaks.registerModPartHandler(new ProxyMariculture());
 	}
 
-	public static void registerParts()
+	public static boolean registerParts()
 	{
 		try
 		{
@@ -127,9 +128,11 @@ public class ProxyMariculture implements IModPartHandler
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
-			return;
+			ModTiCTooltips.Log.warning("Failed to register Mariculture tool parts: " + e.toString());
+			return false;
 		}
+		
+		return true;
 	}
 
 	// Mariculture unlocalizedName -> TiC partName
@@ -173,7 +176,6 @@ public class ProxyMariculture implements IModPartHandler
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
 		}
 
 		partName = partNameDictionary.get(partName);
