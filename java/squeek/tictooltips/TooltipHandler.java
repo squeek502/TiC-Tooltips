@@ -93,7 +93,7 @@ public class TooltipHandler
 				if (toolTipIndex == -1)
 				{
 					((ToolCore) item).addInformation(event.itemStack, event.entityPlayer, tinkersTooltip, event.showAdvancedItemTooltips);
-					toolTipIndex = tinkersTooltip.size() > 0 ? event.toolTip.indexOf(tinkersTooltip.get(0)) + tinkersTooltip.size() : event.toolTip.size();
+					toolTipIndex = tinkersTooltip.size() > 0 ? Math.min(event.toolTip.size(), event.toolTip.indexOf(tinkersTooltip.get(0)) + tinkersTooltip.size()) : event.toolTip.size();
 				}
 			}
 
