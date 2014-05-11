@@ -75,8 +75,7 @@ public class TooltipHandler
 			{
 				toolTipIndex = -1;
 				
-				// skip to the index of last + modifier
-				// TODO: skip to the first + modifier
+				// skip to the last + modifier if it's easy to find
 				if (event.toolTip.get(event.toolTip.size()-1).startsWith(plusPrefix))
 					toolTipIndex = event.toolTip.size()-1;
 				// otherwise skip to the first enchant string
@@ -88,12 +87,24 @@ public class TooltipHandler
 					String enchantName = Enchantment.enchantmentsList[enchantID].getTranslatedName(enchantLevel);
 					toolTipIndex = event.toolTip.indexOf(enchantName);
 				}
+				// otherwise skip to the first + modifier
+				else
+				{
+					for (int toolTipSearchIndex=0; toolTipSearchIndex < event.toolTip.size(); toolTipSearchIndex++)
+					{
+						if (event.toolTip.get(toolTipSearchIndex).startsWith(plusPrefix))
+						{
+							toolTipIndex = toolTipSearchIndex;
+							break;
+						}
+					}
+				}
 
 				// as a last resort, skip to the end of the TiC additions (potentially expensive)
 				if (toolTipIndex == -1)
 				{
 					((ToolCore) item).addInformation(event.itemStack, event.entityPlayer, tinkersTooltip, event.showAdvancedItemTooltips);
-					toolTipIndex = tinkersTooltip.size() > 0 ? event.toolTip.indexOf(tinkersTooltip.get(0)) + tinkersTooltip.size() : event.toolTip.size();
+					toolTipIndex = tinkersTooltip.size() > 0 ? Math.min(event.toolTip.size(), event.toolTip.indexOf(tinkersTooltip.get(0)) + tinkersTooltip.size()) : event.toolTip.size();
 				}
 			}
 
