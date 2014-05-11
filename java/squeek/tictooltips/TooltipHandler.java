@@ -75,8 +75,7 @@ public class TooltipHandler
 			{
 				toolTipIndex = -1;
 				
-				// skip to the index of last + modifier
-				// TODO: skip to the first + modifier
+				// skip to the last + modifier if it's easy to find
 				if (event.toolTip.get(event.toolTip.size()-1).startsWith(plusPrefix))
 					toolTipIndex = event.toolTip.size()-1;
 				// otherwise skip to the first enchant string
@@ -87,6 +86,18 @@ public class TooltipHandler
 					short enchantLevel = ((NBTTagCompound)enchantTagList.tagAt(0)).getShort("lvl");
 					String enchantName = Enchantment.enchantmentsList[enchantID].getTranslatedName(enchantLevel);
 					toolTipIndex = event.toolTip.indexOf(enchantName);
+				}
+				// otherwise skip to the first + modifier
+				else
+				{
+					for (int toolTipSearchIndex=0; toolTipSearchIndex < event.toolTip.size(); toolTipSearchIndex++)
+					{
+						if (event.toolTip.get(toolTipSearchIndex).startsWith(plusPrefix))
+						{
+							toolTipIndex = toolTipSearchIndex;
+							break;
+						}
+					}
 				}
 
 				// as a last resort, skip to the end of the TiC additions (potentially expensive)
