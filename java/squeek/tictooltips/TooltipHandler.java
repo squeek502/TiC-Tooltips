@@ -190,6 +190,9 @@ public class TooltipHandler
 		List<String> toolTip = new ArrayList<String>();
 		TToolMaterial mat = TConstructRegistry.getMaterial(matID);
 		boolean hasTool = tool != null;
+		
+		if (mat == null)
+			return toolTip;
 
 		if (!mat.ability().equals(""))
 			toolTip.add(mat.style() + mat.ability());
