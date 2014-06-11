@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import squeek.tictooltips.helpers.*;
@@ -42,7 +43,7 @@ public class TooltipHandler
 		{
 			if (ToolPartHelper.isShard(item))
 				return;
-			
+
 			if (ModTiCTooltips.hasIguanaTweaks)
 			{
 				if (ToolPartHelper.isArrowFletching(item) || ToolPartHelper.isBowString(item))
@@ -66,7 +67,7 @@ public class TooltipHandler
 		}
 		// Tools
 		else if (item instanceof ToolCore && ToolHelper.hasToolTag(event.itemStack))
-		{	
+		{
 			// start at the last line of the tooltip that was added by Tinkers
 			List<String> tinkersTooltip = new ArrayList<String>();
 			String plusPrefix = "\u00A79+";
@@ -74,23 +75,23 @@ public class TooltipHandler
 			if (event.toolTip.size() > 1)
 			{
 				toolTipIndex = -1;
-				
+
 				// skip to the last + modifier if it's easy to find
-				if (event.toolTip.get(event.toolTip.size()-1).startsWith(plusPrefix))
-					toolTipIndex = event.toolTip.size()-1;
+				if (event.toolTip.get(event.toolTip.size() - 1).startsWith(plusPrefix))
+					toolTipIndex = event.toolTip.size() - 1;
 				// otherwise skip to the first enchant string
 				else if (event.itemStack.isItemEnchanted())
 				{
 					NBTTagList enchantTagList = event.itemStack.getEnchantmentTagList();
-					short enchantID = ((NBTTagCompound)enchantTagList.tagAt(0)).getShort("id");
-					short enchantLevel = ((NBTTagCompound)enchantTagList.tagAt(0)).getShort("lvl");
+					short enchantID = ((NBTTagCompound) enchantTagList.tagAt(0)).getShort("id");
+					short enchantLevel = ((NBTTagCompound) enchantTagList.tagAt(0)).getShort("lvl");
 					String enchantName = Enchantment.enchantmentsList[enchantID].getTranslatedName(enchantLevel);
 					toolTipIndex = event.toolTip.indexOf(enchantName);
 				}
 				// otherwise skip to the first + modifier
 				else
 				{
-					for (int toolTipSearchIndex=0; toolTipSearchIndex < event.toolTip.size(); toolTipSearchIndex++)
+					for (int toolTipSearchIndex = 0; toolTipSearchIndex < event.toolTip.size(); toolTipSearchIndex++)
 					{
 						if (event.toolTip.get(toolTipSearchIndex).startsWith(plusPrefix))
 						{
@@ -109,15 +110,15 @@ public class TooltipHandler
 			}
 
 			// work backwards past any + attack strings
-			while (toolTipIndex > 1 && event.toolTip.get(toolTipIndex-1).startsWith(plusPrefix))
+			while (toolTipIndex > 1 && event.toolTip.get(toolTipIndex - 1).startsWith(plusPrefix))
 			{
 				toolTipIndex--;
 			}
-			
+
 			// work backwards and remove any spacing
-			while (toolTipIndex > 1 && event.toolTip.get(toolTipIndex-1).equals(""))
+			while (toolTipIndex > 1 && event.toolTip.get(toolTipIndex - 1).equals(""))
 			{
-				event.toolTip.remove(toolTipIndex-1);
+				event.toolTip.remove(toolTipIndex - 1);
 				toolTipIndex--;
 			}
 
@@ -151,21 +152,21 @@ public class TooltipHandler
 			// No buttons held
 			else
 			{
-				event.toolTip.add(toolTipIndex++, "Hold " + EnumChatFormatting.YELLOW + EnumChatFormatting.ITALIC + "Shift" + EnumChatFormatting.RESET + EnumChatFormatting.GRAY + " for Stats");
-				event.toolTip.add(toolTipIndex++, "Hold " + EnumChatFormatting.DARK_AQUA + EnumChatFormatting.ITALIC + "Ctrl" + EnumChatFormatting.RESET + EnumChatFormatting.GRAY + " for Materials");
+				event.toolTip.add(toolTipIndex++, StatCollector.translateToLocalFormatted("tictooltips.hold.key.for.stats", EnumChatFormatting.YELLOW.toString() + EnumChatFormatting.ITALIC + "Shift" + EnumChatFormatting.RESET + EnumChatFormatting.GRAY));
+				event.toolTip.add(toolTipIndex++, StatCollector.translateToLocalFormatted("tictooltips.hold.key.for.materials", EnumChatFormatting.DARK_AQUA.toString() + EnumChatFormatting.ITALIC + "Ctrl" + EnumChatFormatting.RESET + EnumChatFormatting.GRAY));
 			}
 		}
 		// Armor
 		else if (item instanceof ArmorCore && ArmorHelper.hasArmorTag(event.itemStack))
 		{
 			int toolTipIndex = Math.min(1, event.toolTip.size());
-			
+
 			// find first empty line
 			while (toolTipIndex < event.toolTip.size() && !event.toolTip.get(toolTipIndex).equals(""))
 			{
 				toolTipIndex++;
 			}
-			
+
 			event.toolTip.addAll(toolTipIndex, getArmorStatsTooltip(event.itemStack));
 		}
 	}
@@ -190,7 +191,7 @@ public class TooltipHandler
 		List<String> toolTip = new ArrayList<String>();
 		ToolMaterial mat = TConstructRegistry.getMaterial(matID);
 		boolean hasTool = tool != null;
-		
+
 		if (mat == null)
 			return toolTip;
 
@@ -203,7 +204,7 @@ public class TooltipHandler
 			{
 				if (toolTip.get(index).contains(StringHelper.getShoddinessTypeString(mat.shoddy())))
 				{
-					toolTip.set(index, toolTip.get(index) + EnumChatFormatting.RESET + EnumChatFormatting.GRAY + " [Modifier: " + ToolPartHelper.getShoddinessString(mat.shoddy()) + EnumChatFormatting.RESET + EnumChatFormatting.GRAY + "]");
+					toolTip.set(index, toolTip.get(index) + EnumChatFormatting.RESET + EnumChatFormatting.GRAY + StatCollector.translateToLocalFormatted("tictooltips.material.shoddiness.modifier", ToolPartHelper.getShoddinessString(mat.shoddy()) + EnumChatFormatting.RESET + EnumChatFormatting.GRAY));
 					break;
 				}
 			}
@@ -264,7 +265,7 @@ public class TooltipHandler
 				{
 					toolTip.add(StringHelper.getLocalizedString("gui.partcrafter5") + ToolPartHelper.getHandleModifierString(mat.handleModifier));
 					if (!hasTool && isArrowMat)
-						toolTip.add("Hold " + EnumChatFormatting.YELLOW + EnumChatFormatting.ITALIC + "Shift" + EnumChatFormatting.RESET + EnumChatFormatting.GRAY + " for Bow/Arrow Stats");
+						toolTip.add(StatCollector.translateToLocalFormatted("tictooltips.hold.key.for.bow.stats", EnumChatFormatting.YELLOW.toString() + EnumChatFormatting.ITALIC + "Shift" + EnumChatFormatting.RESET + EnumChatFormatting.GRAY));
 				}
 			}
 			else if (ToolPartHelper.isToolHead(item))
@@ -333,14 +334,14 @@ public class TooltipHandler
 
 		if (validMats != null && !validMats.isEmpty())
 		{
-			toolTip.add("Valid Materials:");
+			toolTip.add(StatCollector.translateToLocal("tictooltips.pattern.valid.materials"));
 			for (String matName : validMats)
 			{
 				if (toolTip.size() < 7 || KeyHelper.isShiftKeyDown())
 					toolTip.add(" - " + matName);
 				else
 				{
-					toolTip.add("Hold " + EnumChatFormatting.YELLOW + EnumChatFormatting.ITALIC + "Shift" + EnumChatFormatting.RESET + EnumChatFormatting.GRAY + " for More");
+					toolTip.add(StatCollector.translateToLocalFormatted("tictooltips.hold.key.for.more", EnumChatFormatting.YELLOW.toString() + EnumChatFormatting.ITALIC + "Shift" + EnumChatFormatting.RESET + EnumChatFormatting.GRAY));
 					break;
 				}
 			}
@@ -364,7 +365,7 @@ public class TooltipHandler
 		String shoddinessType = StringHelper.getShoddinessTypeString(shoddiness);
 
 		ToolMaterial repairMat = ToolHelper.getHeadMaterial(toolTag);
-		toolTip.add("Repair Material: " + repairMat.style() + repairMat.displayName);
+		toolTip.add(StatCollector.translateToLocal("tictooltips.tool.repair.material") + repairMat.style() + repairMat.displayName);
 
 		int maxDurability = ToolHelper.getMaxDurability(toolTag);
 
@@ -376,14 +377,14 @@ public class TooltipHandler
 
 			String curOfMax = curDurability == maxDurability ? StringHelper.getDurabilityString(maxDurability) : StringHelper.getDurabilityString(curDurability) + " / " + StringHelper.getDurabilityString(maxDurability);
 			toolTip.add(StringHelper.getLocalizedString("gui.toolstation2") + ColorHelper.getRelativeColor(curDurability, 0, maxDurability) + curOfMax);
-			
+
 			if (maxDurability != effectiveDurability)
-				toolTip.add("Effective " + StringHelper.getLocalizedString("gui.toolstation2") + ColorHelper.getRelativeColor(ToolHelper.getReinforcedLevel(toolTag), ToolPartHelper.minReinforcedLevel-3, ToolPartHelper.maxReinforcedLevel) + StringHelper.getDurabilityString(effectiveDurability));
+				toolTip.add(StatCollector.translateToLocalFormatted("tictooltips.tool.effective.durability", StringHelper.getLocalizedString("gui.toolstation2")) + ColorHelper.getRelativeColor(ToolHelper.getReinforcedLevel(toolTag), ToolPartHelper.minReinforcedLevel - 3, ToolPartHelper.maxReinforcedLevel) + StringHelper.getDurabilityString(effectiveDurability));
 		}
 
 		if (isShoddy)
 		{
-			toolTip.add(shoddinessType + " Modifier: " + ToolPartHelper.getShoddinessString(shoddiness));
+			toolTip.add(StatCollector.translateToLocalFormatted("tictooltips.tool.shoddiness.modifier", shoddinessType) + ToolPartHelper.getShoddinessString(shoddiness));
 		}
 
 		if (ToolHelper.isWeaponTool(tool))
@@ -405,36 +406,36 @@ public class TooltipHandler
 				if (stoneboundDamage == maxStoneboundDamage)
 					bonusOrLoss += EnumChatFormatting.BOLD;
 				else
-					maxString = EnumChatFormatting.RESET + " " + EnumChatFormatting.DARK_GRAY + "[Max: " + StringHelper.getDamageNumberString((int) maxStoneboundDamage) + EnumChatFormatting.RESET + EnumChatFormatting.DARK_GRAY + "]";
+					maxString = EnumChatFormatting.RESET + " " + EnumChatFormatting.DARK_GRAY + "[" + StatCollector.translateToLocal("tictooltips.maximum") + ": " + StringHelper.getDamageNumberString((int) maxStoneboundDamage) + EnumChatFormatting.RESET + EnumChatFormatting.DARK_GRAY + "]";
 				toolTip.add(EnumChatFormatting.DARK_GRAY + "- " + shoddinessType + " " + bonusOrLoss + StringHelper.getDamageString((int) stoneboundDamage) + maxString);
 			}
 			else if (maxStoneboundDamage != 0 && stoneboundDamage != maxStoneboundDamage)
 			{
 				String bonusOrLoss = maxStoneboundDamage > 0 ? StringHelper.getLocalizedString("gui.toolstation4") + EnumChatFormatting.DARK_GREEN : StringHelper.getLocalizedString("gui.toolstation5") + EnumChatFormatting.DARK_RED;
-				toolTip.add(EnumChatFormatting.DARK_GRAY + "- Max " + shoddinessType + " " + bonusOrLoss + StringHelper.getDamageString((int) maxStoneboundDamage));
+				toolTip.add(EnumChatFormatting.DARK_GRAY + "- " + StatCollector.translateToLocal("tictooltips.maximum") + " " + shoddinessType + " " + bonusOrLoss + StringHelper.getDamageString((int) maxStoneboundDamage));
 			}
 			if (smiteDamageRange[1] != 0 && smiteDamageRange[0] != 0)
 			{
 				EnumChatFormatting textColor = smiteDamageRange[0] >= 0 ? EnumChatFormatting.DARK_GREEN : EnumChatFormatting.DARK_RED;
 				String bonusOrLoss = (smiteDamageRange[0] >= 0 ? StringHelper.getLocalizedString("gui.toolstation4") : StringHelper.getLocalizedString("gui.toolstation5"));
-				bonusOrLoss = bonusOrLoss.substring(0, bonusOrLoss.length()-2);
-				toolTip.add(EnumChatFormatting.DARK_GRAY + "- " + bonusOrLoss + " vs Undead: " + textColor + StringHelper.getDamageNumberString(smiteDamageRange[0]) + "-" + StringHelper.getDamageString(smiteDamageRange[1]));
+				bonusOrLoss = bonusOrLoss.substring(0, bonusOrLoss.length() - 2);
+				toolTip.add(EnumChatFormatting.DARK_GRAY + "- " + StatCollector.translateToLocalFormatted("tictooltips.tool.bonus.vs.undead", bonusOrLoss) + textColor + StringHelper.getDamageNumberString(smiteDamageRange[0]) + "-" + StringHelper.getDamageString(smiteDamageRange[1]));
 			}
 			if (antiSpiderDamageRange[1] != 0 && antiSpiderDamageRange[0] != 0)
 			{
 				EnumChatFormatting textColor = antiSpiderDamageRange[0] >= 0 ? EnumChatFormatting.DARK_GREEN : EnumChatFormatting.DARK_RED;
 				String bonusOrLoss = (antiSpiderDamageRange[0] >= 0 ? StringHelper.getLocalizedString("gui.toolstation4") : StringHelper.getLocalizedString("gui.toolstation5"));
-				bonusOrLoss = bonusOrLoss.substring(0, bonusOrLoss.length()-2);
-				toolTip.add(EnumChatFormatting.DARK_GRAY + "- " + bonusOrLoss + " vs Spiders: " + textColor + StringHelper.getDamageNumberString(antiSpiderDamageRange[0]) + "-" + StringHelper.getDamageString(antiSpiderDamageRange[1]));
+				bonusOrLoss = bonusOrLoss.substring(0, bonusOrLoss.length() - 2);
+				toolTip.add(EnumChatFormatting.DARK_GRAY + "- " + StatCollector.translateToLocalFormatted("tictooltips.tool.bonus.vs.spiders", bonusOrLoss) + textColor + StringHelper.getDamageNumberString(antiSpiderDamageRange[0]) + "-" + StringHelper.getDamageString(antiSpiderDamageRange[1]));
 			}
 			if (burnDuration != 0)
 			{
 				EnumChatFormatting textColor = EnumChatFormatting.DARK_RED;
-				toolTip.add(EnumChatFormatting.DARK_GRAY + "- Burn Duration: " + textColor + StringHelper.getDurationString(burnDuration));
+				toolTip.add(EnumChatFormatting.DARK_GRAY + "- " + StatCollector.translateToLocal("tictooltips.tool.burn.duration") + textColor + StringHelper.getDurationString(burnDuration));
 			}
 			if (chanceToBehead != 0)
 			{
-				toolTip.add(EnumChatFormatting.DARK_GRAY + "- Chance to Behead: " + ColorHelper.getRelativeColor(chanceToBehead, 0, 1) + StringHelper.getPercentageString(chanceToBehead));
+				toolTip.add(EnumChatFormatting.DARK_GRAY + "- " + StatCollector.translateToLocal("tictooltips.tool.chance.to.behead") + ColorHelper.getRelativeColor(chanceToBehead, 0, 1) + StringHelper.getPercentageString(chanceToBehead));
 			}
 		}
 
@@ -452,7 +453,7 @@ public class TooltipHandler
 			int damage = ToolHelper.getAmmoDamage(toolTag);
 			float weight = ToolHelper.getWeight(toolTag);
 			float accuracy = ToolHelper.getAccuracy(toolTag);
-			
+
 			String damageColor = ColorHelper.getRelativeColor(ToolHelper.getRawDamage(tool, toolTag), ToolPartHelper.minAttack, ToolPartHelper.maxAttack);
 
 			toolTip.add(StringHelper.getLocalizedString("gui.toolstation10") + " " + damageColor + StringHelper.getDamageString(damage));
@@ -483,13 +484,13 @@ public class TooltipHandler
 				if (stoneboundSpeed == maxStoneboundSpeed)
 					bonusOrLoss += EnumChatFormatting.BOLD;
 				else
-					maxString = EnumChatFormatting.RESET + " " + EnumChatFormatting.DARK_GRAY + "[Max: " + StringHelper.getSpeedString((int) (maxStoneboundSpeed * 100f)) + EnumChatFormatting.RESET + EnumChatFormatting.DARK_GRAY + "]";
+					maxString = EnumChatFormatting.RESET + " " + EnumChatFormatting.DARK_GRAY + "[" + StatCollector.translateToLocal("tictooltips.maximum") + ": " + StringHelper.getSpeedString((int) (maxStoneboundSpeed * 100f)) + EnumChatFormatting.RESET + EnumChatFormatting.DARK_GRAY + "]";
 				toolTip.add(EnumChatFormatting.DARK_GRAY + "- " + shoddinessType + " " + bonusOrLoss + StringHelper.getSpeedString((int) (stoneboundSpeed * 100f)) + maxString);
 			}
 			else if (maxStoneboundSpeed != 0 && stoneboundSpeed != maxStoneboundSpeed)
 			{
 				String bonusOrLoss = maxStoneboundSpeed > 0 ? StringHelper.getLocalizedString("gui.toolstation4") + EnumChatFormatting.DARK_GREEN : StringHelper.getLocalizedString("gui.toolstation5") + EnumChatFormatting.DARK_RED;
-				toolTip.add(EnumChatFormatting.DARK_GRAY + "- Max " + shoddinessType + " " + bonusOrLoss + StringHelper.getSpeedString((int) (maxStoneboundSpeed * 100f)));
+				toolTip.add(EnumChatFormatting.DARK_GRAY + "- " + StatCollector.translateToLocal("tictooltips.maximum") + " " + shoddinessType + " " + bonusOrLoss + StringHelper.getSpeedString((int) (maxStoneboundSpeed * 100f)));
 			}
 
 			toolTip.add(StringHelper.getLocalizedString("gui.toolstation13") + " " + ToolPartHelper.getHarvestLevelString(harvestLevel1) + EnumChatFormatting.RESET + EnumChatFormatting.GRAY + ", " + ToolPartHelper.getHarvestLevelString(harvestLevel2));
@@ -511,19 +512,19 @@ public class TooltipHandler
 				if (stoneboundSpeed == maxStoneboundSpeed)
 					bonusOrLoss += EnumChatFormatting.BOLD;
 				else
-					maxString = EnumChatFormatting.RESET + " " + EnumChatFormatting.DARK_GRAY + "[Max: " + StringHelper.getSpeedString((int) (maxStoneboundSpeed * 100f)) + EnumChatFormatting.RESET + EnumChatFormatting.DARK_GRAY + "]";
+					maxString = EnumChatFormatting.RESET + " " + EnumChatFormatting.DARK_GRAY + "[" + StatCollector.translateToLocal("tictooltips.maximum") + ": " + StringHelper.getSpeedString((int) (maxStoneboundSpeed * 100f)) + EnumChatFormatting.RESET + EnumChatFormatting.DARK_GRAY + "]";
 				toolTip.add(EnumChatFormatting.DARK_GRAY + "- " + shoddinessType + " " + bonusOrLoss + StringHelper.getSpeedString((int) (stoneboundSpeed * 100f)) + maxString);
 			}
 			else if (maxStoneboundSpeed != 0 && stoneboundSpeed != maxStoneboundSpeed)
 			{
 				String bonusOrLoss = maxStoneboundSpeed > 0 ? StringHelper.getLocalizedString("gui.toolstation4") + EnumChatFormatting.DARK_GREEN : StringHelper.getLocalizedString("gui.toolstation5") + EnumChatFormatting.DARK_RED;
-				toolTip.add(EnumChatFormatting.DARK_GRAY + "- Max " + shoddinessType + " " + bonusOrLoss + StringHelper.getSpeedString((int) (maxStoneboundSpeed * 100f)));
+				toolTip.add(EnumChatFormatting.DARK_GRAY + "- " + StatCollector.translateToLocal("tictooltips.maximum") + " " + shoddinessType + " " + bonusOrLoss + StringHelper.getSpeedString((int) (maxStoneboundSpeed * 100f)));
 			}
 
 			if (!ModTiCTooltips.hasIguanaTweaks)
 			{
 				int harvestLevel = ToolHelper.getPrimaryHarvestLevel(toolTag);
-	
+
 				toolTip.add(StringHelper.getLocalizedString("gui.toolstation15") + ToolPartHelper.getHarvestLevelString(harvestLevel));
 			}
 		}
@@ -542,7 +543,7 @@ public class TooltipHandler
 
 		boolean hasModifiers = toolTag.hasKey("ModifierTip1") && !toolTag.getString("ModifierTip1").trim().equals("");
 		if (hasModifiers)
-			toolTip.add("Modifiers:");
+			toolTip.add(StatCollector.translateToLocal("gui.toolstation17")+":");
 
 		boolean displayToolTips = true;
 		int tipNum = 0;
@@ -640,7 +641,7 @@ public class TooltipHandler
 		}
 		else
 		{
-			toolTip.add(EnumChatFormatting.WHITE.toString() + EnumChatFormatting.UNDERLINE + "<Unknown Part>");
+			toolTip.add(EnumChatFormatting.WHITE.toString() + EnumChatFormatting.UNDERLINE + StatCollector.translateToLocal("tictooltips.unknown.part"));
 		}
 
 		List<String> partStats = getMaterialTooltip(matID, itemPart, tool);
@@ -661,7 +662,7 @@ public class TooltipHandler
 
 		int modifiersAvailable = armorTag.getInteger("Modifiers");
 		toolTip.add(StringHelper.getLocalizedString("gui.toolstation18") + EnumChatFormatting.WHITE + modifiersAvailable);
-		
+
 		return toolTip;
 	}
 

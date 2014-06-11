@@ -2,6 +2,7 @@ package squeek.tictooltips.helpers;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
+import cpw.mods.fml.common.Loader;
 import squeek.tictooltips.ModTiCTooltips;
 import squeek.tictooltips.proxy.ProxyIguanaTweaks;
 import net.minecraft.util.StatCollector;
@@ -16,7 +17,7 @@ public class StringHelper
 	{
 		if (ModTiCTooltips.hasIguanaTweaks)
 			return ProxyIguanaTweaks.getHarvestLevelName(num);
-		
+
 		String unlocalized = "gui.partcrafter.mining" + (num + 1);
 		String localized = StringHelper.getLocalizedString(unlocalized);
 		if (!unlocalized.equals(localized))
@@ -82,7 +83,7 @@ public class StringHelper
 
 	public static String getDurabilityString(int durability)
 	{
-		return durability >= 0 ? Integer.toString(durability) : "Infinite";
+		return durability >= 0 ? Integer.toString(durability) : StatCollector.translateToLocal("tictooltips.infinite");
 	}
 
 	public static String getWeightString(float weight)
@@ -103,12 +104,12 @@ public class StringHelper
 		String heart = StringHelper.getLocalizedString("gui.partcrafter9");
 		return df.format(minAttack / 2f) + "-" + df.format(maxAttack / 2f) + heart;
 	}
-	
+
 	public static String getDurationString(double duration)
 	{
 		return df.format(duration) + "s";
 	}
-	
+
 	public static String getPercentageString(double percent)
 	{
 		return df.format(percent * 100f) + "%";
@@ -118,63 +119,55 @@ public class StringHelper
 	public static HashMap<String, String> localizationAlternatives = new HashMap<String, String>();
 	static
 	{
-		localizationAlternatives.put("gui.smeltery1", "Fuel");
-		localizationAlternatives.put("gui.landmine", "Landmine");
-		localizationAlternatives.put("gui.partcrafter1", "Tool Part Crafting");
-		localizationAlternatives.put("gui.partcrafter2", "Tool Part Building");
-		localizationAlternatives.put("gui.partcrafter3", "Place a pattern and a material on the left to get started.");
-		localizationAlternatives.put("gui.partcrafter4", "Base Durability: ");
-		localizationAlternatives.put("gui.partcrafter5", "Handle Modifier: ");
-		localizationAlternatives.put("gui.partcrafter6", "Mining Speed: ");
-		localizationAlternatives.put("gui.partcrafter7", "Mining Level: ");
-		localizationAlternatives.put("gui.partcrafter8", " Heart");
-		localizationAlternatives.put("gui.partcrafter9", " Hearts");
-		localizationAlternatives.put("gui.partcrafter10", "Attack: ");
-		localizationAlternatives.put("gui.partcrafter.mining1", "Stone");
-		localizationAlternatives.put("gui.partcrafter.mining2", "Iron");
-		localizationAlternatives.put("gui.partcrafter.mining3", "Redstone");
-		localizationAlternatives.put("gui.partcrafter.mining4", "Obsidian");
-		localizationAlternatives.put("gui.partcrafter.mining5", "Cobalt");
-		localizationAlternatives.put("gui.partcrafter.mining6", "Atlarus");
-		localizationAlternatives.put("gui.partcrafter.mining7", "7");
-		localizationAlternatives.put("gui.partcrafter.mining8", "8");
-		localizationAlternatives.put("gui.stenciltable1", "Next Pattern");
-		localizationAlternatives.put("gui.stenciltable2", "Previous Pattern");
-		localizationAlternatives.put("gui.toolforge1", "Repair and Modification");
-		localizationAlternatives.put("gui.toolforge2", "The main way to repair or change your tools. Place a tool and a material on the left to get started.");
-		localizationAlternatives.put("gui.toolstation1", "Durability:");
-		localizationAlternatives.put("gui.toolstation2", "Durability: ");
-		localizationAlternatives.put("gui.toolstation3", "Attack: ");
-		localizationAlternatives.put("gui.toolstation4", "Bonus: ");
-		localizationAlternatives.put("gui.toolstation5", "Loss: ");
-		localizationAlternatives.put("gui.toolstation6", "Draw Speed: ");
-		localizationAlternatives.put("gui.toolstation7", "Arrow Speed: ");
-		localizationAlternatives.put("gui.toolstation8", "Weight: ");
-		localizationAlternatives.put("gui.toolstation9", "Accuracy: ");
-		localizationAlternatives.put("gui.toolstation10", "Base Attack:");
-		localizationAlternatives.put("gui.toolstation11", "Shortbow Attack:");
-		localizationAlternatives.put("gui.toolstation12", "Mining Speeds: ");
-		localizationAlternatives.put("gui.toolstation13", "Harvest Levels:");
-		localizationAlternatives.put("gui.toolstation14", "Mining Speed: ");
-		localizationAlternatives.put("gui.toolstation15", "Mining Level: ");
-		localizationAlternatives.put("gui.toolstation16", "Usage Speed: ");
-		localizationAlternatives.put("gui.toolstation17", "Modifiers");
-		localizationAlternatives.put("gui.toolstation18", "Modifiers remaining: ");
+		localizationAlternatives.put("gui.partcrafter4", "tictooltips.base.durability");
+		localizationAlternatives.put("gui.partcrafter5", "tictooltips.handle.modifier");
+		localizationAlternatives.put("gui.partcrafter6", "tictooltips.mining.speed");
+		localizationAlternatives.put("gui.partcrafter7", "tictooltips.mining.level");
+		localizationAlternatives.put("gui.partcrafter8", "tictooltips.heart");
+		localizationAlternatives.put("gui.partcrafter9", "tictooltips.hearts");
+		localizationAlternatives.put("gui.partcrafter10", "tictooltips.attack");
+		localizationAlternatives.put("gui.partcrafter.mining1", "tictooltips.mining.level.1");
+		localizationAlternatives.put("gui.partcrafter.mining2", "tictooltips.mining.level.2");
+		localizationAlternatives.put("gui.partcrafter.mining3", "tictooltips.mining.level.3");
+		localizationAlternatives.put("gui.partcrafter.mining4", "tictooltips.mining.level.4");
+		localizationAlternatives.put("gui.partcrafter.mining5", "tictooltips.mining.level.5");
+		localizationAlternatives.put("gui.partcrafter.mining6", "tictooltips.mining.level.6" + (Loader.isModLoaded("Metallurgy3Base") ? ".with.metallurgy" : ""));
+		localizationAlternatives.put("gui.partcrafter.mining7", "tictooltips.mining.level.7");
+		localizationAlternatives.put("gui.partcrafter.mining8", "tictooltips.mining.level.8");
+		localizationAlternatives.put("gui.toolstation2", "tictooltips.durability");
+		localizationAlternatives.put("gui.toolstation3", "tictooltips.attack");
+		localizationAlternatives.put("gui.toolstation4", "tictooltips.bonus");
+		localizationAlternatives.put("gui.toolstation5", "tictooltips.loss");
+		localizationAlternatives.put("gui.toolstation6", "tictooltips.draw.speed");
+		localizationAlternatives.put("gui.toolstation7", "tictooltips.arrow.speed");
+		localizationAlternatives.put("gui.toolstation8", "tictooltips.weight");
+		localizationAlternatives.put("gui.toolstation9", "tictooltips.accuracy");
+		localizationAlternatives.put("gui.toolstation10", "tictooltips.base.attack");
+		localizationAlternatives.put("gui.toolstation11", "tictooltips.shortbow.attack");
+		localizationAlternatives.put("gui.toolstation12", "tictooltips.mining.speeds");
+		localizationAlternatives.put("gui.toolstation13", "tictooltips.harvest.levels");
+		localizationAlternatives.put("gui.toolstation14", "tictooltips.mining.speed");
+		localizationAlternatives.put("gui.toolstation15", "tictooltips.mining.level");
+		localizationAlternatives.put("gui.toolstation16", "tictooltips.usage.speed");
+		localizationAlternatives.put("gui.toolstation17", "tictooltips.modifiers");
+		localizationAlternatives.put("gui.toolstation18", "tictooltips.modifiers.remaining");
+	}
+
+	public static String getAlternativeLocalizedString(String unlocalized)
+	{
+		String unlocalizedAlternative = localizationAlternatives.get(unlocalized);
+		return unlocalizedAlternative != null ? StatCollector.translateToLocal(unlocalizedAlternative) : unlocalized;
 	}
 
 	public static String getLocalizedString(String unlocalized)
 	{
 		if (unlocalized.equals("gui.partcrafter.mining6"))
-			return localizationAlternatives.get(unlocalized);
-			
+			return getAlternativeLocalizedString(unlocalized);
+
 		String localized = StatCollector.translateToLocal(unlocalized);
 		if (localized.equals(unlocalized))
-		{
-			localized = localizationAlternatives.get(unlocalized);
-
-			if (localized == null)
-				localized = unlocalized;
-		}
-		return localized;
+			return getAlternativeLocalizedString(unlocalized);
+		else
+			return localized;
 	}
 }
