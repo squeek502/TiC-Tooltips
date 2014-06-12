@@ -625,7 +625,7 @@ public class TooltipHandler
 		{
 			ToolPart part = (ToolPart) itemPart;
 			ToolMaterial mat = TConstructRegistry.getMaterial(matID);
-			toolTip.add(mat.style() + EnumChatFormatting.UNDERLINE + StringHelper.getLocalizedString("toolpart." + part.partName).replaceAll("%%material ", mat.displayName));
+			toolTip.add(mat.style() + EnumChatFormatting.UNDERLINE + StringHelper.getLocalizedString("toolpart." + part.partName).replaceAll("%%material", mat.displayName.trim()));
 		}
 		else if (itemPart instanceof Bowstring)
 		{
