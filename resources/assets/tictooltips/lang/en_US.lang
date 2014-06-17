@@ -1,0 +1,65 @@
+# keypress related strings
+tictooltips.hold.key.for.stats=Hold %s for Stats
+tictooltips.hold.key.for.materials=Hold %s for Materials
+tictooltips.hold.key.for.bow.stats=Hold %s for Bow/Arrow Stats
+tictooltips.hold.key.for.more=Hold %s for More
+
+# material tooltips
+tictooltips.material.shoddiness.modifier= [Modifier: %s]
+
+# pattern tooltips
+tictooltips.pattern.valid.materials=Valid Materials:
+
+# tool tooltips
+tictooltips.tool.repair.material=Repair Material: 
+tictooltips.tool.effective.durability=Effective %s
+tictooltips.tool.shoddiness.modifier=%s Modifier: 
+tictooltips.tool.burn.duration=Burn Duration: 
+tictooltips.tool.bonus.vs.undead=%s vs Undead: 
+tictooltips.tool.bonus.vs.spiders=%s vs Spiders: 
+tictooltips.tool.chance.to.behead=Chance to Behead: 
+tictooltips.tool.modifiers=Modifiers:
+
+# generic
+tictooltips.minimum=Min
+tictooltips.maximum=Max
+tictooltips.unknown.part=<Unknown Part>
+tictooltips.infinite=Infinite
+
+# overrides for gui.partcrafter.mining6
+tictooltips.mining.level.6=6
+tictooltips.mining.level.6.with.metallurgy=Atlarus
+
+# all of the following strings are only used with Tinkers Construct versions less than 1.5.3
+# in TiC versions >= 1.5.3, the TiC localization strings are used instead
+tictooltips.base.durability=Base Durability: 
+tictooltips.handle.modifier=Handle Modifier: 
+tictooltips.mining.speed=Mining Speed: 
+tictooltips.mining.level=Mining Level: 
+tictooltips.heart= Heart
+tictooltips.hearts= Hearts
+tictooltips.mining.level.1=Stone
+tictooltips.mining.level.2=Iron
+tictooltips.mining.level.3=Redstone
+tictooltips.mining.level.4=Obsidian
+tictooltips.mining.level.5=Cobalt
+# see overrides above
+tictooltips.mining.level.7=7
+tictooltips.mining.level.8=8
+tictooltips.durability=Durability: 
+tictooltips.attack=Attack: 
+tictooltips.bonus=Bonus: 
+tictooltips.loss=Loss: 
+tictooltips.draw.speed=Draw Speed: 
+tictooltips.arrow.speed=Arrow Speed: 
+tictooltips.weight=Weight: 
+tictooltips.accuracy=Accuracy: 
+tictooltips.base.attack=Base Attack:
+tictooltips.shortbow.attack=Shortbow Attack:
+tictooltips.mining.speeds=Mining Speeds: 
+tictooltips.harvest.levels=Harvest Levels:
+tictooltips.mining.speed=Mining Speed: 
+tictooltips.mining.level=Mining Level: 
+tictooltips.usage.speed=Usage Speed: 
+tictooltips.modifiers=Modifiers
+tictooltips.modifiers.remaining=Modifiers remaining: 
