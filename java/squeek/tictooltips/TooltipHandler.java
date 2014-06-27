@@ -541,24 +541,20 @@ public class TooltipHandler
 			toolTip.add(StringHelper.getLocalizedString("gui.toolstation18") + EnumChatFormatting.WHITE + modifiersAvailable);
 		}
 
-		boolean hasModifiers = toolTag.hasKey("ModifierTip1") && !toolTag.getString("ModifierTip1").trim().equals("");
-		if (hasModifiers)
-			toolTip.add(StatCollector.translateToLocal("gui.toolstation17")+":");
-
-		boolean displayToolTips = true;
-		int tipNum = 0;
-		while (hasModifiers && displayToolTips)
+		List<String> modifierToolTips = new ArrayList<String>();
+		int tipNum = 1;
+		while (toolTag.hasKey("ModifierTip" + tipNum))
 		{
+			String tipName = toolTag.getString("ModifierTip" + tipNum);
+			if (!tipName.trim().equals(""))
+				modifierToolTips.add(EnumChatFormatting.DARK_GRAY + "- " + tipName);
 			tipNum++;
-			String tooltip = "ModifierTip" + tipNum;
-			if (toolTag.hasKey(tooltip))
-			{
-				String tipName = toolTag.getString(tooltip);
-				if (!tipName.trim().equals(""))
-					toolTip.add(EnumChatFormatting.DARK_GRAY + "- " + tipName);
-			}
-			else
-				displayToolTips = false;
+		}
+		
+		if (!modifierToolTips.isEmpty())
+		{
+			toolTip.add(StatCollector.translateToLocal("gui.toolstation17")+":");
+			toolTip.addAll(modifierToolTips);
 		}
 
 		return toolTip;
