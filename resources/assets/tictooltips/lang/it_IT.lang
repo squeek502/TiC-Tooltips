@@ -1,29 +1,29 @@
 # keypress related strings
-tictooltips.hold.key.for.stats=Tieni premuto %s per Info
-tictooltips.hold.key.for.materials=Tieni premuto %s per Materiali
-tictooltips.hold.key.for.bow.stats=Tieni premuto %s per Arco/Freccia Info
-tictooltips.hold.key.for.more=Tieni premuto %s per Altro
+tictooltips.hold.key.for.stats=Tieni premuto %s per info
+tictooltips.hold.key.for.materials=Tieni premuto %s per i materiali
+tictooltips.hold.key.for.bow.stats=Tieni premuto %s per arco/freccia info
+tictooltips.hold.key.for.more=Tieni premuto %s per altro
 
 # material tooltips
 tictooltips.material.shoddiness.modifier= [Modificatore: %s]
 
 # pattern tooltips
-tictooltips.pattern.valid.materials=Materiali Validi:
+tictooltips.pattern.valid.materials=Materiali validi:
 
 # tool tooltips
-tictooltips.tool.repair.material=Materiali per Riparare: 
+tictooltips.tool.repair.material=Materiali per riparare: 
 tictooltips.tool.effective.durability=Effettivo %s
 tictooltips.tool.shoddiness.modifier=%s Modificatore: 
-tictooltips.tool.burn.duration=Tempo di Scottatura: 
-tictooltips.tool.bonus.vs.undead=%s contro Non-Morti: 
-tictooltips.tool.bonus.vs.spiders=%s contro Ragni: 
-tictooltips.tool.chance.to.behead=Possibilità di Decapitare: 
+tictooltips.tool.burn.duration=Tempo di scottatura: 
+tictooltips.tool.bonus.vs.undead=%s contro non-morti: 
+tictooltips.tool.bonus.vs.spiders=%s contro ragni: 
+tictooltips.tool.chance.to.behead=Possibilità di decapitare: 
 tictooltips.tool.modifiers=Modificatori:
 
 # generic
 tictooltips.minimum=Min
 tictooltips.maximum=Max
-tictooltips.unknown.part=<Parte Sconosciuta>
+tictooltips.unknown.part=<Parte sconosciuta>
 tictooltips.infinite=Infinito
 
 # overrides for gui.partcrafter.mining6
@@ -32,10 +32,10 @@ tictooltips.mining.level.6.with.metallurgy=Atlarus
 
 # all of the following strings are only used with Tinkers Construct versions less than 1.5.3
 # in TiC versions >= 1.5.3, the TiC localization strings are used instead
-tictooltips.base.durability=Resistenza Base: 
-tictooltips.handle.modifier=Modifica del Manico: 
-tictooltips.mining.speed=Velocità dell'Attrezzo: 
-tictooltips.mining.level=Livello dell'Attrezzo: 
+tictooltips.base.durability=Resistenza base: 
+tictooltips.handle.modifier=Modifica del manico: 
+tictooltips.mining.speed=Velocità dell'attrezzo: 
+tictooltips.mining.level=Livello dell'attrezzo: 
 tictooltips.heart= Cuore
 tictooltips.hearts= Cuori
 tictooltips.mining.level.1=Pietra
@@ -50,16 +50,16 @@ tictooltips.durability=Resistenza:
 tictooltips.attack=Attacco: 
 tictooltips.bonus=Bonus: 
 tictooltips.loss=Perdità: 
-tictooltips.draw.speed=Velocità di Tensione: 
-tictooltips.arrow.speed=Velocità della Freccia: 
+tictooltips.draw.speed=Velocità di tensione: 
+tictooltips.arrow.speed=Velocità della freccia: 
 tictooltips.weight=Peso: 
 tictooltips.accuracy=Precisione: 
-tictooltips.base.attack=Danno Base:
-tictooltips.shortbow.attack=Danno con Arco Corto:
-tictooltips.mining.speeds=Velocità dell'Attrezzo: 
-tictooltips.harvest.levels=Livello di Mietitura:
-tictooltips.mining.speed=Velocità dell'Attrezzo: 
-tictooltips.mining.level==Livello di Estrazione: 
-tictooltips.usage.speed=Velocità dell'Uso: 
+tictooltips.base.attack=Danno base:
+tictooltips.shortbow.attack=Danno con arco corto:
+tictooltips.mining.speeds=Velocità dell'attrezzo: 
+tictooltips.harvest.levels=Livello di mietitura:
+tictooltips.mining.speed=Velocità dell'attrezzo: 
+tictooltips.mining.level==Livello di estrazione: 
+tictooltips.usage.speed=Velocità dell'uso: 
 tictooltips.modifiers=Modificatori
-tictooltips.modifiers.remaining=Modificatori Rimanenti: 
+tictooltips.modifiers.remaining=Modificatori rimanenti: 
