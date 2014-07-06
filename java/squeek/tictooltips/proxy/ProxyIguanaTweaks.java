@@ -9,8 +9,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import squeek.tictooltips.ModTiCTooltips;
 import squeek.tictooltips.helpers.ToolPartHelper;
-import tconstruct.common.TRepo;
-import tconstruct.items.ToolPart;
+import tconstruct.tools.TinkerTools;
+import tconstruct.tools.items.ToolPart;
 
 public class ProxyIguanaTweaks
 {
@@ -34,13 +34,13 @@ public class ProxyIguanaTweaks
 	};
 	
 	public static List<Item> iguanaToolParts = Arrays.asList(
-     	TRepo.toolRod, TRepo.pickaxeHead, TRepo.shovelHead, TRepo.hatchetHead,
-     	TRepo.binding, TRepo.toughBinding, TRepo.toughRod, TRepo.largePlate,
-     	TRepo.swordBlade, TRepo.wideGuard, TRepo.handGuard, TRepo.crossbar,
-     	TRepo.knifeBlade, TRepo.fullGuard, TRepo.frypanHead, TRepo.signHead,
-     	TRepo.chiselHead, TRepo.scytheBlade, TRepo.broadAxeHead, TRepo.excavatorHead,
-     	TRepo.largeSwordBlade, TRepo.hammerHead, TRepo.bowstring, TRepo.fletching,
-     	TRepo.arrowhead
+     	TinkerTools.toolRod, TinkerTools.pickaxeHead, TinkerTools.shovelHead, TinkerTools.hatchetHead,
+     	TinkerTools.binding, TinkerTools.toughBinding, TinkerTools.toughRod, TinkerTools.largePlate,
+     	TinkerTools.swordBlade, TinkerTools.wideGuard, TinkerTools.handGuard, TinkerTools.crossbar,
+     	TinkerTools.knifeBlade, TinkerTools.fullGuard, TinkerTools.frypanHead, TinkerTools.signHead,
+     	TinkerTools.chiselHead, TinkerTools.scytheBlade, TinkerTools.broadAxeHead, TinkerTools.excavatorHead,
+     	TinkerTools.largeSwordBlade, TinkerTools.hammerHead, TinkerTools.bowstring, TinkerTools.fletching,
+     	TinkerTools.arrowhead
 	);
 	
 	public static class ProxyDefaultToolHandler implements IModPartHandler

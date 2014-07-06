@@ -13,9 +13,9 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import squeek.tictooltips.helpers.*;
 import squeek.tictooltips.proxy.ProxyIguanaTweaks;
-import tconstruct.items.Bowstring;
-import tconstruct.items.Fletching;
-import tconstruct.items.ToolPart;
+import tconstruct.tools.items.Bowstring;
+import tconstruct.tools.items.Fletching;
+import tconstruct.tools.items.ToolPart;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.armor.ArmorCore;
 import tconstruct.library.tools.ArrowMaterial;
@@ -23,7 +23,7 @@ import tconstruct.library.tools.BowMaterial;
 import tconstruct.library.tools.BowstringMaterial;
 import tconstruct.library.tools.FletchingMaterial;
 import tconstruct.library.tools.ToolCore;
-import tconstruct.library.tools.TToolMaterial;
+import tconstruct.library.tools.ToolMaterial;
 import tconstruct.library.util.IPattern;
 import tconstruct.library.util.IToolPart;
 
@@ -189,7 +189,7 @@ public class TooltipHandler
 	private List<String> getMaterialTooltip(int matID, Item item, ToolCore tool)
 	{
 		List<String> toolTip = new ArrayList<String>();
-		TToolMaterial mat = TConstructRegistry.getMaterial(matID);
+		ToolMaterial mat = TConstructRegistry.getMaterial(matID);
 		boolean hasTool = tool != null;
 
 		if (mat == null)
@@ -364,7 +364,7 @@ public class TooltipHandler
 		boolean isShoddy = shoddiness != 0;
 		String shoddinessType = StringHelper.getShoddinessTypeString(shoddiness);
 
-		TToolMaterial repairMat = ToolHelper.getHeadMaterial(toolTag);
+		ToolMaterial repairMat = ToolHelper.getHeadMaterial(toolTag);
 		toolTip.add(StatCollector.translateToLocal("tictooltips.tool.repair.material") + repairMat.style() + repairMat.displayName);
 
 		int maxDurability = ToolHelper.getMaxDurability(toolTag);
@@ -620,7 +620,7 @@ public class TooltipHandler
 		if (itemPart instanceof ToolPart)
 		{
 			ToolPart part = (ToolPart) itemPart;
-			TToolMaterial mat = TConstructRegistry.getMaterial(matID);
+			ToolMaterial mat = TConstructRegistry.getMaterial(matID);
 			toolTip.add(mat.style() + EnumChatFormatting.UNDERLINE + StringHelper.getLocalizedString("toolpart." + part.partName).replaceAll("%%material", mat.displayName.trim()));
 		}
 		else if (itemPart instanceof Bowstring)

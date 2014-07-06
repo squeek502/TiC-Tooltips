@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import net.minecraft.item.Item;
-import tconstruct.common.TRepo;
+import tconstruct.tools.TinkerTools;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.tools.ArrowMaterial;
 import tconstruct.library.tools.BowMaterial;
 import tconstruct.library.tools.BowstringMaterial;
 import tconstruct.library.tools.CustomMaterial;
 import tconstruct.library.tools.FletchingMaterial;
-import tconstruct.library.tools.TToolMaterial;
+import tconstruct.library.tools.ToolMaterial;
 
 public class ToolPartHelper
 {
@@ -19,91 +19,91 @@ public class ToolPartHelper
 	public static List<Item> toolHeads = new ArrayList<Item>( 
 		Arrays.asList
 		(
-			TRepo.pickaxeHead, 
-			TRepo.shovelHead,
-			TRepo.excavatorHead
+			TinkerTools.pickaxeHead, 
+			TinkerTools.shovelHead,
+			TinkerTools.excavatorHead
 		)
 	);
 	public static List<Item> weaponMiningHeads = new ArrayList<Item>(
 		Arrays.asList
 		(
-			TRepo.hammerHead
+			TinkerTools.hammerHead
 		)
 	);
 	public static List<Item> weaponToolHeads = new ArrayList<Item>(
 		Arrays.asList
 		(
-			TRepo.hatchetHead,
-			TRepo.scytheBlade,
-			TRepo.broadAxeHead
+			TinkerTools.hatchetHead,
+			TinkerTools.scytheBlade,
+			TinkerTools.broadAxeHead
 		)
 	);
 	public static List<Item> weaponHeads = new ArrayList<Item>(
 		Arrays.asList
 		(
-			TRepo.swordBlade,
-			TRepo.largeSwordBlade,
-			TRepo.knifeBlade,
-			TRepo.frypanHead,
-			TRepo.signHead
+			TinkerTools.swordBlade,
+			TinkerTools.largeSwordBlade,
+			TinkerTools.knifeBlade,
+			TinkerTools.frypanHead,
+			TinkerTools.signHead
 		)
 	);
 	public static List<Item> weaponGuards = new ArrayList<Item>(
 		Arrays.asList
 		(
-		 	TRepo.crossbar,
-		 	TRepo.handGuard,
-		 	TRepo.wideGuard,
-		 	TRepo.fullGuard
+		 	TinkerTools.crossbar,
+		 	TinkerTools.handGuard,
+		 	TinkerTools.wideGuard,
+		 	TinkerTools.fullGuard
 		)
 	);
 	public static List<Item> bindings = new ArrayList<Item>(
 		Arrays.asList
 		(
-			TRepo.binding,
-			TRepo.toughBinding
+			TinkerTools.binding,
+			TinkerTools.toughBinding
 		)
 	);
 	public static List<Item> rods = new ArrayList<Item>(
 		Arrays.asList
 		(
-			TRepo.toolRod,
-			TRepo.toughRod
+			TinkerTools.toolRod,
+			TinkerTools.toughRod
 		)
 	);
 	public static List<Item> plates = new ArrayList<Item>(
 		Arrays.asList(
-			TRepo.largePlate
+			TinkerTools.largePlate
 		)
 	);
 	public static List<Item> shards = new ArrayList<Item>(
 		Arrays.asList(
-			TRepo.toolShard
+			TinkerTools.toolShard
 		)
 	);
 	public static List<Item> arrowHeads = new ArrayList<Item>(
 		Arrays.asList(
-			TRepo.arrowhead
+			TinkerTools.arrowhead
 		)
 	);
 	public static List<Item> arrowFletchings = new ArrayList<Item>(
 		Arrays.asList(
-			TRepo.fletching
+			TinkerTools.fletching
 		)
 	);
 	public static List<Item> bowStrings = new ArrayList<Item>(
 		Arrays.asList(
-			TRepo.bowstring
+			TinkerTools.bowstring
 		)
 	);
 	public static List<Item> arrowRods = new ArrayList<Item>(
 		Arrays.asList(
-			TRepo.toolRod
+			TinkerTools.toolRod
 		)
 	);
 	public static List<Item> chisels = new ArrayList<Item>(
 		Arrays.asList(
-			TRepo.chiselHead
+			TinkerTools.chiselHead
 		)
 	);
 
@@ -223,7 +223,7 @@ public class ToolPartHelper
 		boolean needsInit = true;
 		for (int key : TConstructRegistry.toolMaterials.keySet())
 		{
-			TToolMaterial mat = TConstructRegistry.toolMaterials.get(key);
+			ToolMaterial mat = TConstructRegistry.toolMaterials.get(key);
 
 			if (needsInit)
 			{

@@ -3,7 +3,7 @@ package squeek.tictooltips.helpers;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.item.Item;
-import tconstruct.items.Pattern;
+import tconstruct.tools.items.Pattern;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.tools.CustomMaterial;
 
