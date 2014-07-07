@@ -2,7 +2,6 @@ package squeek.tictooltips;
 
 import java.util.logging.Logger;
 import net.minecraftforge.common.MinecraftForge;
-import squeek.tictooltips.ModInfo;
 import squeek.tictooltips.helpers.ToolHelper;
 import squeek.tictooltips.helpers.ToolPartHelper;
 import squeek.tictooltips.proxy.ProxyExtraTiC;
