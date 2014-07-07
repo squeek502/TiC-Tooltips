@@ -3,7 +3,6 @@ package squeek.tictooltips;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import net.minecraftforge.common.MinecraftForge;
-import squeek.tictooltips.ModInfo;
 import squeek.tictooltips.helpers.ToolHelper;
 import squeek.tictooltips.helpers.ToolPartHelper;
 import squeek.tictooltips.proxy.ProxyExtraTiC;
