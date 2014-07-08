@@ -248,7 +248,7 @@ public class TooltipHandler
 					if (TConstructRegistry.validBowMaterial(matID) && (!hasTool || isToolABow))
 					{
 						String prefix = hasTool ? "" : "Bow ";
-						BowMaterial bowMat = (BowMaterial) TConstructRegistry.getBowMaterial(matID);
+						BowMaterial bowMat = TConstructRegistry.getBowMaterial(matID);
 						toolTip.add(prefix + StringHelper.getLocalizedString("gui.toolstation3") + ToolPartHelper.getAttackString(mat.attack()));
 						toolTip.add(prefix + StringHelper.getLocalizedString("gui.toolstation6") + ToolPartHelper.getBowDrawSpeedString(bowMat.drawspeed));
 						toolTip.add(prefix + StringHelper.getLocalizedString("gui.toolstation2") + ToolPartHelper.getBowDurabilityString(bowMat.durability));

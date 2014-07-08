@@ -222,7 +222,7 @@ public class ToolHelper
 		{
 			try
 			{
-				modifierConstant = (Float) harvestToolStoneboundModifier.invoke((HarvestTool) tool);
+				modifierConstant = (Float) harvestToolStoneboundModifier.invoke(tool);
 			}
 			catch (Exception e)
 			{
@@ -290,7 +290,7 @@ public class ToolHelper
 		{
 			try
 			{
-				speedModifier = (Float) harvestToolBreakSpeedModifier.invoke((HarvestTool) tool);
+				speedModifier = (Float) harvestToolBreakSpeedModifier.invoke(tool);
 			}
 			catch (Exception e)
 			{
