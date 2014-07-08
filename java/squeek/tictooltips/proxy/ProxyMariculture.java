@@ -23,7 +23,7 @@ public class ProxyMariculture implements IModPartHandler
 	{
 		try
 		{
-			MariculturePartsHandler = Class.forName("mariculture.plugins.PluginTConstruct");
+			MariculturePartsHandler = Class.forName("mariculture.plugins.tconstruct.TitaniumTools");
 
 			// tool heads
 			Item part = (Item) MariculturePartsHandler.getDeclaredField("pickaxe_head").get(null);
