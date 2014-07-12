@@ -214,24 +214,33 @@ public class TooltipHandler
 		{
 			ArrowMaterial arrowMat = TConstructRegistry.getArrowMaterial(matID);
 
-			toolTip.add(StringHelper.getLocalizedString("gui.toolstation3") + ToolPartHelper.getAttackString(mat.attack()));
-			toolTip.add(StringHelper.getLocalizedString("gui.toolstation9") + ToolPartHelper.getAccuracyString(arrowMat.accuracy));
-			toolTip.add(StringHelper.getLocalizedString("gui.toolstation8") + ToolPartHelper.getWeightString(arrowMat.mass / 5f));
+			if (arrowMat != null)
+			{
+				toolTip.add(StringHelper.getLocalizedString("gui.toolstation3") + ToolPartHelper.getAttackString(mat.attack()));
+				toolTip.add(StringHelper.getLocalizedString("gui.toolstation9") + ToolPartHelper.getAccuracyString(arrowMat.accuracy));
+				toolTip.add(StringHelper.getLocalizedString("gui.toolstation8") + ToolPartHelper.getWeightString(arrowMat.mass / 5f));
+			}
 		}
 		else if (ToolPartHelper.isArrowFletching(item))
 		{
 			FletchingMaterial fletchingMat = (FletchingMaterial) TConstructRegistry.getCustomMaterial(matID, FletchingMaterial.class);
 
-			toolTip.add(StringHelper.getLocalizedString("gui.toolstation9") + ToolPartHelper.getAccuracyString(fletchingMat.accuracy));
-			toolTip.add(StringHelper.getLocalizedString("gui.toolstation8") + ToolPartHelper.getWeightString(fletchingMat.mass));
+			if (fletchingMat != null)
+			{
+				toolTip.add(StringHelper.getLocalizedString("gui.toolstation9") + ToolPartHelper.getAccuracyString(fletchingMat.accuracy));
+				toolTip.add(StringHelper.getLocalizedString("gui.toolstation8") + ToolPartHelper.getWeightString(fletchingMat.mass));
+			}
 		}
 		else if (ToolPartHelper.isBowString(item))
 		{
 			BowstringMaterial bowstringMat = (BowstringMaterial) TConstructRegistry.getCustomMaterial(matID, BowstringMaterial.class);
 
-			toolTip.add(StringHelper.getLocalizedString("gui.toolstation6") + ToolPartHelper.getBowStringDrawspeedModifierString(bowstringMat.drawspeedModifier));
-			toolTip.add(StringHelper.getLocalizedString("gui.toolstation2") + ToolPartHelper.getBowStringDurabilityModifierString(bowstringMat.durabilityModifier));
-			toolTip.add(StringHelper.getLocalizedString("gui.toolstation7") + ToolPartHelper.getBowStringArrowSpeedModifierString(bowstringMat.flightSpeedModifier));
+			if (bowstringMat != null)
+			{
+				toolTip.add(StringHelper.getLocalizedString("gui.toolstation6") + ToolPartHelper.getBowStringDrawspeedModifierString(bowstringMat.drawspeedModifier));
+				toolTip.add(StringHelper.getLocalizedString("gui.toolstation2") + ToolPartHelper.getBowStringDurabilityModifierString(bowstringMat.durabilityModifier));
+				toolTip.add(StringHelper.getLocalizedString("gui.toolstation7") + ToolPartHelper.getBowStringArrowSpeedModifierString(bowstringMat.flightSpeedModifier));
+			}
 		}
 		else
 		{
@@ -249,16 +258,22 @@ public class TooltipHandler
 					{
 						String prefix = hasTool ? "" : "Bow ";
 						BowMaterial bowMat = TConstructRegistry.getBowMaterial(matID);
-						toolTip.add(prefix + StringHelper.getLocalizedString("gui.toolstation3") + ToolPartHelper.getAttackString(mat.attack()));
-						toolTip.add(prefix + StringHelper.getLocalizedString("gui.toolstation6") + ToolPartHelper.getBowDrawSpeedString(bowMat.drawspeed));
-						toolTip.add(prefix + StringHelper.getLocalizedString("gui.toolstation2") + ToolPartHelper.getBowDurabilityString(bowMat.durability));
-						toolTip.add(prefix + StringHelper.getLocalizedString("gui.toolstation7") + ToolPartHelper.getBowArrowSpeedModifierString(bowMat.flightSpeedMax));
+						if (bowMat != null)
+						{
+							toolTip.add(prefix + StringHelper.getLocalizedString("gui.toolstation3") + ToolPartHelper.getAttackString(mat.attack()));
+							toolTip.add(prefix + StringHelper.getLocalizedString("gui.toolstation6") + ToolPartHelper.getBowDrawSpeedString(bowMat.drawspeed));
+							toolTip.add(prefix + StringHelper.getLocalizedString("gui.toolstation2") + ToolPartHelper.getBowDurabilityString(bowMat.durability));
+							toolTip.add(prefix + StringHelper.getLocalizedString("gui.toolstation7") + ToolPartHelper.getBowArrowSpeedModifierString(bowMat.flightSpeedMax));
+						}
 					}
 					if (TConstructRegistry.validArrowMaterial(matID) && (!hasTool || isToolAnArrow))
 					{
 						String prefix = hasTool ? "" : StringHelper.getLocalizedString("item.InfiTool.Arrow.name") + " ";
 						ArrowMaterial arrowMat = TConstructRegistry.getArrowMaterial(matID);
-						toolTip.add(prefix + StringHelper.getLocalizedString("gui.toolstation8") + ToolPartHelper.getWeightString(arrowMat.mass));
+						if (arrowMat != null)
+						{
+							toolTip.add(prefix + StringHelper.getLocalizedString("gui.toolstation8") + ToolPartHelper.getWeightString(arrowMat.mass));
+						}
 					}
 				}
 				else
@@ -365,7 +380,10 @@ public class TooltipHandler
 		String shoddinessType = StringHelper.getShoddinessTypeString(shoddiness);
 
 		ToolMaterial repairMat = ToolHelper.getHeadMaterial(toolTag);
-		toolTip.add(StatCollector.translateToLocal("tictooltips.tool.repair.material") + repairMat.style() + repairMat.displayName);
+		if (repairMat != null)
+		{
+			toolTip.add(StatCollector.translateToLocal("tictooltips.tool.repair.material") + repairMat.style() + repairMat.displayName);
+		}
 
 		int maxDurability = ToolHelper.getMaxDurability(toolTag);
 
