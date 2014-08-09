@@ -44,21 +44,7 @@ public class TooltipHandler
 			if (ToolPartHelper.isShard(item))
 				return;
 
-			if (ModTiCTooltips.hasIguanaTweaks)
-			{
-				if (ToolPartHelper.isArrowFletching(item) || ToolPartHelper.isBowString(item))
-				{
-					event.toolTip.addAll(getMaterialTooltip(event.itemStack));
-				}
-				else if (ProxyIguanaTweaks.isModdedPart(item))
-				{
-					event.toolTip.addAll(ProxyIguanaTweaks.getPartTooltip(event.itemStack, event.entityPlayer, event.showAdvancedItemTooltips));
-				}
-			}
-			else
-			{
-				event.toolTip.addAll(getMaterialTooltip(event.itemStack));
-			}
+			event.toolTip.addAll(getMaterialTooltip(event.itemStack));
 		}
 		// Patterns
 		else if (item instanceof IPattern && !ModTiCTooltips.hasIguanaTweaks)
