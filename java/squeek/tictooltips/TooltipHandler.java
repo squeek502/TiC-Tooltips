@@ -12,7 +12,6 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import squeek.tictooltips.helpers.*;
-import squeek.tictooltips.proxy.ProxyIguanaTweaks;
 import tconstruct.tools.items.Bowstring;
 import tconstruct.tools.items.Fletching;
 import tconstruct.tools.items.ToolPart;
@@ -138,6 +137,10 @@ public class TooltipHandler
 			// No buttons held
 			else
 			{
+				// add a gap if Iguana Tweaks is present
+				if (ModTiCTooltips.hasIguanaTweaks)
+					event.toolTip.add("");
+
 				event.toolTip.add(toolTipIndex++, StatCollector.translateToLocalFormatted("tictooltips.hold.key.for.stats", EnumChatFormatting.YELLOW.toString() + EnumChatFormatting.ITALIC + "Shift" + EnumChatFormatting.RESET + EnumChatFormatting.GRAY));
 				event.toolTip.add(toolTipIndex++, StatCollector.translateToLocalFormatted("tictooltips.hold.key.for.materials", EnumChatFormatting.DARK_AQUA.toString() + EnumChatFormatting.ITALIC + "Ctrl" + EnumChatFormatting.RESET + EnumChatFormatting.GRAY));
 			}
