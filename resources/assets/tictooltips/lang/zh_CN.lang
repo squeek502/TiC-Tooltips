@@ -1,0 +1,65 @@
+# keypress related strings
+tictooltips.hold.key.for.stats=按住 %s 查看数据
+tictooltips.hold.key.for.materials=按住 %s 查看材料
+tictooltips.hold.key.for.bow.stats=按住 %s 查看那弓/箭数据
+tictooltips.hold.key.for.more=按住 %s 查看更多
+
+# material tooltips
+tictooltips.material.shoddiness.modifier= [升级槽: %s]
+
+# pattern tooltips
+tictooltips.pattern.valid.materials=有效材料:
+
+# tool tooltips
+tictooltips.tool.repair.material=修理材料: 
+tictooltips.tool.effective.durability=有效 %s
+tictooltips.tool.shoddiness.modifier=%s 升级槽: 
+tictooltips.tool.burn.duration=燃烧持续时间: 
+tictooltips.tool.bonus.vs.undead=%s vs 不死生物: 
+tictooltips.tool.bonus.vs.spiders=%s vs 蜘蛛: 
+tictooltips.tool.chance.to.behead=斩首几率: 
+tictooltips.tool.modifiers=升级槽:
+
+# generic
+tictooltips.minimum=最小
+tictooltips.maximum=最大
+tictooltips.unknown.part=<未知部分>
+tictooltips.infinite=无限
+
+# overrides for gui.partcrafter.mining6
+tictooltips.mining.level.6=6
+tictooltips.mining.level.6.with.metallurgy=金钻
+
+# all of the following strings are only used with Tinkers Construct versions less than 1.5.3
+# in TiC versions >= 1.5.3, the TiC localization strings are used instead
+tictooltips.base.durability=基础耐久: 
+tictooltips.handle.modifier=手柄升级槽: 
+tictooltips.mining.speed=挖掘速度: 
+tictooltips.mining.level=挖掘等级: 
+tictooltips.heart= 颗心
+tictooltips.hearts= 颗心
+tictooltips.mining.level.1=石头
+tictooltips.mining.level.2=铁
+tictooltips.mining.level.3=红石
+tictooltips.mining.level.4=黑曜石
+tictooltips.mining.level.5=钴
+# see overrides above
+tictooltips.mining.level.7=7
+tictooltips.mining.level.8=8
+tictooltips.durability=耐久: 
+tictooltips.attack=攻击: 
+tictooltips.bonus=额外: 
+tictooltips.loss=损耗: 
+tictooltips.draw.speed=拉弓速度: 
+tictooltips.arrow.speed=箭速: 
+tictooltips.weight=重量: 
+tictooltips.accuracy=精准度: 
+tictooltips.base.attack=基础攻击:
+tictooltips.shortbow.attack=短工攻击:
+tictooltips.mining.speeds=挖掘速度: 
+tictooltips.harvest.levels=收获等级:
+tictooltips.mining.speed=挖掘速度: 
+tictooltips.mining.level=挖掘等级: 
+tictooltips.usage.speed=使用速度: 
+tictooltips.modifiers=升级槽
+tictooltips.modifiers.remaining=剩余升级槽: 
