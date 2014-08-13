@@ -8,10 +8,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumChatFormatting;
+import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import squeek.tictooltips.helpers.*;
+import squeek.tictooltips.proxy.ProxyIguanaTweaks;
 import tconstruct.tools.items.Bowstring;
 import tconstruct.tools.items.Fletching;
 import tconstruct.tools.items.ToolPart;
@@ -33,6 +35,9 @@ public class TooltipHandler
 	public void onItemTooltip(ItemTooltipEvent event)
 	{
 		if (event.entityPlayer == null)
+			return;
+
+		if (event.getResult() == Result.DENY)
 			return;
 
 		Item item = event.itemStack.getItem();
@@ -276,7 +281,12 @@ public class TooltipHandler
 			{
 				toolTip.add(StringHelper.getLocalizedString("gui.toolstation2") + ToolPartHelper.getDurabilityString(mat.durability()));
 				toolTip.add(StringHelper.getLocalizedString("gui.toolstation14") + ToolPartHelper.getMiningSpeedString(mat.toolSpeed()));
-				toolTip.add(StringHelper.getLocalizedString("gui.toolstation15") + ToolPartHelper.getHarvestLevelString(mat.harvestLevel()));
+
+				int harvestLevel = mat.harvestLevel();
+				if (ModTiCTooltips.hasIguanaTweaks)
+					harvestLevel = ProxyIguanaTweaks.getUnboostedHarvestLevel(item, harvestLevel);
+
+				toolTip.add(StringHelper.getLocalizedString("gui.toolstation15") + ToolPartHelper.getHarvestLevelString(harvestLevel));
 			}
 			else if (ToolPartHelper.isWeaponMiningHead(item))
 			{
