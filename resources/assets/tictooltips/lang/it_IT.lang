@@ -1,7 +1,7 @@
 # keypress related strings
-tictooltips.hold.key.for.stats=Tieni premuto %s per info
+tictooltips.hold.key.for.stats=Tieni premuto %s per dettagli
 tictooltips.hold.key.for.materials=Tieni premuto %s per i materiali
-tictooltips.hold.key.for.bow.stats=Tieni premuto %s per arco/freccia info
+tictooltips.hold.key.for.bow.stats=Tieni premuto %s per dettagli arco/freccia
 tictooltips.hold.key.for.more=Tieni premuto %s per altro
 
 # material tooltips
