@@ -144,7 +144,7 @@ public class TooltipHandler
 			{
 				// add a gap if Iguana Tweaks is present
 				if (ModTiCTooltips.hasIguanaTweaks)
-					event.toolTip.add("");
+					event.toolTip.add(toolTipIndex, "");
 
 				event.toolTip.add(toolTipIndex++, StatCollector.translateToLocalFormatted("tictooltips.hold.key.for.stats", EnumChatFormatting.YELLOW.toString() + EnumChatFormatting.ITALIC + "Shift" + EnumChatFormatting.RESET + EnumChatFormatting.GRAY));
 				event.toolTip.add(toolTipIndex++, StatCollector.translateToLocalFormatted("tictooltips.hold.key.for.materials", EnumChatFormatting.DARK_AQUA.toString() + EnumChatFormatting.ITALIC + "Ctrl" + EnumChatFormatting.RESET + EnumChatFormatting.GRAY));
