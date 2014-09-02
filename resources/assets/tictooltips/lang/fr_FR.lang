@@ -1,0 +1,65 @@
+# keypress related strings
+tictooltips.hold.key.for.stats=Maintenez %s for pours les Stats
+tictooltips.hold.key.for.materials=Maintenez %s for Matériaux
+tictooltips.hold.key.for.bow.stats=Maintenez %s pour les Stats de l'Arc/des Flèches
+tictooltips.hold.key.for.more=Maintenez %s pour plus d'informations
+
+# material tooltips
+tictooltips.material.shoddiness.modifier= [Modifieur: %s]
+
+# pattern tooltips
+tictooltips.pattern.valid.materials=Matériaux Valides:
+
+# tool tooltips
+tictooltips.tool.repair.material=Matériaux pour la Réparation: 
+tictooltips.tool.effective.durability=Effectif %s
+tictooltips.tool.shoddiness.modifier=%s Modifieur: 
+tictooltips.tool.burn.duration=Durée de la Combustion: 
+tictooltips.tool.bonus.vs.undead=%s contre les Morts-Vivants: 
+tictooltips.tool.bonus.vs.spiders=%s contre les Araignées: 
+tictooltips.tool.chance.to.behead=Chance de Décapiter: 
+tictooltips.tool.modifiers=Modifieurs:
+
+# generic
+tictooltips.minimum=Min
+tictooltips.maximum=Max
+tictooltips.unknown.part=<Pièce Inconnue>
+tictooltips.infinite=Infini(e)
+
+# overrides for gui.partcrafter.mining6
+tictooltips.mining.level.6=6
+tictooltips.mining.level.6.with.metallurgy=Atlarus
+
+# all of the following strings are only used with Tinkers Construct versions less than 1.5.3
+# in TiC versions >= 1.5.3, the TiC localization strings are used instead
+tictooltips.base.durability=Durabilité de Base: 
+tictooltips.handle.modifier=Modificateur du manche: 
+tictooltips.mining.speed=Vitesse de Minage: 
+tictooltips.mining.level=Niveau de Minage: 
+tictooltips.heart= Cœur
+tictooltips.hearts= Cœurs
+tictooltips.mining.level.1=Roche
+tictooltips.mining.level.2=Fer
+tictooltips.mining.level.3=Redstone
+tictooltips.mining.level.4=Obsidienne
+tictooltips.mining.level.5=Cobalt
+# see overrides above
+tictooltips.mining.level.7=7
+tictooltips.mining.level.8=8
+tictooltips.durability=Durabilité: 
+tictooltips.attack=Attaque: 
+tictooltips.bonus=Bonus: 
+tictooltips.loss=Perte: 
+tictooltips.draw.speed=Vitesse de Tir: 
+tictooltips.arrow.speed=Vitesse de la Flèche: 
+tictooltips.weight=Masse: 
+tictooltips.accuracy=Précision: 
+tictooltips.base.attack=Attaque de Base:
+tictooltips.shortbow.attack=Shortbow Attack:
+tictooltips.mining.speeds=Vitesses de Minage: 
+tictooltips.harvest.levels=Niveau de Récoltage:
+tictooltips.mining.speed=Vitesse de Minage: 
+tictooltips.mining.level=Niveau de Minage: 
+tictooltips.usage.speed=Vitesse d'Utilisation: 
+tictooltips.modifiers=Modifieurs
+tictooltips.modifiers.remaining=Modifieurs restants

@@ -1,0 +1,65 @@
+# keypress related strings
+tictooltips.hold.key.for.stats=%s를 누르실경우 도구상태
+tictooltips.hold.key.for.materials=%s를 누르실경우 재료효과
+tictooltips.hold.key.for.bow.stats=%s를 누르실경우 활/화살의 상태
+tictooltips.hold.key.for.more=Hold %s를 누르실경우 더많은 정보
+
+# material tooltips
+tictooltips.material.shoddiness.modifier= [모디파이어: %s]
+
+# pattern tooltips
+tictooltips.pattern.valid.materials=사용가능 재료:
+
+# tool tooltips
+tictooltips.tool.repair.material=수리 재료: 
+tictooltips.tool.effective.durability=%s 효과
+tictooltips.tool.shoddiness.modifier=%s 모디파이어: 
+tictooltips.tool.burn.duration=화염 지속시간: 
+tictooltips.tool.bonus.vs.undead=%s vs 언데드: 
+tictooltips.tool.bonus.vs.spiders=%s vs 거미: 
+tictooltips.tool.chance.to.behead=참수 찬스: 
+tictooltips.tool.modifiers=모디파이어:
+
+# generic
+tictooltips.minimum=최소
+tictooltips.maximum=최대
+tictooltips.unknown.part=<알수없는 패턴>
+tictooltips.infinite=무한
+
+# overrides for gui.partcrafter.mining6
+tictooltips.mining.level.6=6
+tictooltips.mining.level.6.with.metallurgy=아틀라러스
+
+# all of the following strings are only used with Tinkers Construct versions less than 1.5.3
+# in TiC versions >= 1.5.3, the TiC localization strings are used instead
+tictooltips.base.durability=기본 내구도: 
+tictooltips.handle.modifier=자루 강화치: 
+tictooltips.mining.speed=채광 속도: 
+tictooltips.mining.level=채광 레벨: 
+tictooltips.heart= 하트
+tictooltips.hearts= 하트
+tictooltips.mining.level.1=돌
+tictooltips.mining.level.2=철
+tictooltips.mining.level.3=레드스톤
+tictooltips.mining.level.4=옵시디언
+tictooltips.mining.level.5=코발트
+# see overrides above
+tictooltips.mining.level.7=7
+tictooltips.mining.level.8=8
+tictooltips.durability=내구도: 
+tictooltips.attack=공격: 
+tictooltips.bonus=보너스: 
+tictooltips.loss=손실: 
+tictooltips.draw.speed=시위 속도: 
+tictooltips.arrow.speed=화살 속도: 
+tictooltips.weight=무게: 
+tictooltips.accuracy=정확도: 
+tictooltips.base.attack=기본피해:
+tictooltips.shortbow.attack=샷보우 공격:
+tictooltips.mining.speeds=채광 속도: 
+tictooltips.harvest.levels=수확 레벨:
+tictooltips.mining.speed=채광 속도: 
+tictooltips.mining.level=채광 레벨: 
+tictooltips.usage.speed=사용 속도: 
+tictooltips.modifiers=모디파이어
+tictooltips.modifiers.remaining=남은 모디파이어: 
