@@ -1,5 +1,6 @@
 package squeek.tictooltips.helpers;
 
+import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import cpw.mods.fml.common.Loader;
@@ -11,19 +12,44 @@ public class StringHelper
 {
 
 	private static DecimalFormat df = new DecimalFormat("##.##");
+	public static Class<?> HarvestLevels = null;
+	public static Method getHarvestLevelName = null;
+	static
+	{
+		try
+		{
+			HarvestLevels = Class.forName("tconstruct.library.util.HarvestLevels");
+			getHarvestLevelName = HarvestLevels.getDeclaredMethod("getHarvestLevelName", int.class);
+		}
+		catch (Exception e)
+		{
+		}
+	}
 
 	// Taken from tconstruct.client.gui.ToolStationGui
 	public static String getHarvestLevelName(int num)
 	{
-		if (ModTiCTooltips.hasIguanaTweaks)
-			return ProxyIguanaTweaks.getHarvestLevelName(num);
-
-		String unlocalized = "gui.partcrafter.mining" + (num + 1);
-		String localized = StringHelper.getLocalizedString(unlocalized);
-		if (!unlocalized.equals(localized))
-			return localized;
+		if (getHarvestLevelName != null)
+		{
+			try
+			{
+				return (String) getHarvestLevelName.invoke(null, num);
+			}
+			catch (Exception e)
+			{
+			}
+		}
 		else
-			return String.valueOf(num);
+		{
+			if (ModTiCTooltips.hasIguanaTweaks)
+				return ProxyIguanaTweaks.getHarvestLevelName(num);
+
+			String unlocalized = "gui.partcrafter.mining" + (num + 1);
+			String localized = StringHelper.getLocalizedString(unlocalized);
+			if (!unlocalized.equals(localized))
+				return localized;
+		}
+		return String.valueOf(num);
 	}
 
 	// Taken from tconstruct.library.tools.ToolCore

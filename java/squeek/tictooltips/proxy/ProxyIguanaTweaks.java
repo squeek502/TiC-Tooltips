@@ -9,7 +9,7 @@ import squeek.tictooltips.ModTiCTooltips;
 
 public class ProxyIguanaTweaks
 {
-	private static Class<?> IguanaTweaksTConstruct = null;
+	private static Class<?> HarvestLevels = null;
 	private static Method proxyGetHarvestLevelName;
 	private static Class<?> IguanaTweaksConfig = null;
 	public static boolean toolsRequireBoost = false;
@@ -24,8 +24,8 @@ public class ProxyIguanaTweaks
 	{
 		try
 		{
-			IguanaTweaksTConstruct = Class.forName("iguanaman.iguanatweakstconstruct.IguanaTweaksTConstruct");
-			proxyGetHarvestLevelName = IguanaTweaksTConstruct.getDeclaredMethod("getHarvestLevelName", int.class);
+			HarvestLevels = Class.forName("iguanaman.iguanatweakstconstruct.util.HarvestLevels");
+			proxyGetHarvestLevelName = HarvestLevels.getDeclaredMethod("getHarvestLevelName", int.class);
 			IguanaTweaksConfig = Class.forName("iguanaman.iguanatweakstconstruct.reference.Config");
 			Field levelingPickaxeBoost = IguanaTweaksConfig.getDeclaredField("levelingPickaxeBoost");
 			Field pickaxeBoostRequired = IguanaTweaksConfig.getDeclaredField("pickaxeBoostRequired");
@@ -43,7 +43,7 @@ public class ProxyIguanaTweaks
 
 		try
 		{
-			harvestLevelName = (String) proxyGetHarvestLevelName.invoke(IguanaTweaksTConstruct, num);
+			harvestLevelName = (String) proxyGetHarvestLevelName.invoke(null, num);
 		}
 		catch (Exception e)
 		{

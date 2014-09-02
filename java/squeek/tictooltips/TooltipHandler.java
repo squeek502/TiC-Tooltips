@@ -190,7 +190,7 @@ public class TooltipHandler
 			return toolTip;
 
 		if (!mat.ability().equals(""))
-			toolTip.add(mat.style() + mat.ability());
+			toolTip.add(mat.style() + CompatibilityHelper.getLocalizedAbility(mat));
 
 		if (mat.shoddy() != 0)
 		{
