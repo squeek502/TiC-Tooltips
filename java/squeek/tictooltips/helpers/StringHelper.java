@@ -83,7 +83,7 @@ public class StringHelper
 
 	public static String getDurabilityString(int durability)
 	{
-		return durability >= 0 ? Integer.toString(durability) : StatCollector.translateToLocal("tictooltips.infinite");
+		return durability != ToolHelper.INFINITE_DURABILITY ? Integer.toString(durability) : StatCollector.translateToLocal("tictooltips.infinite");
 	}
 
 	public static String getWeightString(float weight)

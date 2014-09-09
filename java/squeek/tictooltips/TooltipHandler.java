@@ -390,14 +390,18 @@ public class TooltipHandler
 		if (maxDurability > 0)
 		{
 			int curDurability = maxDurability - ToolHelper.getUsedDurability(toolTag);
-			boolean isUnbreakable = ToolHelper.isUnbreakable(toolTag);
-			int effectiveDurability = isUnbreakable ? -1 : ToolHelper.getEffectiveDurability(toolTag);
+			int effectiveDurability = ToolHelper.getEffectiveDurability(toolTag);
 
 			String curOfMax = curDurability == maxDurability ? StringHelper.getDurabilityString(maxDurability) : StringHelper.getDurabilityString(curDurability) + " / " + StringHelper.getDurabilityString(maxDurability);
 			toolTip.add(StringHelper.getLocalizedString("gui.toolstation2") + ColorHelper.getRelativeColor(curDurability, 0, maxDurability) + curOfMax);
 
 			if (maxDurability != effectiveDurability)
-				toolTip.add(StatCollector.translateToLocalFormatted("tictooltips.tool.effective.durability", StringHelper.getLocalizedString("gui.toolstation2")) + ColorHelper.getRelativeColor(ToolHelper.getReinforcedLevel(toolTag), ToolPartHelper.minReinforcedLevel - 3, ToolPartHelper.maxReinforcedLevel) + StringHelper.getDurabilityString(effectiveDurability));
+			{
+				String effectiveDurabilityTitle = StatCollector.translateToLocalFormatted("tictooltips.tool.effective.durability", StringHelper.getLocalizedString("gui.toolstation2"));
+				String effectiveDurabilityColor = ColorHelper.getRelativeColor(ToolHelper.getReinforcedLevel(toolTag), ToolPartHelper.minReinforcedLevel - 3, ToolPartHelper.maxReinforcedLevel);
+				String effectiveDurabilityValue = StringHelper.getDurabilityString(effectiveDurability);
+				toolTip.add(effectiveDurabilityTitle + effectiveDurabilityColor + effectiveDurabilityValue);
+			}
 		}
 
 		if (isShoddy)
