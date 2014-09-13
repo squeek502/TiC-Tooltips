@@ -17,6 +17,7 @@ public class ToolHelper
 	public static boolean harvestToolsHaveVariableSpeedCalculations = false;
 	private static Method harvestToolStoneboundModifier = null;
 	private static Method harvestToolBreakSpeedModifier = null;
+	public static final int INFINITE_DURABILITY = Integer.MAX_VALUE;
 
 	public static void init()
 	{
@@ -107,7 +108,12 @@ public class ToolHelper
 
 	public static int getEffectiveDurability(NBTTagCompound toolTag)
 	{
-		return (int) (toolTag.getInteger("TotalDurability") * (1f + getReinforcedLevel(toolTag) * .1f));
+		int reinforcedLevel = getReinforcedLevel(toolTag);
+
+		if (isUnbreakable(reinforcedLevel))
+			return INFINITE_DURABILITY;
+		else
+			return (int) (getMaxDurability(toolTag) / (1f - reinforcedLevel/10f));
 	}
 
 	public static int getReinforcedLevel(NBTTagCompound toolTag)
@@ -117,7 +123,12 @@ public class ToolHelper
 
 	public static boolean isUnbreakable(NBTTagCompound toolTag)
 	{
-		return getReinforcedLevel(toolTag) >= 10;
+		return isUnbreakable(getReinforcedLevel(toolTag));
+	}
+
+	public static boolean isUnbreakable(int reinforcedLevel)
+	{
+		return reinforcedLevel >= 10;
 	}
 
 	public static float getStonebound(NBTTagCompound toolTag)
