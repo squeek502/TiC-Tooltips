@@ -6,12 +6,14 @@ import tconstruct.library.tools.ToolMaterial;
 // for backwards-compatibility-related things
 public class CompatibilityHelper
 {
-	public static Method localizedAbility = null;
+	public static Method localizedMaterialAbility = null;
+	public static Method localizedMaterialName = null;
 	static
 	{
 		try
 		{
-			localizedAbility = Class.forName("tconstruct.library.tools.ToolMaterial").getDeclaredMethod("localizedAbility");
+			localizedMaterialAbility = Class.forName("tconstruct.library.tools.ToolMaterial").getDeclaredMethod("localizedAbility");
+			localizedMaterialName = Class.forName("tconstruct.library.tools.ToolMaterial").getDeclaredMethod("localizedName");
 		}
 		catch (Exception e)
 		{
@@ -22,7 +24,20 @@ public class CompatibilityHelper
 	{
 		try
 		{
-			return localizedAbility != null ? (String) localizedAbility.invoke(mat) : mat.ability();
+			return localizedMaterialAbility != null ? (String) localizedMaterialAbility.invoke(mat) : mat.ability();
+		}
+		catch (Exception e)
+		{
+			return "<error>";
+		}
+	}
+
+	@SuppressWarnings("deprecation")
+	public static String getLocalizedName(ToolMaterial mat)
+	{
+		try
+		{
+			return localizedMaterialName != null ? (String) localizedMaterialName.invoke(mat) : mat.displayName;
 		}
 		catch (Exception e)
 		{

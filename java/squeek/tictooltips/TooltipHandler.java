@@ -14,9 +14,6 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import squeek.tictooltips.helpers.*;
 import squeek.tictooltips.proxy.ProxyIguanaTweaks;
-import tconstruct.tools.items.Bowstring;
-import tconstruct.tools.items.Fletching;
-import tconstruct.tools.items.ToolPart;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.armor.ArmorCore;
 import tconstruct.library.tools.ArrowMaterial;
@@ -381,7 +378,7 @@ public class TooltipHandler
 		ToolMaterial repairMat = ToolHelper.getHeadMaterial(toolTag);
 		if (repairMat != null)
 		{
-			toolTip.add(StatCollector.translateToLocal("tictooltips.tool.repair.material") + repairMat.style() + repairMat.displayName);
+			toolTip.add(StatCollector.translateToLocal("tictooltips.tool.repair.material") + repairMat.style() + CompatibilityHelper.getLocalizedName(repairMat));
 		}
 
 		int maxDurability = ToolHelper.getMaxDurability(toolTag);
@@ -638,28 +635,10 @@ public class TooltipHandler
 	{
 		List<String> toolTip = new ArrayList<String>();
 
-		if (itemPart instanceof ToolPart)
-		{
-			ToolPart part = (ToolPart) itemPart;
-			ToolMaterial mat = TConstructRegistry.getMaterial(matID);
-			toolTip.add(mat.style() + EnumChatFormatting.UNDERLINE + StringHelper.getLocalizedString("toolpart." + part.partName).replaceAll("%%material", mat.displayName.trim()));
-		}
-		else if (itemPart instanceof Bowstring)
-		{
-			Bowstring bowstring = (Bowstring) itemPart;
-			ItemStack tempStack = new ItemStack(bowstring, 1, matID);
-			toolTip.add(EnumChatFormatting.UNDERLINE + tempStack.getDisplayName());
-		}
-		else if (itemPart instanceof Fletching)
-		{
-			Fletching fletching = (Fletching) itemPart;
-			ItemStack tempStack = new ItemStack(fletching, 1, matID);
-			toolTip.add(EnumChatFormatting.UNDERLINE + tempStack.getDisplayName());
-		}
-		else
-		{
-			toolTip.add(EnumChatFormatting.WHITE.toString() + EnumChatFormatting.UNDERLINE + StatCollector.translateToLocal("tictooltips.unknown.part"));
-		}
+		ToolMaterial mat = TConstructRegistry.getMaterial(matID);
+		String matStyle = mat != null ? mat.style() : ""; 
+		ItemStack tempStack = new ItemStack(itemPart, 1, matID);
+		toolTip.add(matStyle + EnumChatFormatting.UNDERLINE + tempStack.getDisplayName());
 
 		List<String> partStats = getMaterialTooltip(matID, itemPart, tool);
 		toolTip.addAll(partStats);
