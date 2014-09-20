@@ -5,7 +5,7 @@ tictooltips.hold.key.for.bow.stats=%s를 누르실경우 활/화살의 상태
 tictooltips.hold.key.for.more=Hold %s를 누르실경우 더많은 정보
 
 # material tooltips
-tictooltips.material.shoddiness.modifier= [모디파이어: %s]
+tictooltips.material.shoddiness.modifier= [도구 업그레이드: %s]
 
 # pattern tooltips
 tictooltips.pattern.valid.materials=사용가능 재료:
@@ -18,7 +18,7 @@ tictooltips.tool.burn.duration=화염 지속시간:
 tictooltips.tool.bonus.vs.undead=%s vs 언데드: 
 tictooltips.tool.bonus.vs.spiders=%s vs 거미: 
 tictooltips.tool.chance.to.behead=참수 찬스: 
-tictooltips.tool.modifiers=모디파이어:
+tictooltips.tool.modifiers=도구 업그레이드:
 
 # generic
 tictooltips.minimum=최소
@@ -61,5 +61,5 @@ tictooltips.harvest.levels=수확 레벨:
 tictooltips.mining.speed=채광 속도: 
 tictooltips.mining.level=채광 레벨: 
 tictooltips.usage.speed=사용 속도: 
-tictooltips.modifiers=모디파이어
+tictooltips.modifiers=도구 업그레이드
 tictooltips.modifiers.remaining=남은 모디파이어: 
