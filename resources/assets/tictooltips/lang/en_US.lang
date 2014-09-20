@@ -63,3 +63,7 @@ tictooltips.mining.level=Mining Level:
 tictooltips.usage.speed=Usage Speed: 
 tictooltips.modifiers=Modifiers
 tictooltips.modifiers.remaining=Modifiers remaining: 
+tictooltips.unbreakable=Unbreakable
+tictooltips.reinforced=Reinforced
+tictooltips.jagged=Jagged
+tictooltips.stonebound=Stonebound
