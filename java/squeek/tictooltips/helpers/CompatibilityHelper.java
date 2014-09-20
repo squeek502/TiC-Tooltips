@@ -13,6 +13,12 @@ public class CompatibilityHelper
 		try
 		{
 			localizedMaterialAbility = Class.forName("tconstruct.library.tools.ToolMaterial").getDeclaredMethod("localizedAbility");
+		}
+		catch (Exception e)
+		{
+		}
+		try
+		{
 			localizedMaterialName = Class.forName("tconstruct.library.tools.ToolMaterial").getDeclaredMethod("localizedName");
 		}
 		catch (Exception e)
