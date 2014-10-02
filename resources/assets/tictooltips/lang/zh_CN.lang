@@ -6,6 +6,7 @@ tictooltips.hold.key.for.more=按住 %s 查看更多
 
 # material tooltips
 tictooltips.material.shoddiness.modifier= [升级槽: %s]
+tictooltips.material.arrow.weight=箭重: 
 
 # pattern tooltips
 tictooltips.pattern.valid.materials=有效材料:
@@ -62,4 +63,8 @@ tictooltips.mining.speed=挖掘速度:
 tictooltips.mining.level=挖掘等级: 
 tictooltips.usage.speed=使用速度: 
 tictooltips.modifiers=升级槽
-tictooltips.modifiers.remaining=剩余升级槽: 
+tictooltips.modifiers.remaining=剩余升级槽:
+tictooltips.unbreakable=耐久
+tictooltips.reinforced=坚固
+tictooltips.jagged=锯齿
+tictooltips.stonebound=石缚
