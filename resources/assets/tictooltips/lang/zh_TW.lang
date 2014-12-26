@@ -1,0 +1,70 @@
+# keypress related strings
+tictooltips.hold.key.for.stats=按住 %s 查看數據
+tictooltips.hold.key.for.materials=按住 %s 查看材料
+tictooltips.hold.key.for.bow.stats=按住 %s 查看弓/箭數據
+tictooltips.hold.key.for.more=按住 %s 查看更多
+
+# material tooltips
+tictooltips.material.shoddiness.modifier= [升級槽: %s]
+tictooltips.material.arrow.weight=箭重: 
+
+# pattern tooltips
+tictooltips.pattern.valid.materials=有效材料:
+
+# tool tooltips
+tictooltips.tool.repair.material=修理材料: 
+tictooltips.tool.effective.durability=有效 %s
+tictooltips.tool.shoddiness.modifier=%s 升級槽: 
+tictooltips.tool.burn.duration=燃燒持續時間: 
+tictooltips.tool.bonus.vs.undead=%s vs 不死生物: 
+tictooltips.tool.bonus.vs.spiders=%s vs 蜘蛛: 
+tictooltips.tool.chance.to.behead=斬首幾率: 
+tictooltips.tool.modifiers=升級槽:
+
+# generic
+tictooltips.minimum=最小
+tictooltips.maximum=最大
+tictooltips.unknown.part=<未知部分>
+tictooltips.infinite=無限
+
+# overrides for gui.partcrafter.mining6
+tictooltips.mining.level.6=6
+tictooltips.mining.level.6.with.metallurgy=金鑽
+
+# all of the following strings are only used with Tinkers Construct versions less than 1.5.3
+# in TiC versions >= 1.5.3, the TiC localization strings are used instead
+tictooltips.base.durability=基礎耐久: 
+tictooltips.handle.modifier=手把升級槽: 
+tictooltips.mining.speed=挖掘速度: 
+tictooltips.mining.level=挖掘等級: 
+tictooltips.heart= 顆心
+tictooltips.hearts= 顆心
+tictooltips.mining.level.1=石頭
+tictooltips.mining.level.2=鐵
+tictooltips.mining.level.3=紅石
+tictooltips.mining.level.4=黑曜石
+tictooltips.mining.level.5=鈷
+# see overrides above
+tictooltips.mining.level.7=7
+tictooltips.mining.level.8=8
+tictooltips.durability=耐久: 
+tictooltips.attack=攻擊: 
+tictooltips.bonus=額外: 
+tictooltips.loss=損耗: 
+tictooltips.draw.speed=拉弓速度: 
+tictooltips.arrow.speed=箭速: 
+tictooltips.weight=重量: 
+tictooltips.accuracy=精準度: 
+tictooltips.base.attack=基礎攻擊:
+tictooltips.shortbow.attack=短工攻擊:
+tictooltips.mining.speeds=挖掘速度: 
+tictooltips.harvest.levels=收穫等級:
+tictooltips.mining.speed=挖掘速度: 
+tictooltips.mining.level=挖掘等級: 
+tictooltips.usage.speed=使用速度: 
+tictooltips.modifiers=升級槽
+tictooltips.modifiers.remaining=剩餘升級槽:
+tictooltips.unbreakable=不破
+tictooltips.reinforced=堅固
+tictooltips.jagged=鋸齒
+tictooltips.stonebound=石縛
