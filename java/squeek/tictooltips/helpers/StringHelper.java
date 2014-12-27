@@ -56,9 +56,9 @@ public class StringHelper
 	public static String getReinforcedString(int reinforced)
 	{
 		if (reinforced > 9)
-			return "Unbreakable";
+			return StringHelper.getLocalizedString("modifier.tool.unbreakable");
 		else
-			return "Reinforced " + RomanNumeralHelper.toRoman(reinforced);
+			return StringHelper.getLocalizedString("modifier.tool.reinforced") + " " + RomanNumeralHelper.toRoman(reinforced);
 	}
 
 	// Taken from tconstruct.library.tools.ToolCore
@@ -76,7 +76,7 @@ public class StringHelper
 
 	public static String getShoddinessTypeString(float shoddiness)
 	{
-		return shoddiness > 0 ? "Stonebound" : (shoddiness < 0 ? "Jagged" : "");
+		return shoddiness > 0 ? StringHelper.getLocalizedString("material.stone.ability") : (shoddiness < 0 ? StringHelper.getLocalizedString("material.cactus.ability") : "");
 	}
 
 	public static String getShoddinessString(float shoddiness)
@@ -177,6 +177,10 @@ public class StringHelper
 		localizationAlternatives.put("gui.toolstation16", "tictooltips.usage.speed");
 		localizationAlternatives.put("gui.toolstation17", "tictooltips.modifiers");
 		localizationAlternatives.put("gui.toolstation18", "tictooltips.modifiers.remaining");
+		localizationAlternatives.put("modifier.tool.unbreakable", "tictooltips.unbreakable");
+		localizationAlternatives.put("modifier.tool.reinforced", "tictooltips.reinforced");
+		localizationAlternatives.put("material.stone.ability", "tictooltips.stonebound");
+		localizationAlternatives.put("material.cactus.ability", "tictooltips.jagged");
 	}
 
 	public static String getAlternativeLocalizedString(String unlocalized)

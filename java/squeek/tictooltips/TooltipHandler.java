@@ -247,23 +247,22 @@ public class TooltipHandler
 				{
 					if (TConstructRegistry.validBowMaterial(matID) && (!hasTool || isToolABow))
 					{
-						String prefix = hasTool ? "" : "Bow ";
 						BowMaterial bowMat = TConstructRegistry.getBowMaterial(matID);
 						if (bowMat != null)
 						{
-							toolTip.add(prefix + StringHelper.getLocalizedString("gui.toolstation3") + ToolPartHelper.getAttackString(mat.attack()));
-							toolTip.add(prefix + StringHelper.getLocalizedString("gui.toolstation6") + ToolPartHelper.getBowDrawSpeedString(bowMat.drawspeed));
-							toolTip.add(prefix + StringHelper.getLocalizedString("gui.toolstation2") + ToolPartHelper.getBowDurabilityString(bowMat.durability));
-							toolTip.add(prefix + StringHelper.getLocalizedString("gui.toolstation7") + ToolPartHelper.getBowArrowSpeedModifierString(bowMat.flightSpeedMax));
+							toolTip.add(StringHelper.getLocalizedString("gui.toolstation3") + ToolPartHelper.getAttackString(mat.attack()));
+							toolTip.add(StringHelper.getLocalizedString("gui.toolstation6") + ToolPartHelper.getBowDrawSpeedString(bowMat.drawspeed));
+							toolTip.add(StringHelper.getLocalizedString("gui.toolstation2") + ToolPartHelper.getBowDurabilityString(bowMat.durability));
+							toolTip.add(StringHelper.getLocalizedString("gui.toolstation7") + ToolPartHelper.getBowArrowSpeedModifierString(bowMat.flightSpeedMax));
 						}
 					}
 					if (TConstructRegistry.validArrowMaterial(matID) && (!hasTool || isToolAnArrow))
 					{
-						String prefix = hasTool ? "" : StringHelper.getLocalizedString("item.InfiTool.Arrow.name") + " ";
 						ArrowMaterial arrowMat = TConstructRegistry.getArrowMaterial(matID);
 						if (arrowMat != null)
 						{
-							toolTip.add(prefix + StringHelper.getLocalizedString("gui.toolstation8") + ToolPartHelper.getWeightString(arrowMat.mass));
+							String weightTitle = hasTool ? StringHelper.getLocalizedString("gui.toolstation8") : StringHelper.getLocalizedString("tictooltips.material.arrow.weight");
+							toolTip.add(weightTitle + ToolPartHelper.getWeightString(arrowMat.mass));
 						}
 					}
 				}
