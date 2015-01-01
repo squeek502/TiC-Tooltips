@@ -9,7 +9,7 @@ tictooltips.material.shoddiness.modifier= [Модификатор: %s]
 tictooltips.material.arrow.weight=Вес стрелы: 
 
 # pattern tooltips
-tictooltips.pattern.valid.materials=Подходящие материалы:
+tictooltips.pattern.valid.materials=Подходящие материалы: 
 
 # tool tooltips
 tictooltips.tool.repair.material=Материал для ремонта: 
@@ -19,7 +19,9 @@ tictooltips.tool.burn.duration=Время сгорания:
 tictooltips.tool.bonus.vs.undead=%s против нежити: 
 tictooltips.tool.bonus.vs.spiders=%s против пауков: 
 tictooltips.tool.chance.to.behead=Шанс обезглавить: 
-tictooltips.tool.modifiers=Модификаторы:
+tictooltips.tool.modifiers=Модификаторы: 
+tictooltips.tool.knockback=Отброс: 
+tictooltips.tool.sprint.damage=Урон во время бега: 
 
 # generic
 tictooltips.minimum=Мин.
@@ -27,44 +29,5 @@ tictooltips.maximum=Макс.
 tictooltips.unknown.part=<Неизвестная часть>
 tictooltips.infinite=Бесконечная
 
-# overrides for gui.partcrafter.mining6
-tictooltips.mining.level.6=6
-tictooltips.mining.level.6.with.metallurgy=Атларис
-
-# all of the following strings are only used with Tinkers Construct versions less than 1.5.3
-# in TiC versions >= 1.5.3, the TiC localization strings are used instead
-tictooltips.base.durability=Базовая прочность: 
-tictooltips.handle.modifier=Модификатор ручки: 
-tictooltips.mining.speed=Скорость добычи: 
-tictooltips.mining.level=Уровень добычи: 
-tictooltips.heart= Сердце
-tictooltips.hearts= Сердца
-tictooltips.mining.level.1=Камень
-tictooltips.mining.level.2=Железо
-tictooltips.mining.level.3=Красный камень
-tictooltips.mining.level.4=Обсидиан
-tictooltips.mining.level.5=Кобальт
-# see overrides above
-tictooltips.mining.level.7=7
-tictooltips.mining.level.8=8
-tictooltips.durability=Прочность: 
-tictooltips.attack=Урон: 
-tictooltips.bonus=Бонус: 
-tictooltips.loss=Потери: 
-tictooltips.draw.speed=Скорость натяжения: 
-tictooltips.arrow.speed=Скорость стрелы: 
-tictooltips.weight=Вес: 
-tictooltips.accuracy=Точность: 
-tictooltips.base.attack=Обычный урон: 
-tictooltips.shortbow.attack=Урон короткого лука: 
-tictooltips.mining.speeds=Скорости добычи: 
-tictooltips.harvest.levels=Уровни сбора: 
-tictooltips.mining.speed=Скорость добычи: 
-tictooltips.mining.level=Уровень добычи: 
-tictooltips.usage.speed=Скорость использования: 
-tictooltips.modifiers=Модификаторы
-tictooltips.modifiers.remaining=Модификаторов осталось: 
+# things that should be in TiC
 tictooltips.unbreakable=Неразрушимость
-tictooltips.reinforced=Укрепление
-tictooltips.jagged=Зазубренyость
-tictooltips.stonebound=Сила камня
