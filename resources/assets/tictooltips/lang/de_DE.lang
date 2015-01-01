@@ -1,7 +1,7 @@
 # keypress related strings
 tictooltips.hold.key.for.stats=Halte %s für Statistik
 tictooltips.hold.key.for.materials=Halte %s für Materialien
-tictooltips.hold.key.for.bow.stats=Halte %s für Bogen-/Pfeil-Statistik
+tictooltips.hold.key.for.bow.stats=Halte %s für Pfeil-Statistik
 tictooltips.hold.key.for.more=Halte %s für mehr Info
 
 # material tooltips

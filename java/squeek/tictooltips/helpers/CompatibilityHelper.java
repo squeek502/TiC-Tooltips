@@ -1,53 +1,30 @@
 package squeek.tictooltips.helpers;
 
-import java.lang.reflect.Method;
+import tconstruct.library.TConstructRegistry;
+import tconstruct.library.tools.FletchingMaterial;
+import tconstruct.library.tools.FletchlingLeafMaterial;
 import tconstruct.library.tools.ToolMaterial;
 
 // for backwards-compatibility-related things
 public class CompatibilityHelper
 {
-	public static Method localizedMaterialAbility = null;
-	public static Method localizedMaterialName = null;
-	static
-	{
-		try
-		{
-			localizedMaterialAbility = Class.forName("tconstruct.library.tools.ToolMaterial").getDeclaredMethod("localizedAbility");
-		}
-		catch (Exception e)
-		{
-		}
-		try
-		{
-			localizedMaterialName = Class.forName("tconstruct.library.tools.ToolMaterial").getDeclaredMethod("localizedName");
-		}
-		catch (Exception e)
-		{
-		}
-	}
-
 	public static String getLocalizedAbility(ToolMaterial mat)
 	{
-		try
-		{
-			return localizedMaterialAbility != null ? (String) localizedMaterialAbility.invoke(mat) : mat.ability();
-		}
-		catch (Exception e)
-		{
-			return "<error>";
-		}
+		return mat.ability();
 	}
 
-	@SuppressWarnings("deprecation")
 	public static String getLocalizedName(ToolMaterial mat)
 	{
-		try
-		{
-			return localizedMaterialName != null ? (String) localizedMaterialName.invoke(mat) : mat.displayName;
-		}
-		catch (Exception e)
-		{
-			return "<error>";
-		}
+		return mat.localizedName();
+	}
+
+	public static FletchingMaterial getFletchingMaterial(int matID)
+	{
+		FletchingMaterial fletching = (FletchingMaterial) TConstructRegistry.getCustomMaterial(matID, FletchingMaterial.class);
+
+		if (fletching == null)
+			fletching = (FletchingMaterial) TConstructRegistry.getCustomMaterial(matID, FletchlingLeafMaterial.class);
+
+		return fletching;
 	}
 }

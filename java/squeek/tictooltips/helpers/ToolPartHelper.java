@@ -5,13 +5,10 @@ import java.util.Arrays;
 import java.util.List;
 import net.minecraft.item.Item;
 import tconstruct.tools.TinkerTools;
+import tconstruct.weaponry.TinkerWeaponry;
 import tconstruct.library.TConstructRegistry;
-import tconstruct.library.tools.ArrowMaterial;
-import tconstruct.library.tools.BowMaterial;
-import tconstruct.library.tools.BowstringMaterial;
-import tconstruct.library.tools.CustomMaterial;
-import tconstruct.library.tools.FletchingMaterial;
-import tconstruct.library.tools.ToolMaterial;
+import tconstruct.library.tools.*;
+import tconstruct.library.weaponry.ArrowShaftMaterial;
 
 public class ToolPartHelper
 {
@@ -83,27 +80,59 @@ public class ToolPartHelper
 	);
 	public static List<Item> arrowHeads = new ArrayList<Item>(
 		Arrays.asList(
-			TinkerTools.arrowhead
+			TinkerWeaponry.arrowhead
 		)
 	);
 	public static List<Item> arrowFletchings = new ArrayList<Item>(
 		Arrays.asList(
-			TinkerTools.fletching
+			TinkerWeaponry.fletching
 		)
 	);
 	public static List<Item> bowStrings = new ArrayList<Item>(
 		Arrays.asList(
-			TinkerTools.bowstring
+			TinkerWeaponry.bowstring
 		)
 	);
 	public static List<Item> arrowRods = new ArrayList<Item>(
 		Arrays.asList(
-			TinkerTools.toolRod
+			TinkerTools.toolRod,
+			TinkerWeaponry.partArrowShaft
 		)
 	);
 	public static List<Item> chisels = new ArrayList<Item>(
 		Arrays.asList(
 			TinkerTools.chiselHead
+		)
+	);
+	// stuff added in 1.8.0
+	public static List<Item> shurikenParts = new ArrayList<Item>(
+		Arrays.asList(
+			TinkerWeaponry.partShuriken
+		)
+	);
+	public static List<Item> arrowShafts = new ArrayList<Item>(
+		Arrays.asList(
+			TinkerWeaponry.partArrowShaft
+		)
+	);
+	public static List<Item> bowLimbs = new ArrayList<Item>(
+		Arrays.asList(
+			TinkerWeaponry.partBowLimb
+		)
+	);
+	public static List<Item> crossbowLimbs = new ArrayList<Item>(
+		Arrays.asList(
+			TinkerWeaponry.partCrossbowLimb
+		)
+	);
+	public static List<Item> crossbowBodies = new ArrayList<Item>(
+		Arrays.asList(
+			TinkerWeaponry.partCrossbowBody
+		)
+	);
+	public static List<Item> boltParts = new ArrayList<Item>(
+		Arrays.asList(
+			TinkerWeaponry.partBolt
 		)
 	);
 
@@ -177,6 +206,41 @@ public class ToolPartHelper
 		return chisels.contains(item);
 	}
 
+	public static boolean isShurikenPart(Item item)
+	{
+		return shurikenParts.contains(item);
+	}
+
+	public static boolean isArrowShaft(Item item)
+	{
+		return arrowShafts.contains(item);
+	}
+
+	public static boolean isBowLimb(Item item)
+	{
+		return bowLimbs.contains(item);
+	}
+
+	public static boolean isCrossbowLimb(Item item)
+	{
+		return crossbowLimbs.contains(item);
+	}
+
+	public static boolean isCrossbowBody(Item item)
+	{
+		return crossbowBodies.contains(item);
+	}
+
+	public static boolean isBoltPart(Item item)
+	{
+		return boltParts.contains(item);
+	}
+
+	public static boolean hasCustomMaterial(Item item)
+	{
+		return isArrowShaft(item) || isArrowFletching(item) || isBowString(item);
+	}
+
 	// shoddiness
 	public static float minShoddiness = 0f;
 	public static float maxPositiveShoddiness = minShoddiness;
@@ -201,14 +265,20 @@ public class ToolPartHelper
 	public static float maxAccuracy;
 	public static float minWeight;
 	public static float maxWeight;
+	// added in 1.8.0
+	public static float minBreakChance;
+	public static float maxBreakChance;
+	public static float minArrowDurabilityModifier;
+	public static float maxArrowDurabilityModifier;
 
 	// bows
 	public static int minBowDrawSpeed;
 	public static int maxBowDrawSpeed;
-	public static int minBowDurability;
-	public static int maxBowDurability;
 	public static float minBowArrowSpeedModifier;
 	public static float maxBowArrowSpeedModifier;
+	// added in 1.8.0
+	public static float minFlightSpeedMax;
+	public static float maxFlightSpeedMax;
 
 	// bowstrings
 	public static float minBowStringDrawspeedModifier;
@@ -217,6 +287,11 @@ public class ToolPartHelper
 	public static float maxBowStringDurabilityModifier;
 	public static float minBowStringArrowSpeedModifier;
 	public static float maxBowStringArrowSpeedModifier;
+
+	// fletchings
+	// added in 1.8.0
+	public static float minFletchingDurabilityModifier;
+	public static float maxFletchingDurabilityModifier;
 
 	public static void determineMinAndMaxValues()
 	{
@@ -278,16 +353,16 @@ public class ToolPartHelper
 
 			if (needsInit)
 			{
-				minAccuracy = maxAccuracy = mat.accuracy;
+				minBreakChance = maxBreakChance = mat.breakChance;
 				minWeight = maxWeight = mat.mass;
 				needsInit = false;
 			}
 			else
 			{
-				if (mat.accuracy > maxAccuracy)
-					maxAccuracy = mat.accuracy;
-				else if (mat.accuracy < minAccuracy)
-					minAccuracy = mat.accuracy;
+				if (mat.breakChance > maxBreakChance)
+					maxBreakChance = mat.breakChance;
+				else if (mat.breakChance < minBreakChance)
+					minBreakChance = mat.breakChance;
 				if (mat.mass > maxWeight)
 					maxWeight = mat.mass;
 				else if (mat.mass < minWeight)
@@ -303,7 +378,6 @@ public class ToolPartHelper
 			if (needsInit)
 			{
 				minBowDrawSpeed = maxBowDrawSpeed = mat.drawspeed;
-				minBowDurability = maxBowDurability = mat.durability;
 				minBowArrowSpeedModifier = maxBowArrowSpeedModifier = mat.flightSpeedMax;
 				needsInit = false;
 			}
@@ -313,10 +387,10 @@ public class ToolPartHelper
 					maxBowDrawSpeed = mat.drawspeed;
 				else if (mat.drawspeed < minBowDrawSpeed)
 					minBowDrawSpeed = mat.drawspeed;
-				if (mat.durability > maxBowDurability)
-					maxBowDurability = mat.durability;
-				else if (mat.durability < minBowDurability)
-					minBowDurability = mat.durability;
+				if (mat.flightSpeedMax > maxFlightSpeedMax)
+					maxFlightSpeedMax = mat.flightSpeedMax;
+				else if (mat.flightSpeedMax < minFlightSpeedMax)
+					minFlightSpeedMax = mat.flightSpeedMax;
 				if (mat.flightSpeedMax > maxBowArrowSpeedModifier)
 					maxBowArrowSpeedModifier = mat.flightSpeedMax;
 				else if (mat.flightSpeedMax < minBowArrowSpeedModifier)
@@ -354,17 +428,38 @@ public class ToolPartHelper
 				}
 			}
 
-			FletchingMaterial fletchingMat = (FletchingMaterial) TConstructRegistry.getCustomMaterial(customMat.materialID, FletchingMaterial.class);
+			FletchingMaterial fletchingMat = CompatibilityHelper.getFletchingMaterial(customMat.materialID);
 			if (fletchingMat != null)
 			{
 				if (fletchingMat.accuracy > maxAccuracy)
 					maxAccuracy = fletchingMat.accuracy;
 				else if (fletchingMat.accuracy < minAccuracy)
 					minAccuracy = fletchingMat.accuracy;
-				if (fletchingMat.mass > maxWeight)
-					maxWeight = fletchingMat.mass;
-				else if (fletchingMat.mass < minWeight)
-					minWeight = fletchingMat.mass;
+				if (fletchingMat.breakChance > maxBreakChance)
+					maxBreakChance = fletchingMat.breakChance;
+				else if (fletchingMat.breakChance < minBreakChance)
+					minBreakChance = fletchingMat.breakChance;
+				if (fletchingMat.durabilityModifier > maxFletchingDurabilityModifier)
+					maxFletchingDurabilityModifier = fletchingMat.durabilityModifier;
+				else if (fletchingMat.durabilityModifier < minFletchingDurabilityModifier)
+					minFletchingDurabilityModifier = fletchingMat.durabilityModifier;
+			}
+
+			ArrowShaftMaterial arrowShaftMat = (ArrowShaftMaterial) TConstructRegistry.getCustomMaterial(customMat.materialID, ArrowShaftMaterial.class);
+			if (arrowShaftMat != null)
+			{
+				if (arrowShaftMat.durabilityModifier > maxArrowDurabilityModifier)
+					maxArrowDurabilityModifier = arrowShaftMat.durabilityModifier;
+				else if (arrowShaftMat.durabilityModifier < minArrowDurabilityModifier)
+					minArrowDurabilityModifier = arrowShaftMat.durabilityModifier;
+				if (arrowShaftMat.fragility > maxBreakChance)
+					maxBreakChance = arrowShaftMat.fragility;
+				else if (arrowShaftMat.fragility < minBreakChance)
+					minBreakChance = arrowShaftMat.fragility;
+				if (arrowShaftMat.weight > maxWeight)
+					maxWeight = arrowShaftMat.weight;
+				else if (arrowShaftMat.weight < minWeight)
+					minWeight = arrowShaftMat.weight;
 			}
 		}
 	}
@@ -423,14 +518,14 @@ public class ToolPartHelper
 		return ColorHelper.getRelativeColor(val, maxBowDrawSpeed, minBowDrawSpeed) + StringHelper.getDrawSpeedString(val);
 	}
 
-	public static String getBowDurabilityString(int val)
+	public static String getArrowSpeedString(float val)
 	{
-		return ColorHelper.getRelativeColor(val, minBowDurability, maxBowDurability) + StringHelper.getDurabilityString(val);
+		return getArrowSpeedString(val, 1.0f);
 	}
 
-	public static String getBowArrowSpeedModifierString(float val)
+	public static String getArrowSpeedString(float val, float multiplier)
 	{
-		return ColorHelper.getRelativeColor(val, minBowArrowSpeedModifier, maxBowArrowSpeedModifier) + StringHelper.getModifierString(val);
+		return ColorHelper.getRelativeColor(val, minBowArrowSpeedModifier * multiplier, maxBowArrowSpeedModifier * multiplier) + StringHelper.getArrowSpeedString(val);
 	}
 
 	// bowstrings
@@ -447,6 +542,16 @@ public class ToolPartHelper
 	public static String getBowStringArrowSpeedModifierString(float val)
 	{
 		return ColorHelper.getRelativeColor(val, minBowStringArrowSpeedModifier, maxBowStringArrowSpeedModifier) + StringHelper.getModifierString(val);
+	}
+
+	public static String getBreakChanceString(float val)
+	{
+		return ColorHelper.getRelativeColor(val, maxBreakChance, minBreakChance) + StringHelper.getBreakChanceString(val);
+	}
+
+	public static String getDurabilityModifierString(float val)
+	{
+		return ColorHelper.getRelativeColor(val, minFletchingDurabilityModifier, maxFletchingDurabilityModifier) + StringHelper.getModifierString(val);
 	}
 
 }

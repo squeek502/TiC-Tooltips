@@ -3,6 +3,8 @@ package squeek.tictooltips.helpers;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 import tconstruct.tools.items.Pattern;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.tools.CustomMaterial;
@@ -35,9 +37,19 @@ public class PatternHelper
 		for (CustomMaterial customMat : TConstructRegistry.customMaterials)
 		{
 			customMat = TConstructRegistry.getCustomMaterial(customMat.materialID, matClass);
-			if (customMat != null && !validMats.contains(customMat.input.getDisplayName()))
+			if (customMat != null)
 			{
-				validMats.add(customMat.input.getDisplayName());
+				if (customMat.input != null && !validMats.contains(customMat.input.getDisplayName()))
+					validMats.add(customMat.input.getDisplayName());
+				else if (customMat.input == null && customMat.oredict != null)
+				{
+					List<ItemStack> items = OreDictionary.getOres(customMat.oredict);
+					for (ItemStack item : items)
+					{
+						if (!validMats.contains(item.getDisplayName()))
+							validMats.add(item.getDisplayName());
+					}
+				}
 			}
 		}
 		return validMats;

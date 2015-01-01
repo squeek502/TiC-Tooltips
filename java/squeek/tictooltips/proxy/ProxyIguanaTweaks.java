@@ -1,7 +1,6 @@
 package squeek.tictooltips.proxy;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.item.Item;
@@ -9,8 +8,6 @@ import squeek.tictooltips.ModTiCTooltips;
 
 public class ProxyIguanaTweaks
 {
-	private static Class<?> HarvestLevels = null;
-	private static Method proxyGetHarvestLevelName;
 	private static Class<?> IguanaTweaksConfig = null;
 	public static boolean toolsRequireBoost = false;
 	private static List<IModPartHandler> modPartHandlers = new ArrayList<IModPartHandler>();
@@ -24,8 +21,6 @@ public class ProxyIguanaTweaks
 	{
 		try
 		{
-			HarvestLevels = Class.forName("iguanaman.iguanatweakstconstruct.util.HarvestLevels");
-			proxyGetHarvestLevelName = HarvestLevels.getDeclaredMethod("getHarvestLevelName", int.class);
 			IguanaTweaksConfig = Class.forName("iguanaman.iguanatweakstconstruct.reference.Config");
 			Field levelingPickaxeBoost = IguanaTweaksConfig.getDeclaredField("levelingPickaxeBoost");
 			Field pickaxeBoostRequired = IguanaTweaksConfig.getDeclaredField("pickaxeBoostRequired");
@@ -35,21 +30,6 @@ public class ProxyIguanaTweaks
 		{
 			ModTiCTooltips.Log.error("Failed to load Iguana Tweaks integration: " + e.toString());
 		}
-	}
-
-	public static String getHarvestLevelName(int num)
-	{
-		String harvestLevelName = "<Unknown>";
-
-		try
-		{
-			harvestLevelName = (String) proxyGetHarvestLevelName.invoke(null, num);
-		}
-		catch (Exception e)
-		{
-		}
-
-		return harvestLevelName;
 	}
 
 	public static int getUnboostedHarvestLevel(Item item, int harvestLevel)

@@ -1,7 +1,7 @@
 # keypress related strings
 tictooltips.hold.key.for.stats=Зажмите %s для статистики
 tictooltips.hold.key.for.materials=Зажмите %s для материалов
-tictooltips.hold.key.for.bow.stats=Зажмите %s для статистики лука/стрелы
+tictooltips.hold.key.for.bow.stats=Зажмите %s для статистики стрелы
 tictooltips.hold.key.for.more=Зажмите %s для подробной информации
 
 # material tooltips

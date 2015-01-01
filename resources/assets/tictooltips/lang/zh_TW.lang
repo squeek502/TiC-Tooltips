@@ -1,7 +1,7 @@
 # keypress related strings
 tictooltips.hold.key.for.stats=按住 %s 查看數據
 tictooltips.hold.key.for.materials=按住 %s 查看材料
-tictooltips.hold.key.for.bow.stats=按住 %s 查看弓/箭數據
+tictooltips.hold.key.for.bow.stats=按住 %s 箭數據
 tictooltips.hold.key.for.more=按住 %s 查看更多
 
 # material tooltips

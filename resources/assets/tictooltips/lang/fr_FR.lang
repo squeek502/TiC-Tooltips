@@ -1,7 +1,7 @@
 # keypress related strings
 tictooltips.hold.key.for.stats=Maintenez %s for pours les Stats
 tictooltips.hold.key.for.materials=Maintenez %s for Matériaux
-tictooltips.hold.key.for.bow.stats=Maintenez %s pour les Stats de l'Arc/des Flèches
+tictooltips.hold.key.for.bow.stats=Maintenez %s pour les Stats des Flèches
 tictooltips.hold.key.for.more=Maintenez %s pour plus d'informations
 
 # material tooltips

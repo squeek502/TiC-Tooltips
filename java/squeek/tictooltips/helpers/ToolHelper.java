@@ -1,36 +1,24 @@
 package squeek.tictooltips.helpers;
 
-import java.lang.reflect.Method;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import tconstruct.tools.TinkerTools;
-import tconstruct.items.tools.Excavator;
-import tconstruct.items.tools.Hammer;
-import tconstruct.items.tools.LumberAxe;
+import tconstruct.items.tools.FryingPan;
 import tconstruct.library.TConstructRegistry;
+import tconstruct.library.armor.ArmorCore;
 import tconstruct.library.tools.HarvestTool;
 import tconstruct.library.tools.ToolCore;
 import tconstruct.library.tools.ToolMaterial;
+import tconstruct.library.weaponry.AmmoWeapon;
+import tconstruct.library.weaponry.IAmmo;
+import tconstruct.tools.TinkerTools;
 
 public class ToolHelper
 {
-	public static boolean harvestToolsHaveVariableSpeedCalculations = false;
-	private static Method harvestToolStoneboundModifier = null;
-	private static Method harvestToolBreakSpeedModifier = null;
 	public static final int INFINITE_DURABILITY = Integer.MAX_VALUE;
 
 	public static void init()
 	{
-		try
-		{
-			harvestToolStoneboundModifier = HarvestTool.class.getDeclaredMethod("stoneboundModifier");
-			harvestToolBreakSpeedModifier = HarvestTool.class.getDeclaredMethod("breakSpeedModifier");
-			harvestToolsHaveVariableSpeedCalculations = true;
-		}
-		catch (Exception e)
-		{
-			harvestToolsHaveVariableSpeedCalculations = false;
-		}
 	}
 
 	public static boolean hasToolTag(ItemStack itemStack)
@@ -66,17 +54,17 @@ public class ToolHelper
 		return false;
 	}
 
-	public static boolean isWeaponTool(ToolCore tool)
+	public static boolean isWeapon(ToolCore tool)
 	{
 		return hasToolCategory(tool, "weapon");
 	}
 
-	public static boolean isBowTool(ToolCore tool)
+	public static boolean isBow(ToolCore tool)
 	{
 		return hasToolCategory(tool, "bow");
 	}
 
-	public static boolean isAmmoTool(ToolCore tool)
+	public static boolean isAmmo(ToolCore tool)
 	{
 		return hasToolCategory(tool, "ammo");
 	}
@@ -96,6 +84,26 @@ public class ToolHelper
 		return hasToolCategory(tool, "utility");
 	}
 
+	public static boolean isThrown(ToolCore tool)
+	{
+		return hasToolCategory(tool, "thrown");
+	}
+
+	public static boolean isProjectile(ToolCore tool)
+	{
+		return hasToolCategory(tool, "projectile");
+	}
+
+	public static boolean hasAmmoCount(Item item)
+	{
+		return item instanceof IAmmo;
+	}
+
+	public static boolean hasDurability(Item item)
+	{
+		return !hasAmmoCount(item) && item instanceof ToolCore || item instanceof ArmorCore;
+	}
+
 	public static int getUsedDurability(NBTTagCompound toolTag)
 	{
 		return toolTag.getInteger("Damage");
@@ -113,7 +121,7 @@ public class ToolHelper
 		if (isUnbreakable(reinforcedLevel))
 			return INFINITE_DURABILITY;
 		else
-			return (int) (getMaxDurability(toolTag) / (1f - reinforcedLevel/10f));
+			return (int) (getMaxDurability(toolTag) / (1f - reinforcedLevel / 10f));
 	}
 
 	public static int getReinforcedLevel(NBTTagCompound toolTag)
@@ -142,14 +150,34 @@ public class ToolHelper
 		return rawDamage;
 	}
 
-	public static int getDamage(ToolCore tool, NBTTagCompound toolTag)
+	public static int getDamage(ToolCore tool, NBTTagCompound toolTag, float damageModifier)
 	{
-		int attack = toolTag.getInteger("Attack") + 1;
-		attack += getShoddinessDamageBonus(toolTag);
+		float attack = toolTag.getInteger("Attack") * damageModifier;
+		attack += getShoddinessDamageBonus(tool, toolTag);
 		attack *= tool.getDamageModifier();
+		if (tool instanceof AmmoWeapon)
+		{
+			attack *= ((AmmoWeapon) tool).getProjectileSpeed();
+		}
 		if (attack < 1)
 			attack = 1;
 
+		return (int) attack;
+	}
+
+	public static int getDamage(ToolCore tool, NBTTagCompound toolTag)
+	{
+		return getDamage(tool, toolTag, 1f);
+	}
+
+	public static int getSprintDamage(ToolCore tool, NBTTagCompound toolTag)
+	{
+		int attack = getDamage(tool, toolTag);
+		float lunge = tool.chargeAttack();
+		if (lunge > 1f)
+		{
+			attack *= lunge;
+		}
 		return attack;
 	}
 
@@ -157,8 +185,7 @@ public class ToolHelper
 	{
 		int staticBonus = 0;
 		int variableBonus = 0;
-		// TODO: Better way to determine if the tool is of a certain type
-		if (tool == TinkerTools.hammer)
+		if (TinkerTools.hammer.getClass().isInstance(tool))
 		{
 			int level = 2;
 			staticBonus += level * 2;
@@ -205,71 +232,76 @@ public class ToolHelper
 	public static float getChanceToBehead(ToolCore tool, NBTTagCompound toolTag)
 	{
 		float chanceToBehead = toolTag.getInteger("Beheading");
-		if (tool == TinkerTools.cleaver)
+		if (TinkerTools.cleaver.getClass().isInstance(tool))
 			chanceToBehead += 2;
 		chanceToBehead = chanceToBehead / 10;
 		return Math.min(1, chanceToBehead);
 	}
 
-	public static float getShoddinessDamageBonus(NBTTagCompound toolTag)
+	public static float getKnockback(ToolCore tool, NBTTagCompound toolTag)
 	{
-		return (float) Math.log(getUsedDurability(toolTag) / 72f + 1) * -2 * getStonebound(toolTag);
+		float knockback = 0f;
+		if (tool instanceof FryingPan)
+			knockback += 1.7f;
+		if (toolTag.hasKey("Knockback"))
+		{
+			float level = toolTag.getFloat("Knockback");
+			knockback += level;
+		}
+		return knockback;
 	}
 
-	public static float getMaxShoddinessDamageBonus(NBTTagCompound toolTag)
+	public static float getSprintKnockback(ToolCore tool, NBTTagCompound toolTag)
 	{
-		return (float) Math.log(getMaxDurability(toolTag) / 72f + 1) * -2 * getStonebound(toolTag);
+		float knockback = getKnockback(tool, toolTag);
+		knockback++;
+		float lunge = tool.chargeAttack();
+		if (lunge > 1f)
+		{
+			knockback += lunge - 1.0f;
+		}
+		return knockback;
+	}
+
+	public static float getShoddinessDamageBonus(ToolCore tool, NBTTagCompound toolTag)
+	{
+		return -getShoddinessBonus(getUsedDurability(toolTag), getStonebound(toolTag), getShoddinessModifierConstant(tool));
+	}
+
+	public static float getMaxShoddinessDamageBonus(ToolCore tool, NBTTagCompound toolTag)
+	{
+		return -getShoddinessBonus(getMaxDurability(toolTag), getStonebound(toolTag), getShoddinessModifierConstant(tool));
 	}
 
 	public static float getShoddinessModifierConstant(ToolCore tool)
 	{
-		float modifierConstant = 72f;
-
 		if (tool == null || !(tool instanceof HarvestTool))
-			return modifierConstant;
+			return 72f;
 
-		// version >= 1.5.5
-		if (harvestToolsHaveVariableSpeedCalculations)
-		{
-			try
-			{
-				modifierConstant = (Float) harvestToolStoneboundModifier.invoke(tool);
-			}
-			catch (Exception e)
-			{
-				harvestToolsHaveVariableSpeedCalculations = false;
-			}
-		}
-		// version < 1.5.5
-		else if (tool instanceof Excavator || tool instanceof Hammer) // not LumberAxe due to a TiC bug
-		{
-			modifierConstant = 216f;
-		}
-
-		return modifierConstant;
+		return ((HarvestTool) tool).stoneboundModifier();
 	}
 
-	public static float getShoddinessSpeedBonus(int usedDurability, float shoddiness, float modifierConstant)
+	public static float getShoddinessBonus(int usedDurability, float shoddiness, float modifierConstant)
 	{
 		return (float) Math.log(usedDurability / modifierConstant + 1) * 2 * shoddiness;
 	}
 
 	public static float getShoddinessSpeedBonus(ToolCore tool, NBTTagCompound toolTag)
 	{
-		return getShoddinessSpeedBonus(getUsedDurability(toolTag), getStonebound(toolTag), getShoddinessModifierConstant(tool));
+		return getShoddinessBonus(getUsedDurability(toolTag), getStonebound(toolTag), getShoddinessModifierConstant(tool));
 	}
 
 	public static float getMaxShoddinessSpeedBonus(ToolCore tool, NBTTagCompound toolTag)
 	{
-		return getShoddinessSpeedBonus(getMaxDurability(toolTag), getStonebound(toolTag), getShoddinessModifierConstant(tool));
+		return getShoddinessBonus(getMaxDurability(toolTag), getStonebound(toolTag), getShoddinessModifierConstant(tool));
 	}
 
-	public static int getDrawSpeed(NBTTagCompound toolTag)
+	public static int getDrawSpeed(ToolCore tool, NBTTagCompound toolTag)
 	{
 		return toolTag.getInteger("DrawSpeed");
 	}
 
-	public static float getArrowSpeedModifier(NBTTagCompound toolTag)
+	public static float getArrowSpeed(ToolCore tool, NBTTagCompound toolTag)
 	{
 		return toolTag.getFloat("FlightSpeed");
 	}
@@ -289,32 +321,17 @@ public class ToolHelper
 		return toolTag.getFloat("Accuracy");
 	}
 
+	public static float getBreakChance(NBTTagCompound toolTag)
+	{
+		return toolTag.getFloat("BreakChance");
+	}
+
 	public static float getMiningSpeedModifier(ToolCore tool)
 	{
-		float speedModifier = 1f;
-
 		if (tool == null || !(tool instanceof HarvestTool))
-			return speedModifier;
+			return 1f;
 
-		// version >= 1.5.5
-		if (harvestToolsHaveVariableSpeedCalculations)
-		{
-			try
-			{
-				speedModifier = (Float) harvestToolBreakSpeedModifier.invoke(tool);
-			}
-			catch (Exception e)
-			{
-				harvestToolsHaveVariableSpeedCalculations = false;
-			}
-		}
-		// version < 1.5.5
-		else if (tool instanceof Excavator || tool instanceof Hammer || tool instanceof LumberAxe)
-		{
-			speedModifier = 1f / 3f;
-		}
-
-		return speedModifier;
+		return ((HarvestTool) tool).breakSpeedModifier();
 	}
 
 	public static int getPrimaryMiningSpeed(ToolCore tool, NBTTagCompound toolTag)
