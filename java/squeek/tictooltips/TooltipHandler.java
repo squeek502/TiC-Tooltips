@@ -695,6 +695,10 @@ public class TooltipHandler
 		while (toolTag.hasKey("ModifierTip" + tipNum))
 		{
 			String tipName = toolTag.getString("ModifierTip" + tipNum);
+			String locString = "modifier.toolstation." + EnumChatFormatting.getTextWithoutFormattingCodes(tipName);
+			locString = locString.replace(" ", "");
+			if(StatCollector.canTranslate(locString))
+				tipName = tipName.replace(EnumChatFormatting.getTextWithoutFormattingCodes(tipName), StatCollector.translateToLocal(locString));
 			if (!tipName.trim().equals(""))
 				modifierToolTips.add(EnumChatFormatting.DARK_GRAY + "- " + tipName);
 			tipNum++;
