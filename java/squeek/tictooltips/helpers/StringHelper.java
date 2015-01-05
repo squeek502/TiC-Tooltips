@@ -20,9 +20,9 @@ public class StringHelper
 	public static String getReinforcedString(int reinforced)
 	{
 		if (reinforced > 9)
-			return StringHelper.getLocalizedString("modifier.tool.unbreakable");
+			return StringHelper.getLocalizedString("tool.unbreakable");
 		else
-			return StringHelper.getLocalizedString("modifier.tool.reinforced") + " " + RomanNumeralHelper.toRoman(reinforced);
+			return StringHelper.getLocalizedString("tool.reinforced") + " " + RomanNumeralHelper.toRoman(reinforced);
 	}
 
 	// Taken from tconstruct.library.tools.ToolCore
@@ -129,7 +129,7 @@ public class StringHelper
 	static
 	{
 		//localizationAlternatives.put("tic.string.name", "tictooltips.string.name");
-		localizationAlternatives.put("modifier.tool.unbreakable", "tictooltips.unbreakable");
+		localizationAlternatives.put("tool.unbreakable", "tictooltips.unbreakable");
 	}
 
 	public static String getAlternativeLocalizedString(String unlocalized)
