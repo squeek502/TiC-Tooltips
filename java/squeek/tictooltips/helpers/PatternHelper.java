@@ -44,10 +44,18 @@ public class PatternHelper
 				else if (customMat.input == null && customMat.oredict != null)
 				{
 					List<ItemStack> items = OreDictionary.getOres(customMat.oredict);
-					for (ItemStack item : items)
+					if (items != null && !items.isEmpty())
 					{
-						if (!validMats.contains(item.getDisplayName()))
-							validMats.add(item.getDisplayName());
+						ItemStack itemStackToGetNameOf = items.get(0);
+						if (itemStackToGetNameOf.getItemDamage() == OreDictionary.WILDCARD_VALUE)
+						{
+							itemStackToGetNameOf = itemStackToGetNameOf.copy();
+							itemStackToGetNameOf.setItemDamage(0);
+						}
+						String name = itemStackToGetNameOf.getDisplayName();
+						String line = String.format("%s (%s)", name, customMat.oredict);
+						if (!validMats.contains(line))
+							validMats.add(line);
 					}
 				}
 			}
