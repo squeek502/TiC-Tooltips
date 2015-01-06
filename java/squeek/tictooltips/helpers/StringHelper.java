@@ -130,6 +130,9 @@ public class StringHelper
 	{
 		//localizationAlternatives.put("tic.string.name", "tictooltips.string.name");
 		localizationAlternatives.put("tool.unbreakable", "tictooltips.unbreakable");
+
+		// modifier.tool.reinforced got renamed to tool.reinforced; this enables a fallback for versions before that happened
+		localizationAlternatives.put("tool.reinforced", "modifier.tool.reinforced");
 	}
 
 	public static String getAlternativeLocalizedString(String unlocalized)
