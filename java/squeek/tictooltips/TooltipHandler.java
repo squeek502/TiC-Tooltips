@@ -691,14 +691,25 @@ public class TooltipHandler
 		}
 
 		List<String> modifierToolTips = new ArrayList<String>();
+
+		// the following logic is taken from tconstruct/tools/gui/ToolStationGuiHelper.drawModifiers
 		int tipNum = 1;
 		while (toolTag.hasKey("ModifierTip" + tipNum))
 		{
 			String tipName = toolTag.getString("ModifierTip" + tipNum);
-			String locString = "modifier.toolstation." + EnumChatFormatting.getTextWithoutFormattingCodes(tipName);
-			locString = locString.replace(" ", "");
-			if(StatCollector.canTranslate(locString))
+			String locString = "modifier.toolstation." + tipName;
+			// strip out the '(X of Y)' in some for the localization strings.. sigh
+			int bracket = tipName.indexOf("(");
+			if (bracket > 0)
+				locString = "modifier.toolstation." + tipName.substring(0, bracket);
+			locString = EnumChatFormatting.getTextWithoutFormattingCodes(locString.replace(" ", ""));
+			if (StatCollector.canTranslate(locString))
+			{
 				tipName = tipName.replace(EnumChatFormatting.getTextWithoutFormattingCodes(tipName), StatCollector.translateToLocal(locString));
+				// re-add the X/Y
+				if (bracket > 0)
+					tipName += " " + toolTag.getString("ModifierTip" + tipNum).substring(bracket);
+			}
 			if (!tipName.trim().equals(""))
 				modifierToolTips.add(EnumChatFormatting.DARK_GRAY + "- " + tipName);
 			tipNum++;
