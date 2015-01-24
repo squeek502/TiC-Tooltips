@@ -63,8 +63,6 @@ public class TooltipHandler
 		// Tools
 		else if (item instanceof ToolCore && ToolHelper.hasToolTag(event.itemStack))
 		{
-			// start at the last line of the tooltip that was added by Tinkers
-			List<String> tinkersTooltip = new ArrayList<String>();
 			String plusPrefix = "\u00A79+";
 			String maxDamagePrefix = StatCollector.translateToLocal("attribute.name.ammo.maxAttackDamage");
 			int toolTipIndex = 0;
@@ -105,13 +103,14 @@ public class TooltipHandler
 				// as a last resort, skip to the end of the TiC additions (potentially expensive)
 				if (toolTipIndex == -1)
 				{
+					List<String> tinkersTooltip = new ArrayList<String>();
 					((ToolCore) item).addInformation(event.itemStack, event.entityPlayer, tinkersTooltip, event.showAdvancedItemTooltips);
-					toolTipIndex = tinkersTooltip.size() > 0 ? Math.min(event.toolTip.size(), event.toolTip.indexOf(tinkersTooltip.get(0)) + tinkersTooltip.size()) : event.toolTip.size();
+					toolTipIndex = Math.max(0, (tinkersTooltip.size() > 0 ? Math.min(event.toolTip.size(), event.toolTip.indexOf(tinkersTooltip.get(0)) + tinkersTooltip.size()) : event.toolTip.size()) - 1);
 				}
 			}
 
 			// remove the Max Damage string
-			if (event.toolTip.get(toolTipIndex).startsWith(maxDamagePrefix))
+			if (toolTipIndex > 1 && event.toolTip.get(toolTipIndex).startsWith(maxDamagePrefix))
 			{
 				event.toolTip.remove(toolTipIndex);
 				// skip to above the ammo line that accompanies the max damage line
