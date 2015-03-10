@@ -2,7 +2,7 @@
 tictooltips.hold.key.for.stats=%s키를 눌러서 도구의 정보 보기
 tictooltips.hold.key.for.materials=%s키를 눌러서 재료의 정보 보기
 tictooltips.hold.key.for.bow.stats=%s키를 눌러서 화살의 정보 보기
-tictooltips.hold.key.for.more=Hold %s키를 눌러서 더 많은 정보 보기
+tictooltips.hold.key.for.more=%s키를 눌러서 더 많은 정보 보기
 
 # material tooltips
 tictooltips.material.shoddiness.modifier= [특성 계수: %s]
@@ -26,7 +26,7 @@ tictooltips.tool.sprint.damage=질주 공격력:
 # generic
 tictooltips.minimum=최소
 tictooltips.maximum=최대
-tictooltips.unknown.part=<알수없는 패턴>
+tictooltips.unknown.part=<알 수 없는 패턴>
 tictooltips.infinite=무한
 
 # things that should be in TiC
