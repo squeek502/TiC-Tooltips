@@ -138,6 +138,27 @@ public class ProxyExtraTiC implements IModPartHandler
 			part = (Item) ExtraTiCPartsHandler.getDeclaredField("CHISEL_HEAD").get(null);
 			extraTiCParts.add(part);
 			ToolPartHelper.chisels.add(part);
+
+			// parts added in TiC 1.8.0
+			part = (Item) ExtraTiCPartsHandler.getDeclaredField("SHURIKEN").get(null);
+			extraTiCParts.add(part);
+			ToolPartHelper.shurikenParts.add(part);
+
+			part = (Item) ExtraTiCPartsHandler.getDeclaredField("BOW_LIMB").get(null);
+			extraTiCParts.add(part);
+			ToolPartHelper.bowLimbs.add(part);
+
+			part = (Item) ExtraTiCPartsHandler.getDeclaredField("CROSSBOW_LIMB").get(null);
+			extraTiCParts.add(part);
+			ToolPartHelper.crossbowLimbs.add(part);
+
+			part = (Item) ExtraTiCPartsHandler.getDeclaredField("CROSSBOW_BODY").get(null);
+			extraTiCParts.add(part);
+			ToolPartHelper.crossbowBodies.add(part);
+
+			part = (Item) ExtraTiCPartsHandler.getDeclaredField("BOLT").get(null);
+			extraTiCParts.add(part);
+			ToolPartHelper.boltParts.add(part);
 		}
 		catch (Exception e)
 		{
