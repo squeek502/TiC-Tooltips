@@ -96,7 +96,7 @@ public class ProxyExtraTiC implements IModPartHandler
 			ToolPartHelper.weaponGuards.add(part);
 			part = (Item) ExtraTiCPartsHandler.getDeclaredField("FULL_GUARD").get(null);
 			extraTiCParts.add(part);
-			ToolPartHelper.weaponGuards.add(part);
+			ToolPartHelper.fullWeaponGuards.add(part);
 
 			// bindings
 			part = (Item) ExtraTiCPartsHandler.getDeclaredField("BINDING").get(null);
@@ -104,7 +104,7 @@ public class ProxyExtraTiC implements IModPartHandler
 			ToolPartHelper.bindings.add(part);
 			part = (Item) ExtraTiCPartsHandler.getDeclaredField("TOUGHBIND").get(null);
 			extraTiCParts.add(part);
-			ToolPartHelper.bindings.add(part);
+			ToolPartHelper.toughBindings.add(part);
 
 			// rods
 			part = (Item) ExtraTiCPartsHandler.getDeclaredField("TOOLROD").get(null);

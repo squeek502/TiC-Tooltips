@@ -278,7 +278,8 @@ public class TooltipHandler
 				}
 				else
 				{
-					toolTip.add(StringHelper.getLocalizedString("gui.partcrafter5") + ToolPartHelper.getHandleModifierString(mat.handleModifier));
+					String durabilityModifierTitle = StatCollector.translateToLocalFormatted("tictooltips.material.durability.modifier", StringHelper.getLocalizedString("gui.toolstation2").replaceFirst(": ", ""));
+					toolTip.add(durabilityModifierTitle + ToolPartHelper.getHandleModifierString(mat.handleModifier));
 					if (!hasTool && isArrowMat)
 						toolTip.add(StatCollector.translateToLocalFormatted("tictooltips.hold.key.for.bow.stats", EnumChatFormatting.YELLOW.toString() + EnumChatFormatting.ITALIC + "Shift" + EnumChatFormatting.RESET + EnumChatFormatting.GRAY));
 				}
@@ -346,11 +347,15 @@ public class TooltipHandler
 					toolTip.add(StringHelper.getLocalizedString("gui.toolstation8") + ToolPartHelper.getWeightString(arrowMat.mass));
 				}
 			}
-			/* weapon guards don't affect anything except abilities
-			else if (ToolPartHelper.isWeaponGuard(item))
+			// tough bindings and full guards, specifically, count as 'handles'
+			// apparently this is due to them having 3 material cost, but
+			// that is arbitrary, it's not *actually* due to them having 3 material cost
+			// as far as the code is concerned; that is just the justification mDiyo used
+			else if (ToolPartHelper.isToughBinding(item) || ToolPartHelper.isFullWeaponGuard(item))
 			{
+				String durabilityModifierTitle = StatCollector.translateToLocalFormatted("tictooltips.material.durability.modifier", StringHelper.getLocalizedString("gui.toolstation2").replaceFirst(": ", ""));
+				toolTip.add(durabilityModifierTitle + ToolPartHelper.getHandleModifierString(mat.handleDurability()));
 			}
-			*/
 		}
 
 		return toolTip;

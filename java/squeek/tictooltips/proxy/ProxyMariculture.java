@@ -83,7 +83,7 @@ public class ProxyMariculture implements IModPartHandler
 			ToolPartHelper.weaponGuards.add(part);
 			part = (Item) MariculturePartsHandler.getDeclaredField("full_guard").get(null);
 			MaricultureParts.add(part);
-			ToolPartHelper.weaponGuards.add(part);
+			ToolPartHelper.fullWeaponGuards.add(part);
 
 			// bindings
 			part = (Item) MariculturePartsHandler.getDeclaredField("binding").get(null);
@@ -91,7 +91,7 @@ public class ProxyMariculture implements IModPartHandler
 			ToolPartHelper.bindings.add(part);
 			part = (Item) MariculturePartsHandler.getDeclaredField("tough_binding").get(null);
 			MaricultureParts.add(part);
-			ToolPartHelper.bindings.add(part);
+			ToolPartHelper.toughBindings.add(part);
 
 			// rods
 			part = (Item) MariculturePartsHandler.getDeclaredField("tool_rod").get(null);

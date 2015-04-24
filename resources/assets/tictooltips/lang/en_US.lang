@@ -7,6 +7,7 @@ tictooltips.hold.key.for.more=Hold %s for More
 # material tooltips
 tictooltips.material.shoddiness.modifier= [Modifier: %s]
 tictooltips.material.arrow.weight=Arrow Weight: 
+tictooltips.material.durability.modifier=%s Modifier: 
 
 # pattern tooltips
 tictooltips.pattern.valid.materials=Valid Materials:

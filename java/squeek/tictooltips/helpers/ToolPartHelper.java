@@ -50,17 +50,27 @@ public class ToolPartHelper
 		(
 		 	TinkerTools.crossbar,
 		 	TinkerTools.handGuard,
-		 	TinkerTools.wideGuard,
+		 	TinkerTools.wideGuard
+		)
+	);
+	public static List<Item> fullWeaponGuards = new ArrayList<Item>(
+		Arrays.asList
+		(
 		 	TinkerTools.fullGuard
 		)
 	);
 	public static List<Item> bindings = new ArrayList<Item>(
 		Arrays.asList
 		(
-			TinkerTools.binding,
-			TinkerTools.toughBinding
+			TinkerTools.binding
 		)
 	);
+	public static List<Item> toughBindings = new ArrayList<Item>(
+			Arrays.asList
+			(
+				TinkerTools.toughBinding
+			)
+		);
 	public static List<Item> rods = new ArrayList<Item>(
 		Arrays.asList
 		(
@@ -155,10 +165,20 @@ public class ToolPartHelper
 	{
 		return weaponHeads.contains(item);
 	}
-	
+
 	public static boolean isWeaponGuard(Item item)
 	{
+		return isNormalWeaponGuard(item) || isFullWeaponGuard(item);
+	}
+
+	public static boolean isNormalWeaponGuard(Item item)
+	{
 		return weaponGuards.contains(item);
+	}
+
+	public static boolean isFullWeaponGuard(Item item)
+	{
+		return fullWeaponGuards.contains(item);
 	}
 
 	public static boolean isPlate(Item item)
@@ -168,7 +188,17 @@ public class ToolPartHelper
 
 	public static boolean isBinding(Item item)
 	{
+		return isNormalBinding(item) || isToughBinding(item);
+	}
+
+	public static boolean isNormalBinding(Item item)
+	{
 		return bindings.contains(item);
+	}
+
+	public static boolean isToughBinding(Item item)
+	{
+		return toughBindings.contains(item);
 	}
 
 	public static boolean isRod(Item item)
