@@ -1,13 +1,12 @@
 package squeek.tictooltips.proxy;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import net.minecraft.item.Item;
 import squeek.tictooltips.ModTiCTooltips;
 import squeek.tictooltips.helpers.ToolPartHelper;
 
-public class ProxyMariculture implements IModPartHandler
+public class ProxyMariculture
 {
 
 	private static Class<?> MariculturePartsHandler;
@@ -15,8 +14,7 @@ public class ProxyMariculture implements IModPartHandler
 
 	public static void init()
 	{
-		if (registerParts())
-			ProxyIguanaTweaks.registerModPartHandler(new ProxyMariculture());
+		registerParts();
 	}
 
 	public static boolean registerParts()
@@ -128,60 +126,6 @@ public class ProxyMariculture implements IModPartHandler
 		}
 		
 		return true;
-	}
-
-	// Mariculture unlocalizedName -> TiC partName
-	public static HashMap<String, String> partNameDictionary = new HashMap<String, String>();
-	static
-	{
-		partNameDictionary.put("titanium.arrow.head", "ArrowHead");
-		partNameDictionary.put("titanium.axe.head", "AxeHead");
-		partNameDictionary.put("titanium.battlesign.head", "SignHead");
-		partNameDictionary.put("titanium.binding", "Binding");
-		partNameDictionary.put("titanium.chisel.head", "ChiselHead");
-		partNameDictionary.put("titanium.chunk", "ToolShard");
-		partNameDictionary.put("titanium.crossbar", "Crossbar");
-		partNameDictionary.put("titanium.excavator.head", "ExcavatorHead");
-		partNameDictionary.put("titanium.frypan.head", "FrypanHead");
-		partNameDictionary.put("titanium.full.guard", "FullGuard");
-		partNameDictionary.put("titanium.hammer.head", "HammerHead");
-		partNameDictionary.put("titanium.knife.blade", "KnifeBlade");
-		partNameDictionary.put("titanium.large.guard", "LargeGuard");
-		partNameDictionary.put("titanium.large.sword.blade", "LargeSwordBlade");
-		partNameDictionary.put("titanium.large.plate", "LargePlate");
-		partNameDictionary.put("titanium.lumberaxe.head", "LumberHead");
-		partNameDictionary.put("titanium.medium.guard", "MediumGuard");
-		partNameDictionary.put("titanium.pickaxe.head", "PickHead");
-		partNameDictionary.put("titanium.scythe.head", "ScytheHead");
-		partNameDictionary.put("titanium.shovel.head", "ShovelHead");
-		partNameDictionary.put("titanium.sword.blade", "SwordBlade");
-		partNameDictionary.put("titanium.tool.rod", "ToolRod");
-		partNameDictionary.put("titanium.tough.binding", "ToughBind");
-		partNameDictionary.put("titanium.tough.rod", "ToughRod");
-	}
-
-	@Override
-	public String getPartName(Item part)
-	{
-		String partName = "";
-
-		try
-		{
-			partName = part.getUnlocalizedName().substring(5);
-		}
-		catch (Exception e)
-		{
-		}
-
-		partName = partNameDictionary.get(partName);
-
-		return partName;
-	}
-
-	@Override
-	public boolean isModdedPart(Item part)
-	{
-		return MaricultureParts.contains(part);
 	}
 
 }
