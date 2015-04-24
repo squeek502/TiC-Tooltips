@@ -111,11 +111,6 @@ public class ProxyMariculture implements IModPartHandler
 			MaricultureParts.add(part);
 			ToolPartHelper.shards.add(part);
 
-			// arrowheads
-			part = (Item) MariculturePartsHandler.getDeclaredField("arrowhead").get(null);
-			MaricultureParts.add(part);
-			ToolPartHelper.arrowHeads.add(part);
-
 			// arrow rods
 			part = (Item) MariculturePartsHandler.getDeclaredField("tool_rod").get(null);
 			MaricultureParts.add(part);
