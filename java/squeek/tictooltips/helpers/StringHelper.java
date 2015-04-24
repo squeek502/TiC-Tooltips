@@ -48,6 +48,11 @@ public class StringHelper
 		return getDamageNumberString((int) attack);
 	}
 
+	public static String getShoddinessTypeCode(float shoddiness)
+	{
+		return shoddiness > 0 ? "stonebound" : (shoddiness < 0 ? "jagged" : "");
+	}
+
 	public static String getShoddinessTypeString(float shoddiness)
 	{
 		return shoddiness > 0 ? StringHelper.getLocalizedString("material.stone.ability") : (shoddiness < 0 ? StringHelper.getLocalizedString("material.cactus.ability") : "");

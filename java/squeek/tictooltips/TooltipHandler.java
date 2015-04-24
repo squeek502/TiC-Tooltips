@@ -458,6 +458,8 @@ public class TooltipHandler
 		float chanceToBehead = ToolHelper.getChanceToBehead(tool, toolTag);
 		float shoddiness = ToolHelper.getStonebound(toolTag);
 		String shoddinessType = StringHelper.getShoddinessTypeString(shoddiness);
+		String shoddinessCode = StringHelper.getShoddinessTypeCode(shoddiness);
+		String bonusOrLossCode = stoneboundDamage > 0 ? "bonus" : "loss";
 		float knockback = ToolHelper.getKnockback(tool, toolTag);
 		int sprintDamage = ToolHelper.hasDurability(tool) ? ToolHelper.getSprintDamage(tool, toolTag) : damage;
 
@@ -472,17 +474,19 @@ public class TooltipHandler
 		{
 			EnumChatFormatting textColor = stoneboundDamage > 0 ? EnumChatFormatting.DARK_GREEN : EnumChatFormatting.DARK_RED;
 			String bonusOrLoss = (stoneboundDamage > 0 ? StringHelper.getLocalizedString("gui.toolstation4") : StringHelper.getLocalizedString("gui.toolstation5")) + textColor;
+			String shoddinessBonusOrLossTitle = StatCollector.translateToLocalFormatted("tictooltips.tool." + shoddinessCode + "." + bonusOrLossCode, shoddinessType, bonusOrLoss);
 			String maxString = "";
 			if (stoneboundDamage == maxStoneboundDamage)
 				bonusOrLoss += EnumChatFormatting.BOLD;
 			else
 				maxString = EnumChatFormatting.RESET + " " + EnumChatFormatting.DARK_GRAY + "[" + StatCollector.translateToLocal("tictooltips.maximum") + ": " + StringHelper.getDamageNumberString((int) maxStoneboundDamage) + EnumChatFormatting.RESET + EnumChatFormatting.DARK_GRAY + "]";
-			toolTip.add(EnumChatFormatting.DARK_GRAY + "- " + shoddinessType + " " + bonusOrLoss + StringHelper.getDamageString((int) stoneboundDamage) + maxString);
+			toolTip.add(EnumChatFormatting.DARK_GRAY + "- " + shoddinessBonusOrLossTitle + StringHelper.getDamageString((int) stoneboundDamage) + maxString);
 		}
 		else if (maxStoneboundDamage != 0 && stoneboundDamage != maxStoneboundDamage)
 		{
 			String bonusOrLoss = maxStoneboundDamage > 0 ? StringHelper.getLocalizedString("gui.toolstation4") + EnumChatFormatting.DARK_GREEN : StringHelper.getLocalizedString("gui.toolstation5") + EnumChatFormatting.DARK_RED;
-			toolTip.add(EnumChatFormatting.DARK_GRAY + "- " + StatCollector.translateToLocal("tictooltips.maximum") + " " + shoddinessType + " " + bonusOrLoss + StringHelper.getDamageString((int) maxStoneboundDamage));
+			String maxShoddinessBonusOrLossTitle = StatCollector.translateToLocalFormatted("tictooltips.tool.max." + shoddinessCode + "." + bonusOrLossCode, StatCollector.translateToLocal("tictooltips.maximum"), shoddinessType, bonusOrLoss);
+			toolTip.add(EnumChatFormatting.DARK_GRAY + "- " + maxShoddinessBonusOrLossTitle + StringHelper.getDamageString((int) maxStoneboundDamage));
 		}
 		if (smiteDamageRange[1] != 0 && smiteDamageRange[0] != 0)
 		{
@@ -524,6 +528,8 @@ public class TooltipHandler
 		float maxStoneboundSpeed = ToolHelper.getMaxShoddinessSpeedBonus(tool, toolTag);
 		float shoddiness = ToolHelper.getStonebound(toolTag);
 		String shoddinessType = StringHelper.getShoddinessTypeString(shoddiness);
+		String shoddinessCode = StringHelper.getShoddinessTypeCode(shoddiness);
+		String bonusOrLossCode = stoneboundSpeed > 0 ? "bonus" : "loss";
 
 		mineSpeed += stoneboundSpeed * 100f;
 
@@ -532,17 +538,19 @@ public class TooltipHandler
 		{
 			EnumChatFormatting textColor = stoneboundSpeed > 0 ? EnumChatFormatting.DARK_GREEN : EnumChatFormatting.DARK_RED;
 			String bonusOrLoss = (stoneboundSpeed > 0 ? StringHelper.getLocalizedString("gui.toolstation4") : StringHelper.getLocalizedString("gui.toolstation5")) + textColor;
+			String shoddinessBonusOrLossTitle = StatCollector.translateToLocalFormatted("tictooltips.tool." + shoddinessCode + "." + bonusOrLossCode, shoddinessType, bonusOrLoss);
 			String maxString = "";
 			if (stoneboundSpeed == maxStoneboundSpeed)
 				bonusOrLoss += EnumChatFormatting.BOLD;
 			else
 				maxString = EnumChatFormatting.RESET + " " + EnumChatFormatting.DARK_GRAY + "[" + StatCollector.translateToLocal("tictooltips.maximum") + ": " + StringHelper.getSpeedString((int) (maxStoneboundSpeed * 100f)) + EnumChatFormatting.RESET + EnumChatFormatting.DARK_GRAY + "]";
-			toolTip.add(EnumChatFormatting.DARK_GRAY + "- " + shoddinessType + " " + bonusOrLoss + StringHelper.getSpeedString((int) (stoneboundSpeed * 100f)) + maxString);
+			toolTip.add(EnumChatFormatting.DARK_GRAY + "- " + shoddinessBonusOrLossTitle + StringHelper.getSpeedString((int) (stoneboundSpeed * 100f)) + maxString);
 		}
 		else if (maxStoneboundSpeed != 0 && stoneboundSpeed != maxStoneboundSpeed)
 		{
 			String bonusOrLoss = maxStoneboundSpeed > 0 ? StringHelper.getLocalizedString("gui.toolstation4") + EnumChatFormatting.DARK_GREEN : StringHelper.getLocalizedString("gui.toolstation5") + EnumChatFormatting.DARK_RED;
-			toolTip.add(EnumChatFormatting.DARK_GRAY + "- " + StatCollector.translateToLocal("tictooltips.maximum") + " " + shoddinessType + " " + bonusOrLoss + StringHelper.getSpeedString((int) (maxStoneboundSpeed * 100f)));
+			String maxShoddinessBonusOrLossTitle = StatCollector.translateToLocalFormatted("tictooltips.tool.max." + shoddinessCode + "." + bonusOrLossCode, StatCollector.translateToLocal("tictooltips.maximum"), shoddinessType, bonusOrLoss);
+			toolTip.add(EnumChatFormatting.DARK_GRAY + "- " + maxShoddinessBonusOrLossTitle + StringHelper.getSpeedString((int) (maxStoneboundSpeed * 100f)));
 		}
 
 		if (!ModTiCTooltips.hasIguanaTweaks)
@@ -565,6 +573,8 @@ public class TooltipHandler
 		float maxStoneboundSpeed = ToolHelper.getMaxShoddinessSpeedBonus(tool, toolTag);
 		float shoddiness = ToolHelper.getStonebound(toolTag);
 		String shoddinessType = StringHelper.getShoddinessTypeString(shoddiness);
+		String shoddinessCode = StringHelper.getShoddinessTypeCode(shoddiness);
+		String bonusOrLossCode = stoneboundSpeed > 0 ? "bonus" : "loss";
 
 		mineSpeed1 += stoneboundSpeed * 100f;
 		mineSpeed2 += stoneboundSpeed * 100f;
@@ -577,17 +587,19 @@ public class TooltipHandler
 		{
 			EnumChatFormatting textColor = stoneboundSpeed > 0 ? EnumChatFormatting.DARK_GREEN : EnumChatFormatting.DARK_RED;
 			String bonusOrLoss = (stoneboundSpeed > 0 ? StringHelper.getLocalizedString("gui.toolstation4") : StringHelper.getLocalizedString("gui.toolstation5")) + textColor;
+			String shoddinessBonusOrLossTitle = StatCollector.translateToLocalFormatted("tictooltips.tool." + shoddinessCode + "." + bonusOrLossCode, shoddinessType, bonusOrLoss);
 			String maxString = "";
 			if (stoneboundSpeed == maxStoneboundSpeed)
 				bonusOrLoss += EnumChatFormatting.BOLD;
 			else
 				maxString = EnumChatFormatting.RESET + " " + EnumChatFormatting.DARK_GRAY + "[" + StatCollector.translateToLocal("tictooltips.maximum") + ": " + StringHelper.getSpeedString((int) (maxStoneboundSpeed * 100f)) + EnumChatFormatting.RESET + EnumChatFormatting.DARK_GRAY + "]";
-			toolTip.add(EnumChatFormatting.DARK_GRAY + "- " + shoddinessType + " " + bonusOrLoss + StringHelper.getSpeedString((int) (stoneboundSpeed * 100f)) + maxString);
+			toolTip.add(EnumChatFormatting.DARK_GRAY + "- " + shoddinessBonusOrLossTitle + StringHelper.getSpeedString((int) (stoneboundSpeed * 100f)) + maxString);
 		}
 		else if (maxStoneboundSpeed != 0 && stoneboundSpeed != maxStoneboundSpeed)
 		{
 			String bonusOrLoss = maxStoneboundSpeed > 0 ? StringHelper.getLocalizedString("gui.toolstation4") + EnumChatFormatting.DARK_GREEN : StringHelper.getLocalizedString("gui.toolstation5") + EnumChatFormatting.DARK_RED;
-			toolTip.add(EnumChatFormatting.DARK_GRAY + "- " + StatCollector.translateToLocal("tictooltips.maximum") + " " + shoddinessType + " " + bonusOrLoss + StringHelper.getSpeedString((int) (maxStoneboundSpeed * 100f)));
+			String maxShoddinessBonusOrLossTitle = StatCollector.translateToLocalFormatted("tictooltips.tool.max." + shoddinessCode + "." + bonusOrLossCode, StatCollector.translateToLocal("tictooltips.maximum"), shoddinessType, bonusOrLoss);
+			toolTip.add(EnumChatFormatting.DARK_GRAY + "- " + maxShoddinessBonusOrLossTitle + StringHelper.getSpeedString((int) (maxStoneboundSpeed * 100f)));
 		}
 
 		toolTip.add(StringHelper.getLocalizedString("gui.toolstation13") + " " + ToolPartHelper.getHarvestLevelString(harvestLevel1) + EnumChatFormatting.RESET + EnumChatFormatting.GRAY + ", " + ToolPartHelper.getHarvestLevelString(harvestLevel2));
@@ -604,8 +616,16 @@ public class TooltipHandler
 
 		if (isShoddy)
 		{
-			String shoddinessType = StringHelper.getShoddinessTypeString(shoddiness);
-			toolTip.add(StatCollector.translateToLocalFormatted("tictooltips.tool.shoddiness.modifier", shoddinessType) + ToolPartHelper.getShoddinessString(shoddiness));
+			String shoddinessModifierTitle;
+			String shoddinessCode = StringHelper.getShoddinessTypeCode(shoddiness);
+			if (StatCollector.canTranslate("tictooltips.tool." + shoddinessCode + ".modifier"))
+				shoddinessModifierTitle = StatCollector.translateToLocal("tictooltips.tool." + shoddinessCode + ".modifier");
+			else
+			{
+				String shoddinessType = StringHelper.getShoddinessTypeString(shoddiness);
+				shoddinessModifierTitle = StatCollector.translateToLocalFormatted("tictooltips.tool.shoddiness.modifier", shoddinessType);
+			}
+			toolTip.add(shoddinessModifierTitle + ToolPartHelper.getShoddinessString(shoddiness));
 		}
 
 		return toolTip;
