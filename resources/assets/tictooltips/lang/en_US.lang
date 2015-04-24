@@ -23,6 +23,7 @@ tictooltips.tool.chance.to.behead=Chance to Behead:
 tictooltips.tool.modifiers=Modifiers:
 tictooltips.tool.knockback=Knockback: 
 tictooltips.tool.sprint.damage=Sprint Damage: 
+tictooltips.tool.crit.damage=Crit Damage %s: 
 
 # generic
 tictooltips.minimum=Min

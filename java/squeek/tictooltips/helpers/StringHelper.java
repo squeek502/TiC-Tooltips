@@ -33,9 +33,19 @@ public class StringHelper
 		return damageNum + heart;
 	}
 
+	public static String getDamageString(float attack)
+	{
+		return getDamageString((int) attack);
+	}
+
 	public static String getDamageNumberString(int attack)
 	{
 		return df.format(attack / 2f);
+	}
+
+	public static String getDamageNumberString(float attack)
+	{
+		return getDamageNumberString((int) attack);
 	}
 
 	public static String getShoddinessTypeString(float shoddiness)

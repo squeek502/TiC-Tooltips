@@ -9,6 +9,7 @@ import tconstruct.library.armor.ArmorCore;
 import tconstruct.library.tools.HarvestTool;
 import tconstruct.library.tools.ToolCore;
 import tconstruct.library.tools.ToolMaterial;
+import tconstruct.library.weaponry.AmmoItem;
 import tconstruct.library.weaponry.AmmoWeapon;
 import tconstruct.library.weaponry.IAmmo;
 import tconstruct.tools.TinkerTools;
@@ -152,7 +153,25 @@ public class ToolHelper
 
 	public static int getDamage(ToolCore tool, NBTTagCompound toolTag, float damageModifier)
 	{
-		float attack = toolTag.getInteger("Attack") * damageModifier;
+		return (int) getPreciseDamage(tool, toolTag, damageModifier);
+	}
+
+	public static float getPreciseDamage(ToolCore tool, NBTTagCompound toolTag, float damageModifier)
+	{
+		float attack;
+		if ((Item) tool instanceof AmmoItem && toolTag.hasKey("BaseAttack"))
+		{
+			float baseAttack = toolTag.getInteger("BaseAttack");
+			float totalAttack = toolTag.getInteger("Attack");
+			attack = baseAttack * damageModifier; // damageModifier is the projectile speed here
+
+			// add quartz damage
+			attack += (totalAttack - baseAttack);
+
+			attack = Math.max(0, attack - totalAttack / 2f);
+		}
+		else
+			attack = toolTag.getInteger("Attack") * damageModifier;
 		attack += getShoddinessDamageBonus(tool, toolTag);
 		attack *= tool.getDamageModifier();
 		if (tool instanceof AmmoWeapon)
@@ -162,12 +181,29 @@ public class ToolHelper
 		if (attack < 1)
 			attack = 1;
 
-		return (int) attack;
+		return attack;
 	}
 
 	public static int getDamage(ToolCore tool, NBTTagCompound toolTag)
 	{
-		return getDamage(tool, toolTag, 1f);
+		return (int) getPreciseDamage(tool, toolTag);
+	}
+
+	public static float getPreciseDamage(ToolCore tool, NBTTagCompound toolTag)
+	{
+		return getPreciseDamage(tool, toolTag, 1f);
+	}
+
+	public static float[] getCriticalDamageRange(ToolCore tool, NBTTagCompound toolTag, float damageModifier)
+	{
+		float attack = getPreciseDamage(tool, toolTag, damageModifier);
+
+		// the real formula (from ProjectileBase.onHitEntity):
+		// (this.rand.nextFloat()/4f + Math.min(0.75f, distance/25f)) * (damage / 2f + 2f);
+		float minCritDamage = 0.0f;
+		float maxCritDamage = (1.0f / 4f + 0.75f) * (attack / 2f + 2f);
+
+		return new float[]{minCritDamage, maxCritDamage};
 	}
 
 	public static int getSprintDamage(ToolCore tool, NBTTagCompound toolTag)

@@ -624,6 +624,15 @@ public class TooltipHandler
 				if (ToolHelper.hasToolTag(currentAmmo) && currentAmmo.getItem() instanceof ToolCore)
 				{
 					toolTip.addAll(getWeaponTooltip((ToolCore) currentAmmo.getItem(), ToolHelper.getToolTag(currentAmmo), projectileWeapon.getProjectileSpeed(itemStack)));
+
+					float[] critDamageRange = ToolHelper.getCriticalDamageRange((ToolCore) currentAmmo.getItem(), ToolHelper.getToolTag(currentAmmo), projectileWeapon.getProjectileSpeed(itemStack));
+					if (critDamageRange[1] != 0)
+					{
+						EnumChatFormatting textColor = critDamageRange[0] >= 0 ? EnumChatFormatting.DARK_GREEN : EnumChatFormatting.DARK_RED;
+						String bonusOrLoss = (critDamageRange[0] >= 0 ? StringHelper.getLocalizedString("gui.toolstation4") : StringHelper.getLocalizedString("gui.toolstation5"));
+						bonusOrLoss = bonusOrLoss.substring(0, bonusOrLoss.length() - 2);
+						toolTip.add(EnumChatFormatting.DARK_GRAY + "- " + StatCollector.translateToLocalFormatted("tictooltips.tool.crit.damage", bonusOrLoss) + textColor + StringHelper.getDamageNumberString(critDamageRange[0]) + "-" + StringHelper.getDamageString(critDamageRange[1]));
+					}
 				}
 				else if (currentAmmo.getItem() == Items.arrow)
 				{
