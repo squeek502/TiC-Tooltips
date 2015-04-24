@@ -38,48 +38,46 @@ repositories {
 		name "TiC"
 		url "http://dvs1.progwml6.com/files/maven"
 	}
+	maven {
+		name "NEI"
+		url "http://chickenbones.net/maven/"
+	}
 }
 
 dependencies {
-	compile fileTree(dir: 'libs', include: '*.jar,*.zip')
 	compile "tconstruct:TConstruct:${project.minecraft.version}-${tcon_version}:deobf"
 }
 
-// variable replacement in source files
-task processSourcesCustom(type:Copy){
+// variable substitution in java files
+task processSourceMainJava(type:Copy) {
+	inputs.property "vars", project.version + project.minecraft.version
 	from('java')
 	{
 		include '**/ModInfo.java'
-
+		include '**/package-info.java'
 		expand 'version':project.version, 'mcversion':project.minecraft.version
 	}
 	into project.buildDir.getPath()+"/sources/java"
 }
 
-// delete mcmod.info so that it gets a fresh version copied in every time
-task cleanModInfo(type: Delete) {
-	delete file(sourceSets.main.output.resourcesDir.getPath()+"/mcmod.info")
+// remove apis only necessary for compilation from the build
+task removeExternalAPIs(type:Delete) {
+	delete += sourceSets.main.output.classesDir.getPath()+"/cofh"
 }
 
 // correct task ordering
-processResources.dependsOn cleanModInfo
-compileJava.dependsOn processSourcesCustom
 afterEvaluate { project ->
-	processSourcesCustom.shouldRunAfter(sourceMainJava)
+	sourceMainJava.finalizedBy(processSourceMainJava)
+	compileJava.finalizedBy(removeExternalAPIs)
 }
 
-processResources
-{
-	// replace stuff in mcmod.info, nothing else
+processResources {
+	inputs.property "vars", project.version + project.minecraft.version
 	from(sourceSets.main.resources.srcDirs) {
-		include 'mcmod.info'
-				
-		// replace version and mcversion
+		include '**/*.info'
 		expand 'version':project.version, 'mcversion':project.minecraft.version
 	}
-		
-	// copy everything else, thats not the mcmod.info
 	from(sourceSets.main.resources.srcDirs) {
-		exclude 'mcmod.info'
+		exclude '**/*.info'
 	}
 }
