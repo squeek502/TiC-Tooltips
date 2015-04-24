@@ -17,7 +17,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@Mod(modid = ModInfo.MODID, version = ModInfo.VERSION, dependencies = "required-after:TConstruct@[1.7.10-1.8,);after:ExtraTiC;after:TSteelworks;after:Mariculture")
+@Mod(modid = ModInfo.MODID, version = ModInfo.VERSION, dependencies = "required-after:TConstruct@[1.7.10-1.8,);after:ExtraTiC;after:TSteelworks;after:Mariculture", acceptableRemoteVersions="*")
 public class ModTiCTooltips
 {
 	public static boolean hasIguanaTweaks;
