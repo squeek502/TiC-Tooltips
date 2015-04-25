@@ -29,15 +29,15 @@ tictooltips.tool.knockback=Knockback:
 tictooltips.tool.sprint.damage=Sprint Damage: 
 tictooltips.tool.crit.damage=Crit Damage Bonus: 
 # uses: material.cactus.ability/material.stone.ability, gui.toolstation4/gui.toolstation5
-tictooltips.tool.stonebound.loss=%s %s
-tictooltips.tool.stonebound.bonus=%s %s
-tictooltips.tool.jagged.loss=%s %s
-tictooltips.tool.jagged.bonus=%s %s
+tictooltips.tool.stonebound.loss=%s %s: 
+tictooltips.tool.stonebound.bonus=%s %s: 
+tictooltips.tool.jagged.loss=%s %s: 
+tictooltips.tool.jagged.bonus=%s %s: 
 # uses: tictooltips.maximum, material.cactus.ability/material.stone.ability, gui.toolstation4/gui.toolstation5
-tictooltips.tool.max.stonebound.loss=%s %s %s
-tictooltips.tool.max.stonebound.bonus=%s %s %s
-tictooltips.tool.max.jagged.loss=%s %s %s
-tictooltips.tool.max.jagged.bonus=%s %s %s
+tictooltips.tool.max.stonebound.loss=%s %s %s: 
+tictooltips.tool.max.stonebound.bonus=%s %s %s: 
+tictooltips.tool.max.jagged.loss=%s %s %s: 
+tictooltips.tool.max.jagged.bonus=%s %s %s: 
 
 # generic
 tictooltips.minimum=Min
