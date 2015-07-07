@@ -1,0 +1,49 @@
+# keypress related strings
+tictooltips.hold.key.for.stats=Podrž %s pro statistiky
+tictooltips.hold.key.for.materials=Podrž %s pro materiály
+tictooltips.hold.key.for.bow.stats=Podrž %s pro statistiky šípu
+tictooltips.hold.key.for.more=Podrž %s pro více informací
+
+# material tooltips
+tictooltips.material.shoddiness.modifier= [Modifikátor: %s]
+tictooltips.material.arrow.weight=Hmotnost šípu: 
+tictooltips.material.durability.modifier=Modifikátor trvanlivosti: 
+
+# pattern tooltips
+tictooltips.pattern.valid.materials=Správné materiály:
+
+# tool tooltips
+tictooltips.tool.repair.material=Materiál na opravu:
+tictooltips.tool.effective.durability=Efektivní trvanlivost: 
+# uses: material.cactus.ability/material.stone.ability
+tictooltips.tool.shoddiness.modifier=Modifikátor %s: 
+# uncomment these if your language needs different syntax for jagged/stonebound 
+tictooltips.tool.jagged.modifier=Modifikátor roztřepení: 
+tictooltips.tool.stonebound.modifier=Modifikátor zkamenění: 
+tictooltips.tool.burn.duration=Doba hoření: 
+tictooltips.tool.bonus.vs.undead=Bonus při nemrtvých: 
+tictooltips.tool.bonus.vs.spiders=Bonus při pavoukách: 
+tictooltips.tool.chance.to.behead=Šance na useknutí hlavy: 
+tictooltips.tool.modifiers=Modifikátory:
+tictooltips.tool.knockback=Odražení: 
+tictooltips.tool.sprint.damage=Poškození při běhu: 
+tictooltips.tool.crit.damage=Bonus kritického poškození: 
+# uses: material.cactus.ability/material.stone.ability, gui.toolstation4/gui.toolstation5
+tictooltips.tool.stonebound.loss=%s %s
+tictooltips.tool.stonebound.bonus=%s %s
+tictooltips.tool.jagged.loss=%s %s
+tictooltips.tool.jagged.bonus=%s %s
+# uses: tictooltips.maximum, material.cactus.ability/material.stone.ability, gui.toolstation4/gui.toolstation5
+tictooltips.tool.max.stonebound.loss=%s %s %s
+tictooltips.tool.max.stonebound.bonus=%s %s %s
+tictooltips.tool.max.jagged.loss=%s %s %s
+tictooltips.tool.max.jagged.bonus=%s %s %s
+
+# generic
+tictooltips.minimum=Minimální
+tictooltips.maximum=Maximální
+tictooltips.unknown.part=<Neznámá součást>
+tictooltips.infinite=Nekonečno
+
+# things that should be in TiC
+tictooltips.unbreakable=Nezničitelné
