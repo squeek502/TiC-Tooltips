@@ -1,17 +1,85 @@
 package squeek.tictooltips.proxy;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import net.minecraft.item.Item;
 import squeek.tictooltips.ModTiCTooltips;
 import squeek.tictooltips.helpers.ToolPartHelper;
+import tconstruct.tools.TinkerTools;
+import tconstruct.weaponry.TinkerWeaponry;
 
 public class ProxyExtraTiC
 {
 
 	private static Class<?> ExtraTiCPartsHandler;
 	public static List<Item> extraTiCParts = new ArrayList<Item>();
-	
+	public static Map<Item, Item> ticToExtraTiCParts = new HashMap<Item, Item>();
+
+	public enum PartInfo
+	{
+		// tool heads
+		PICKAXE_HEAD(TinkerTools.pickaxeHead, ToolPartHelper.toolHeads),
+		SHOVEL_HEAD(TinkerTools.shovelHead, ToolPartHelper.toolHeads),
+		EXCAVATOR_HEAD(TinkerTools.excavatorHead, ToolPartHelper.toolHeads),
+		// weapon mining heads
+		HAMMER_HEAD(TinkerTools.hammerHead, ToolPartHelper.weaponMiningHeads),
+		// weapon tool heads
+		AXE_HEAD(TinkerTools.hatchetHead, ToolPartHelper.weaponToolHeads),
+		SCYTHE_HEAD(TinkerTools.scytheBlade, ToolPartHelper.weaponToolHeads),
+		LUMBERAXE_HEAD(TinkerTools.broadAxeHead, ToolPartHelper.weaponToolHeads),
+		// weapon heads
+		SWORD_BLADE(TinkerTools.swordBlade, ToolPartHelper.weaponHeads),
+		LARGE_SWORD_BLADE(TinkerTools.largeSwordBlade, ToolPartHelper.weaponHeads),
+		KNIFE_BLADE(TinkerTools.knifeBlade, ToolPartHelper.weaponHeads),
+		FRYPAN_HEAD(TinkerTools.frypanHead, ToolPartHelper.weaponHeads),
+		BATTLE_SIGN_HEAD(TinkerTools.signHead, ToolPartHelper.weaponHeads),
+		// weapon guards
+		CROSSBAR(TinkerTools.crossbar, ToolPartHelper.weaponGuards),
+		MEDIUM_GUARD(TinkerTools.handGuard, ToolPartHelper.weaponGuards),
+		LARGE_GUARD(TinkerTools.wideGuard, ToolPartHelper.weaponGuards),
+		FULL_GUARD(TinkerTools.fullGuard, ToolPartHelper.fullWeaponGuards),
+		// bindings
+		BINDING(TinkerTools.binding, ToolPartHelper.bindings),
+		TOUGHBIND(TinkerTools.toughBinding, ToolPartHelper.toughBindings),
+		// rods
+		TOOLROD(TinkerTools.toolRod, ToolPartHelper.rods),
+		TOUGHROD(TinkerTools.toughRod, ToolPartHelper.rods),
+		// plates
+		LARGEPLATE(TinkerTools.largePlate, ToolPartHelper.plates),
+		// shards
+		CHUNK(TinkerTools.toolShard, ToolPartHelper.shards),
+		// arrowheads
+		ARROWHEAD(TinkerWeaponry.arrowhead, ToolPartHelper.arrowHeads),
+		// chisel heads
+		CHISEL_HEAD(TinkerTools.chiselHead, ToolPartHelper.chisels),
+		// parts added in TiC 1.8.0
+		SHURIKEN(TinkerWeaponry.partShuriken, ToolPartHelper.shurikenParts),
+		BOW_LIMB(TinkerWeaponry.partBowLimb, ToolPartHelper.bowLimbs),
+		CROSSBOW_LIMB(TinkerWeaponry.partCrossbowLimb, ToolPartHelper.crossbowLimbs),
+		CROSSBOW_BODY(TinkerWeaponry.partCrossbowBody, ToolPartHelper.crossbowBodies),
+		BOLT(TinkerWeaponry.partBolt, ToolPartHelper.boltParts);
+
+		public Item ticPart;
+		public List<Item> relevantList;
+		public Item partItem;
+
+		PartInfo(Item ticPart, List<Item> relevantList)
+		{
+			this.ticPart = ticPart;
+			this.relevantList = relevantList;
+		}
+
+		public void setPartItem(Item partItem)
+		{
+			this.partItem = partItem;
+			this.relevantList.add(partItem);
+			extraTiCParts.add(partItem);
+			ticToExtraTiCParts.put(ticPart, partItem);
+		}
+	}
+
 	public static void init()
 	{
 		registerParts();
@@ -23,135 +91,27 @@ public class ProxyExtraTiC
 		{
 			ExtraTiCPartsHandler = Class.forName("glassmaker.extratic.common.PartsHandler");
 
-			// tool heads
-			Item part = (Item) ExtraTiCPartsHandler.getDeclaredField("PICKAXE_HEAD").get(null);
-			extraTiCParts.add(part);
-			ToolPartHelper.toolHeads.add(part);
-			
-			part = (Item) ExtraTiCPartsHandler.getDeclaredField("SHOVEL_HEAD").get(null);
-			extraTiCParts.add(part);
-			ToolPartHelper.toolHeads.add(part);
+			for (PartInfo partInfo : PartInfo.values())
+			{
+				Item part = (Item) ExtraTiCPartsHandler.getDeclaredField(partInfo.name()).get(null);
+				partInfo.setPartItem(part);
 
-			part = (Item) ExtraTiCPartsHandler.getDeclaredField("EXCAVATOR_HEAD").get(null);
-			extraTiCParts.add(part);
-			ToolPartHelper.toolHeads.add(part);
-			
-			// weapon mining heads
-			part = (Item) ExtraTiCPartsHandler.getDeclaredField("HAMMER_HEAD").get(null);
-			extraTiCParts.add(part);
-			ToolPartHelper.weaponMiningHeads.add(part);
-
-			// weapon tool heads
-			part = (Item) ExtraTiCPartsHandler.getDeclaredField("AXE_HEAD").get(null);
-			extraTiCParts.add(part);
-			ToolPartHelper.weaponToolHeads.add(part);
-			part = (Item) ExtraTiCPartsHandler.getDeclaredField("SCYTHE_HEAD").get(null);
-			extraTiCParts.add(part);
-			ToolPartHelper.weaponToolHeads.add(part);
-			part = (Item) ExtraTiCPartsHandler.getDeclaredField("LUMBERAXE_HEAD").get(null);
-			extraTiCParts.add(part);
-			ToolPartHelper.weaponToolHeads.add(part);
-
-			// weapon heads
-			part = (Item) ExtraTiCPartsHandler.getDeclaredField("SWORD_BLADE").get(null);
-			extraTiCParts.add(part);
-			ToolPartHelper.weaponHeads.add(part);
-			part = (Item) ExtraTiCPartsHandler.getDeclaredField("LARGE_SWORD_BLADE").get(null);
-			extraTiCParts.add(part);
-			ToolPartHelper.weaponHeads.add(part);
-			part = (Item) ExtraTiCPartsHandler.getDeclaredField("KNIFE_BLADE").get(null);
-			extraTiCParts.add(part);
-			ToolPartHelper.weaponHeads.add(part);
-			part = (Item) ExtraTiCPartsHandler.getDeclaredField("FRYPAN_HEAD").get(null);
-			extraTiCParts.add(part);
-			ToolPartHelper.weaponHeads.add(part);
-			part = (Item) ExtraTiCPartsHandler.getDeclaredField("BATTLE_SIGN_HEAD").get(null);
-			extraTiCParts.add(part);
-			ToolPartHelper.weaponHeads.add(part);
-			
-			// weapon guards
-			part = (Item) ExtraTiCPartsHandler.getDeclaredField("CROSSBAR").get(null);
-			extraTiCParts.add(part);
-			ToolPartHelper.weaponGuards.add(part);
-			part = (Item) ExtraTiCPartsHandler.getDeclaredField("MEDIUM_GUARD").get(null);
-			extraTiCParts.add(part);
-			ToolPartHelper.weaponGuards.add(part);
-			part = (Item) ExtraTiCPartsHandler.getDeclaredField("LARGE_GUARD").get(null);
-			extraTiCParts.add(part);
-			ToolPartHelper.weaponGuards.add(part);
-			part = (Item) ExtraTiCPartsHandler.getDeclaredField("FULL_GUARD").get(null);
-			extraTiCParts.add(part);
-			ToolPartHelper.fullWeaponGuards.add(part);
-
-			// bindings
-			part = (Item) ExtraTiCPartsHandler.getDeclaredField("BINDING").get(null);
-			extraTiCParts.add(part);
-			ToolPartHelper.bindings.add(part);
-			part = (Item) ExtraTiCPartsHandler.getDeclaredField("TOUGHBIND").get(null);
-			extraTiCParts.add(part);
-			ToolPartHelper.toughBindings.add(part);
-
-			// rods
-			part = (Item) ExtraTiCPartsHandler.getDeclaredField("TOOLROD").get(null);
-			extraTiCParts.add(part);
-			ToolPartHelper.rods.add(part);
-			part = (Item) ExtraTiCPartsHandler.getDeclaredField("TOUGHROD").get(null);
-			extraTiCParts.add(part);
-			ToolPartHelper.rods.add(part);
-
-			// plates
-			part = (Item) ExtraTiCPartsHandler.getDeclaredField("LARGEPLATE").get(null);
-			extraTiCParts.add(part);
-			ToolPartHelper.plates.add(part);
-
-			// shards
-			part = (Item) ExtraTiCPartsHandler.getDeclaredField("CHUNK").get(null);
-			extraTiCParts.add(part);
-			ToolPartHelper.shards.add(part);
-
-			// arrowheads
-			part = (Item) ExtraTiCPartsHandler.getDeclaredField("ARROWHEAD").get(null);
-			extraTiCParts.add(part);
-			ToolPartHelper.arrowHeads.add(part);
-
-			// arrow rods
-			part = (Item) ExtraTiCPartsHandler.getDeclaredField("TOOLROD").get(null);
-			extraTiCParts.add(part);
-			ToolPartHelper.arrowRods.add(part);
-
-			// chisel heads
-			part = (Item) ExtraTiCPartsHandler.getDeclaredField("CHISEL_HEAD").get(null);
-			extraTiCParts.add(part);
-			ToolPartHelper.chisels.add(part);
-
-			// parts added in TiC 1.8.0
-			part = (Item) ExtraTiCPartsHandler.getDeclaredField("SHURIKEN").get(null);
-			extraTiCParts.add(part);
-			ToolPartHelper.shurikenParts.add(part);
-
-			part = (Item) ExtraTiCPartsHandler.getDeclaredField("BOW_LIMB").get(null);
-			extraTiCParts.add(part);
-			ToolPartHelper.bowLimbs.add(part);
-
-			part = (Item) ExtraTiCPartsHandler.getDeclaredField("CROSSBOW_LIMB").get(null);
-			extraTiCParts.add(part);
-			ToolPartHelper.crossbowLimbs.add(part);
-
-			part = (Item) ExtraTiCPartsHandler.getDeclaredField("CROSSBOW_BODY").get(null);
-			extraTiCParts.add(part);
-			ToolPartHelper.crossbowBodies.add(part);
-
-			part = (Item) ExtraTiCPartsHandler.getDeclaredField("BOLT").get(null);
-			extraTiCParts.add(part);
-			ToolPartHelper.boltParts.add(part);
+				if (partInfo.name().equals("TOOLROD"))
+					ToolPartHelper.arrowRods.add(part);
+			}
 		}
 		catch (Exception e)
 		{
 			ModTiCTooltips.Log.error("Failed to register Extra TiC tool parts: " + e.toString());
 			return false;
 		}
-		
+
 		return true;
+	}
+
+	public static boolean isExtraTiCMaterialID(int matID)
+	{
+		return (matID >= 100 && matID < 200) || (matID >= 2000 && matID < 3000);
 	}
 
 }

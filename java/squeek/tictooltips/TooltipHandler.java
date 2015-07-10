@@ -18,6 +18,7 @@ import squeek.tictooltips.helpers.PatternHelper;
 import squeek.tictooltips.helpers.StringHelper;
 import squeek.tictooltips.helpers.ToolHelper;
 import squeek.tictooltips.helpers.ToolPartHelper;
+import squeek.tictooltips.proxy.ProxyExtraTiC;
 import squeek.tictooltips.proxy.ProxyIguanaTweaks;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.tools.*;
@@ -872,6 +873,11 @@ public class TooltipHandler
 	private List<String> getToolPartTooltip(Item itemPart, int matID, ToolCore tool)
 	{
 		List<String> toolTip = new ArrayList<String>();
+
+		if (ProxyExtraTiC.isExtraTiCMaterialID(matID))
+		{
+			itemPart = ProxyExtraTiC.ticToExtraTiCParts.get(itemPart);
+		}
 
 		String matStyle = "";
 		if (!ToolPartHelper.hasCustomMaterial(itemPart))
