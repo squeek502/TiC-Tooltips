@@ -61,9 +61,9 @@ public class ProxyExtraTiC
 		CROSSBOW_BODY(TinkerWeaponry.partCrossbowBody, ToolPartHelper.crossbowBodies),
 		BOLT(TinkerWeaponry.partBolt, ToolPartHelper.boltParts);
 
-		public Item ticPart;
-		public List<Item> relevantList;
-		public Item partItem;
+		public final Item ticPart;
+		public final List<Item> relevantList;
+		private Item partItem;
 
 		PartInfo(Item ticPart, List<Item> relevantList)
 		{
@@ -71,12 +71,17 @@ public class ProxyExtraTiC
 			this.relevantList = relevantList;
 		}
 
-		public void setPartItem(Item partItem)
+		void setPartItem(Item partItem)
 		{
 			this.partItem = partItem;
 			this.relevantList.add(partItem);
 			extraTiCParts.add(partItem);
 			ticToExtraTiCParts.put(ticPart, partItem);
+		}
+
+		public Item getPartItem()
+		{
+			return this.partItem;
 		}
 	}
 
@@ -99,6 +104,10 @@ public class ProxyExtraTiC
 				if (partInfo.name().equals("TOOLROD"))
 					ToolPartHelper.arrowRods.add(part);
 			}
+		}
+		catch (RuntimeException e)
+		{
+			throw e;
 		}
 		catch (Exception e)
 		{

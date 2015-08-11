@@ -326,10 +326,8 @@ public class ToolPartHelper
 	public static void determineMinAndMaxValues()
 	{
 		boolean needsInit = true;
-		for (int key : TConstructRegistry.toolMaterials.keySet())
+		for (ToolMaterial mat : TConstructRegistry.toolMaterials.values())
 		{
-			ToolMaterial mat = TConstructRegistry.toolMaterials.get(key);
-
 			if (needsInit)
 			{
 				minAttack = maxAttack = mat.attack();
@@ -377,10 +375,8 @@ public class ToolPartHelper
 		}
 
 		needsInit = true;
-		for (int key : TConstructRegistry.arrowMaterials.keySet())
+		for (ArrowMaterial mat : TConstructRegistry.arrowMaterials.values())
 		{
-			ArrowMaterial mat = TConstructRegistry.arrowMaterials.get(key);
-
 			if (needsInit)
 			{
 				minBreakChance = maxBreakChance = mat.breakChance;
@@ -401,10 +397,8 @@ public class ToolPartHelper
 		}
 
 		needsInit = true;
-		for (int key : TConstructRegistry.bowMaterials.keySet())
+		for (BowMaterial mat : TConstructRegistry.bowMaterials.values())
 		{
-			BowMaterial mat = TConstructRegistry.bowMaterials.get(key);
-
 			if (needsInit)
 			{
 				minBowDrawSpeed = maxBowDrawSpeed = mat.drawspeed;

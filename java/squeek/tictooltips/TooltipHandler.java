@@ -11,13 +11,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import squeek.tictooltips.helpers.ColorHelper;
-import squeek.tictooltips.helpers.CompatibilityHelper;
-import squeek.tictooltips.helpers.KeyHelper;
-import squeek.tictooltips.helpers.PatternHelper;
-import squeek.tictooltips.helpers.StringHelper;
-import squeek.tictooltips.helpers.ToolHelper;
-import squeek.tictooltips.helpers.ToolPartHelper;
+import squeek.tictooltips.helpers.*;
 import squeek.tictooltips.proxy.ProxyExtraTiC;
 import squeek.tictooltips.proxy.ProxyIguanaTweaks;
 import tconstruct.library.TConstructRegistry;
@@ -83,8 +77,8 @@ public class TooltipHandler
 				else if (event.itemStack.isItemEnchanted())
 				{
 					NBTTagList enchantTagList = event.itemStack.getEnchantmentTagList();
-					short enchantID = ((NBTTagCompound) enchantTagList.getCompoundTagAt(0)).getShort("id");
-					short enchantLevel = ((NBTTagCompound) enchantTagList.getCompoundTagAt(0)).getShort("lvl");
+					short enchantID = enchantTagList.getCompoundTagAt(0).getShort("id");
+					short enchantLevel = enchantTagList.getCompoundTagAt(0).getShort("lvl");
 					String enchantName = Enchantment.enchantmentsList[enchantID].getTranslatedName(enchantLevel);
 					toolTipIndex = event.toolTip.indexOf(enchantName);
 				}
@@ -164,7 +158,6 @@ public class TooltipHandler
 
 				List<String> toolMaterials = getToolMaterialsTooltip(event.itemStack);
 				event.toolTip.addAll(toolTipIndex, toolMaterials);
-				toolTipIndex += toolMaterials.size();
 			}
 			// No buttons held
 			else
@@ -477,13 +470,13 @@ public class TooltipHandler
 			String bonusOrLoss = (stoneboundDamage > 0 ? StringHelper.getLocalizedString("gui.toolstation4") : StringHelper.getLocalizedString("gui.toolstation5")) + textColor;
 			String shoddinessBonusOrLossTitle = StatCollector.translateToLocalFormatted("tictooltips.tool." + shoddinessCode + "." + bonusOrLossCode, shoddinessType, bonusOrLoss);
 			String maxString = "";
-			if (stoneboundDamage == maxStoneboundDamage)
+			if (MathHelper.equals(stoneboundDamage, maxStoneboundDamage))
 				bonusOrLoss += EnumChatFormatting.BOLD;
 			else
 				maxString = EnumChatFormatting.RESET + " " + EnumChatFormatting.DARK_GRAY + "[" + StatCollector.translateToLocal("tictooltips.maximum") + ": " + StringHelper.getDamageNumberString((int) maxStoneboundDamage) + EnumChatFormatting.RESET + EnumChatFormatting.DARK_GRAY + "]";
 			toolTip.add(EnumChatFormatting.DARK_GRAY + "- " + shoddinessBonusOrLossTitle + StringHelper.getDamageString((int) stoneboundDamage) + maxString);
 		}
-		else if (maxStoneboundDamage != 0 && stoneboundDamage != maxStoneboundDamage)
+		else if (!MathHelper.equals(maxStoneboundDamage, 0f) && !MathHelper.equals(stoneboundDamage, maxStoneboundDamage))
 		{
 			String bonusOrLoss = maxStoneboundDamage > 0 ? StringHelper.getLocalizedString("gui.toolstation4") + EnumChatFormatting.DARK_GREEN : StringHelper.getLocalizedString("gui.toolstation5") + EnumChatFormatting.DARK_RED;
 			String maxShoddinessBonusOrLossTitle = StatCollector.translateToLocalFormatted("tictooltips.tool.max." + shoddinessCode + "." + bonusOrLossCode, StatCollector.translateToLocal("tictooltips.maximum"), shoddinessType, bonusOrLoss);
@@ -541,13 +534,13 @@ public class TooltipHandler
 			String bonusOrLoss = (stoneboundSpeed > 0 ? StringHelper.getLocalizedString("gui.toolstation4") : StringHelper.getLocalizedString("gui.toolstation5")) + textColor;
 			String shoddinessBonusOrLossTitle = StatCollector.translateToLocalFormatted("tictooltips.tool." + shoddinessCode + "." + bonusOrLossCode, shoddinessType, bonusOrLoss);
 			String maxString = "";
-			if (stoneboundSpeed == maxStoneboundSpeed)
-				bonusOrLoss += EnumChatFormatting.BOLD;
+			if (MathHelper.equals(stoneboundSpeed, maxStoneboundSpeed))
+				shoddinessBonusOrLossTitle += EnumChatFormatting.BOLD;
 			else
 				maxString = EnumChatFormatting.RESET + " " + EnumChatFormatting.DARK_GRAY + "[" + StatCollector.translateToLocal("tictooltips.maximum") + ": " + StringHelper.getSpeedString((int) (maxStoneboundSpeed * 100f)) + EnumChatFormatting.RESET + EnumChatFormatting.DARK_GRAY + "]";
 			toolTip.add(EnumChatFormatting.DARK_GRAY + "- " + shoddinessBonusOrLossTitle + StringHelper.getSpeedString((int) (stoneboundSpeed * 100f)) + maxString);
 		}
-		else if (maxStoneboundSpeed != 0 && stoneboundSpeed != maxStoneboundSpeed)
+		else if (!MathHelper.equals(maxStoneboundSpeed, 0f) && !MathHelper.equals(stoneboundSpeed, maxStoneboundSpeed))
 		{
 			String bonusOrLoss = maxStoneboundSpeed > 0 ? StringHelper.getLocalizedString("gui.toolstation4") + EnumChatFormatting.DARK_GREEN : StringHelper.getLocalizedString("gui.toolstation5") + EnumChatFormatting.DARK_RED;
 			String maxShoddinessBonusOrLossTitle = StatCollector.translateToLocalFormatted("tictooltips.tool.max." + shoddinessCode + "." + bonusOrLossCode, StatCollector.translateToLocal("tictooltips.maximum"), shoddinessType, bonusOrLoss);
@@ -590,13 +583,13 @@ public class TooltipHandler
 			String bonusOrLoss = (stoneboundSpeed > 0 ? StringHelper.getLocalizedString("gui.toolstation4") : StringHelper.getLocalizedString("gui.toolstation5")) + textColor;
 			String shoddinessBonusOrLossTitle = StatCollector.translateToLocalFormatted("tictooltips.tool." + shoddinessCode + "." + bonusOrLossCode, shoddinessType, bonusOrLoss);
 			String maxString = "";
-			if (stoneboundSpeed == maxStoneboundSpeed)
-				bonusOrLoss += EnumChatFormatting.BOLD;
+			if (MathHelper.equals(stoneboundSpeed, maxStoneboundSpeed))
+				shoddinessBonusOrLossTitle += EnumChatFormatting.BOLD;
 			else
 				maxString = EnumChatFormatting.RESET + " " + EnumChatFormatting.DARK_GRAY + "[" + StatCollector.translateToLocal("tictooltips.maximum") + ": " + StringHelper.getSpeedString((int) (maxStoneboundSpeed * 100f)) + EnumChatFormatting.RESET + EnumChatFormatting.DARK_GRAY + "]";
 			toolTip.add(EnumChatFormatting.DARK_GRAY + "- " + shoddinessBonusOrLossTitle + StringHelper.getSpeedString((int) (stoneboundSpeed * 100f)) + maxString);
 		}
-		else if (maxStoneboundSpeed != 0 && stoneboundSpeed != maxStoneboundSpeed)
+		else if (!MathHelper.equals(maxStoneboundSpeed, 0f) && !MathHelper.equals(stoneboundSpeed, maxStoneboundSpeed))
 		{
 			String bonusOrLoss = maxStoneboundSpeed > 0 ? StringHelper.getLocalizedString("gui.toolstation4") + EnumChatFormatting.DARK_GREEN : StringHelper.getLocalizedString("gui.toolstation5") + EnumChatFormatting.DARK_RED;
 			String maxShoddinessBonusOrLossTitle = StatCollector.translateToLocalFormatted("tictooltips.tool.max." + shoddinessCode + "." + bonusOrLossCode, StatCollector.translateToLocal("tictooltips.maximum"), shoddinessType, bonusOrLoss);

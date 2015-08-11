@@ -159,7 +159,7 @@ public class ToolHelper
 	public static float getPreciseDamage(ToolCore tool, NBTTagCompound toolTag, float damageModifier)
 	{
 		float attack;
-		if ((Item) tool instanceof AmmoItem && toolTag.hasKey("BaseAttack"))
+		if (tool instanceof AmmoItem && toolTag.hasKey("BaseAttack"))
 		{
 			float baseAttack = toolTag.getInteger("BaseAttack");
 			float totalAttack = toolTag.getInteger("Attack");

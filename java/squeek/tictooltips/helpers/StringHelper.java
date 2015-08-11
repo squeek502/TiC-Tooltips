@@ -60,10 +60,7 @@ public class StringHelper
 
 	public static String getShoddinessString(float shoddiness)
 	{
-		if ((int) shoddiness == shoddiness)
-			return Float.toString(Math.abs(shoddiness));
-		else
-			return df.format(Math.abs(shoddiness));
+		return df.format(Math.abs(shoddiness));
 	}
 
 	public static String getModifierString(float modifier)

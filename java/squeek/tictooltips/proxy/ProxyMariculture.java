@@ -119,6 +119,10 @@ public class ProxyMariculture
 			MaricultureParts.add(part);
 			ToolPartHelper.chisels.add(part);
 		}
+		catch (RuntimeException e)
+		{
+			throw e;
+		}
 		catch (Exception e)
 		{
 			ModTiCTooltips.Log.error("Failed to register Mariculture tool parts: " + e.toString());
