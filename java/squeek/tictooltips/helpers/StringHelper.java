@@ -80,7 +80,7 @@ public class StringHelper
 
 	public static String getAccuracyString(float accuracy)
 	{
-		return df.format(accuracy - 4) + "%";
+		return df.format(accuracy) + "%";
 	}
 
 	public static String getDrawSpeedString(int drawSpeed)
